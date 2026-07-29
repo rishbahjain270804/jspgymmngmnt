@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GymOS ERP v2 - Part 10</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#1f2937}
+header{background:#102542;color:#fff;padding:42px}
+main{max-width:1280px;margin:auto;padding:30px}
+section{margin:42px 0}
+.card{background:#fff;border:1px solid #d9e2ef;border-radius:12px;padding:18px;margin:16px 0}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #d9e2ef;padding:8px}
+th{background:#eef4ff}
+pre{background:#111827;color:#f3f4f6;padding:14px;border-radius:10px;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+</style>
+</head>
+<body>
+<header>
+<h1>GymOS ERP v2 — Part 10 (Final Core Specification)</h1>
+<p>Developer Handoff • Architecture • DevOps • Security • Roadmap</p>
+</header>
+<main>
+
+<section>
+<h2>1. Recommended Technology Stack</h2>
+<table>
+<tr><th>Layer</th><th>Technology</th></tr>
+<tr><td>Frontend</td><td>Next.js 15 + React + TypeScript + Tailwind CSS</td></tr>
+<tr><td>Mobile</td><td>React Native (Expo)</td></tr>
+<tr><td>Backend</td><td>NestJS + TypeScript</td></tr>
+<tr><td>Database</td><td>PostgreSQL</td></tr>
+<tr><td>Cache</td><td>Redis</td></tr>
+<tr><td>Storage</td><td>S3 Compatible Object Storage</td></tr>
+<tr><td>Realtime</td><td>WebSockets</td></tr>
+<tr><td>Queue</td><td>BullMQ / Redis</td></tr>
+</table>
+</section>
+
+<section>
+<h2>2. Monorepo Structure</h2>
+<pre>
+apps/
+  web/
+  mobile/
+  admin/
+services/
+  auth/
+  crm/
+  members/
+  billing/
+  ai/
+  notifications/
+packages/
+  ui/
+  config/
+  types/
+  sdk/
+infrastructure/
+  docker/
+  kubernetes/
+  terraform/
+</pre>
+</section>
+
+<section class="grid">
+<div class="card">
+<h2>3. Microservices</h2>
+<ul>
+<li>Auth</li>
+<li>Organization</li>
+<li>CRM</li>
+<li>Members</li>
+<li>Attendance</li>
+<li>Billing</li>
+<li>Workout</li>
+<li>Diet</li>
+<li>Inventory</li>
+<li>AI</li>
+<li>Notifications</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>4. External Integrations</h2>
+<ul>
+<li>Razorpay</li>
+<li>WhatsApp Business API</li>
+<li>SMS Provider</li>
+<li>Email Provider</li>
+<li>Google Calendar</li>
+<li>GST e-Invoice (future)</li>
+</ul>
+</div>
+</section>
+
+<section>
+<h2>5. CI/CD Pipeline</h2>
+<pre>
+Git Push
+   ↓
+GitHub Actions
+   ↓
+Lint
+   ↓
+Type Check
+   ↓
+Unit Tests
+   ↓
+Build
+   ↓
+Container Scan
+   ↓
+Docker Image
+   ↓
+Staging
+   ↓
+Production Approval
+   ↓
+Production
+</pre>
+</section>
+
+<section>
+<h2>6. Security Checklist</h2>
+<table>
+<tr><th>Area</th><th>Requirement</th></tr>
+<tr><td>Authentication</td><td>JWT + Refresh + MFA Ready</td></tr>
+<tr><td>Authorization</td><td>RBAC + Permission Matrix</td></tr>
+<tr><td>Passwords</td><td>Argon2 hashing</td></tr>
+<tr><td>Secrets</td><td>Environment vault</td></tr>
+<tr><td>Transport</td><td>TLS 1.3</td></tr>
+<tr><td>Audit</td><td>Immutable audit logs</td></tr>
+<tr><td>Rate Limiting</td><td>Per IP and per organization</td></tr>
+<tr><td>Backups</td><td>Daily with point-in-time recovery</td></tr>
+</table>
+</section>
+
+<section>
+<h2>7. Testing Strategy</h2>
+<div class="card">
+<ul>
+<li>Unit Tests (>80% critical logic coverage)</li>
+<li>Integration Tests</li>
+<li>API Contract Tests</li>
+<li>End-to-End Tests</li>
+<li>Performance Testing</li>
+<li>Security Testing</li>
+<li>Accessibility Testing</li>
+<li>UAT before every release</li>
+</ul>
+</div>
+</section>
+
+<section>
+<h2>8. Performance Targets</h2>
+<table>
+<tr><th>Metric</th><th>Target</th></tr>
+<tr><td>Dashboard Load</td><td>&lt;2 seconds</td></tr>
+<tr><td>API Response</td><td>&lt;300 ms (95th percentile)</td></tr>
+<tr><td>Attendance Check-in</td><td>&lt;1 second</td></tr>
+<tr><td>Availability</td><td>99.9%</td></tr>
+</table>
+</section>
+
+<section>
+<h2>9. Development Roadmap</h2>
+<table>
+<tr><th>Phase</th><th>Deliverables</th></tr>
+<tr><td>MVP</td><td>CRM, Members, Attendance, Billing, Dashboard</td></tr>
+<tr><td>V1</td><td>Trainer, Workout, Diet, Inventory, Mobile Apps</td></tr>
+<tr><td>V2</td><td>AI, Automation, Analytics, Marketing</td></tr>
+<tr><td>Enterprise</td><td>Multi-franchise, White-label, Advanced BI</td></tr>
+</table>
+</section>
+
+<section>
+<h2>10. Developer Handoff Checklist</h2>
+<div class="card">
+<ol>
+<li>Finalize UI/UX assets.</li>
+<li>Freeze database schema.</li>
+<li>Generate OpenAPI specification.</li>
+<li>Create backlog and sprint plan.</li>
+<li>Provision cloud infrastructure.</li>
+<li>Configure CI/CD.</li>
+<li>Implement monitoring and logging.</li>
+<li>Run security review.</li>
+<li>Prepare staging environment.</li>
+<li>Pilot with one gym before wider rollout.</li>
+</ol>
+</div>
+</section>
+
+<section>
+<h2>11. Future Expansion</h2>
+<div class="card">
+<ul>
+<li>Wearable integrations</li>
+<li>Marketplace for trainers</li>
+<li>Nutrition marketplace</li>
+<li>Corporate wellness</li>
+<li>AI video form analysis</li>
+<li>Multi-country compliance</li>
+</ul>
+</div>
+</section>
+
+<footer>
+<hr>
+<p><strong>GymOS ERP v2 – Core Specification Complete.</strong></p>
+<p>Recommended next deliverable: dedicated UI/Wireframe volume with 100+ production-quality HTML screens and complete PostgreSQL schema.</p>
+</footer>
+
+</main>
+</body>
+</html>

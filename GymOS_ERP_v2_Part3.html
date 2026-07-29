@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GymOS ERP v2 - Part 3</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;background:#f5f7fb;margin:0;color:#222}
+header{background:#0f2747;color:#fff;padding:40px}
+main{max-width:1200px;margin:auto;padding:30px}
+section{margin:42px 0}
+.card{background:#fff;border:1px solid #d7dce5;border-radius:10px;padding:18px;margin:16px 0}
+pre{background:#101820;color:#f2f2f2;padding:14px;border-radius:8px;overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #d7dce5;padding:8px}
+th{background:#eef4ff}
+h1,h2,h3{color:#17365d}
+.small{color:#666;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<h1>GymOS ERP v2 — Product Specification Part 3</h1>
+<p>User Flows • Mobile Architecture • AI Workflows • Wireframes</p>
+</header>
+<main>
+
+<section>
+<h2>1. Member Lifecycle</h2>
+<pre>
+Lead
+ ↓
+Inquiry
+ ↓
+Trial Booking
+ ↓
+Trial Completed
+ ↓
+Membership Purchase
+ ↓
+Assessment
+ ↓
+Workout + Diet
+ ↓
+Attendance
+ ↓
+Progress
+ ↓
+PT Upsell
+ ↓
+Renewal
+ ↓
+Referral
+</pre>
+</section>
+
+<section>
+<h2>2. AI Workflow Strategy</h2>
+<div class="card">
+<ul>
+<li>AI Sales Assistant follows up every lead automatically.</li>
+<li>AI predicts renewal probability.</li>
+<li>AI detects inactive members after configurable absence.</li>
+<li>AI recommends PT upsell opportunities.</li>
+<li>AI generates workouts and diet drafts for trainer review.</li>
+<li>AI summarizes daily branch performance.</li>
+</ul>
+</div>
+</section>
+
+<section>
+<h2>3. User Flows (UF-001 to UF-030)</h2>
+<table>
+<tr><th>ID</th><th>Flow</th><th>Start</th><th>End</th></tr>
+<tr><td>UF-001</td><td>Lead Conversion</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-002</td><td>Trial Booking</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-003</td><td>Member Registration</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-004</td><td>Membership Renewal</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-005</td><td>Daily Check-in</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-006</td><td>QR Attendance</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-007</td><td>Trainer Assignment</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-008</td><td>Workout Creation</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-009</td><td>Diet Assignment</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-010</td><td>Measurement Update</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-011</td><td>PT Session</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-012</td><td>Payment Collection</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-013</td><td>Expense Entry</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-014</td><td>Inventory Purchase</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-015</td><td>Inventory Sale</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-016</td><td>WhatsApp Reminder</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-017</td><td>Birthday Campaign</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-018</td><td>Freeze Membership</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-019</td><td>Reactivate Membership</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-020</td><td>Refund</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-021</td><td>Equipment Issue</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-022</td><td>Complaint Resolution</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-023</td><td>Branch Transfer</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-024</td><td>Staff Login</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-025</td><td>Role Change</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-026</td><td>Report Export</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-027</td><td>AI Summary</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-028</td><td>Lead Follow-up</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-029</td><td>Member Referral</td><td>User Action</td><td>Business Outcome</td></tr>
+<tr><td>UF-030</td><td>Exit Process</td><td>User Action</td><td>Business Outcome</td></tr>
+</table></section>
+<section>
+<h2>4. Reception Wireframe</h2>
+<pre>
++---------------------------------------------------------------+
+| Search Phone / Scan QR                       Today's Check-ins |
++---------------------------------------------------------------+
+| Member Card             | Membership Status | Dues | Renew Now |
++---------------------------------------------------------------+
+| Recent Check-ins                                         View |
++---------------------------------------------------------------+
+</pre>
+
+<h2>5. Owner Dashboard Wireframe</h2>
+<pre>
+Revenue | Profit | Active Members | Expiring | PT Revenue
+---------------------------------------------------------
+AI Alerts
+---------------------------------------------------------
+Branch Performance
+---------------------------------------------------------
+Renewals | Leads | Marketing | Finance
+</pre>
+
+<h2>6. Mobile Member App</h2>
+<pre>
+Home
+ ├─ QR Pass
+ ├─ Membership
+ ├─ Workout
+ ├─ Diet
+ ├─ Attendance
+ ├─ Progress
+ ├─ Payments
+ └─ Notifications
+</pre>
+</section>
+
+<section>
+<h2>7. PostgreSQL Domain Model (High Level)</h2>
+<table>
+<tr><th>Domain</th><th>Primary Tables</th></tr>
+<tr><td>Identity</td><td>users, roles, permissions</td></tr>
+<tr><td>Organization</td><td>organizations, branches</td></tr>
+<tr><td>CRM</td><td>leads, lead_activities</td></tr>
+<tr><td>Members</td><td>members, memberships</td></tr>
+<tr><td>Fitness</td><td>workouts, exercises, diets, measurements</td></tr>
+<tr><td>Finance</td><td>payments, invoices, expenses</td></tr>
+<tr><td>Inventory</td><td>products, stock, suppliers</td></tr>
+<tr><td>Automation</td><td>notifications, campaigns, audit_logs</td></tr>
+</table>
+</section>
+
+<section>
+<h2>8. Demo Priority Screens</h2>
+<div class="card">
+<ol>
+<li>AI Owner Dashboard</li>
+<li>Reception Check-in</li>
+<li>CRM Pipeline</li>
+<li>Member 360 Profile</li>
+<li>Trainer Workspace</li>
+<li>Workout Builder</li>
+<li>Diet Builder</li>
+<li>Finance Dashboard</li>
+<li>Automation Center</li>
+<li>Member Mobile Home</li>
+</ol>
+</div>
+</section>
+
+<footer>
+<hr>
+<p><strong>Next (Part 4):</strong> Complete PostgreSQL schema, ER relationships, RBAC matrix, audit model, indexes, constraints, and production database architecture.</p>
+</footer>
+
+</main>
+</body>
+</html>

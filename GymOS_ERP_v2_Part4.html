@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GymOS ERP v2 - Part 4</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;margin:0;background:#f4f6fa;color:#222}
+header{background:#12284c;color:#fff;padding:40px}
+main{max-width:1250px;margin:auto;padding:28px}
+section{margin:40px 0}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #d8dce5;padding:8px;font-size:14px}
+th{background:#eef3ff}
+.card{background:#fff;border:1px solid #d8dce5;border-radius:10px;padding:18px;margin:16px 0}
+pre{background:#111827;color:#f3f4f6;padding:14px;border-radius:8px;overflow:auto}
+</style>
+</head>
+<body>
+<header>
+<h1>GymOS ERP v2 – Part 4</h1>
+<p>PostgreSQL Architecture • ER Model • RBAC • Audit • Multi-Tenant</p>
+</header>
+<main>
+
+<section>
+<h2>1. Multi-Tenant Database Hierarchy</h2>
+<pre>
+Platform
+ └── Organization
+      ├── Branch
+      │     ├── Members
+      │     ├── Staff
+      │     ├── Inventory
+      │     ├── Finance
+      │     └── Attendance
+      └── Shared Configuration
+</pre>
+</section>
+
+<section>
+<h2>2. Core Tables</h2>
+<table>
+<tr><th>#</th><th>Table</th><th>Purpose</th></tr>
+<tr><td>1</td><td>organizations</td><td>Tenant root</td></tr><tr><td>2</td><td>branches</td><td>Gym branches</td></tr><tr><td>3</td><td>users</td><td>Authentication</td></tr><tr><td>4</td><td>roles</td><td>RBAC</td></tr><tr><td>5</td><td>permissions</td><td>Permissions</td></tr><tr><td>6</td><td>role_permissions</td><td>Role mapping</td></tr><tr><td>7</td><td>members</td><td>Member profile</td></tr><tr><td>8</td><td>member_profiles</td><td>Fitness profile</td></tr><tr><td>9</td><td>membership_plans</td><td>Plan master</td></tr><tr><td>10</td><td>memberships</td><td>Purchased plans</td></tr><tr><td>11</td><td>attendance</td><td>Daily check-ins</td></tr><tr><td>12</td><td>trainers</td><td>Trainer records</td></tr><tr><td>13</td><td>trainer_assignments</td><td>Trainer-member mapping</td></tr><tr><td>14</td><td>workout_templates</td><td>Workout library</td></tr><tr><td>15</td><td>member_workouts</td><td>Assigned workouts</td></tr><tr><td>16</td><td>diet_templates</td><td>Diet library</td></tr><tr><td>17</td><td>member_diets</td><td>Assigned diets</td></tr><tr><td>18</td><td>measurements</td><td>Body measurements</td></tr><tr><td>19</td><td>progress_photos</td><td>Progress tracking</td></tr><tr><td>20</td><td>payments</td><td>Transactions</td></tr><tr><td>21</td><td>invoices</td><td>GST invoices</td></tr><tr><td>22</td><td>expenses</td><td>Branch expenses</td></tr><tr><td>23</td><td>products</td><td>Inventory</td></tr><tr><td>24</td><td>stock_movements</td><td>Stock ledger</td></tr><tr><td>25</td><td>suppliers</td><td>Vendor master</td></tr><tr><td>26</td><td>purchase_orders</td><td>Procurement</td></tr><tr><td>27</td><td>crm_leads</td><td>Lead management</td></tr><tr><td>28</td><td>lead_activities</td><td>CRM timeline</td></tr><tr><td>29</td><td>campaigns</td><td>Marketing</td></tr><tr><td>30</td><td>notifications</td><td>WhatsApp/SMS/Push</td></tr><tr><td>31</td><td>audit_logs</td><td>Immutable audit</td></tr><tr><td>32</td><td>ai_insights</td><td>Predictions</td></tr><tr><td>33</td><td>equipment</td><td>Machines</td></tr><tr><td>34</td><td>equipment_issues</td><td>Maintenance</td></tr><tr><td>35</td><td>support_tickets</td><td>Complaints</td></tr><tr><td>36</td><td>settings</td><td>Organization settings</td></tr></table></section>
+<section>
+<h2>3. Entity Relationships</h2>
+<pre>
+organizations
+    │
+branches
+    │
+members ───── memberships ───── membership_plans
+    │
+attendance
+    │
+measurements
+    │
+member_workouts
+    │
+member_diets
+
+users
+ │
+roles
+ │
+permissions
+</pre>
+</section>
+
+<section>
+<h2>4. RBAC Matrix</h2>
+<table>
+<tr><th>Module</th><th>Owner</th><th>Manager</th><th>Reception</th><th>Trainer</th><th>Member</th></tr>
+<tr><td>Dashboard</td><td>CRUD</td><td>Read</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>Members</td><td>CRUD</td><td>CRUD</td><td>Create/Read</td><td>Assigned</td><td>Self</td></tr>
+<tr><td>Finance</td><td>CRUD</td><td>Read</td><td>Limited</td><td>-</td><td>Own Payments</td></tr>
+<tr><td>Workout</td><td>Read</td><td>Read</td><td>-</td><td>CRUD</td><td>Read</td></tr>
+<tr><td>Diet</td><td>Read</td><td>Read</td><td>-</td><td>CRUD</td><td>Read</td></tr>
+<tr><td>Automation</td><td>CRUD</td><td>Read</td><td>-</td><td>-</td><td>-</td></tr>
+</table>
+</section>
+
+<section>
+<h2>5. Audit Strategy</h2>
+<div class="card">
+<ul>
+<li>Every create/update/delete operation writes an immutable audit record.</li>
+<li>Store user_id, branch_id, organization_id, IP, device, timestamp.</li>
+<li>Before/after JSON snapshots for sensitive records.</li>
+<li>No hard delete for financial data.</li>
+<li>Soft delete with archived_at for operational entities.</li>
+</ul>
+</div>
+</section>
+
+<section>
+<h2>6. Index Strategy</h2>
+<div class="card">
+<pre>
+members(phone)
+attendance(member_id,date)
+payments(branch_id,created_at)
+crm_leads(status)
+memberships(expiry_date)
+audit_logs(created_at)
+notifications(status)
+</pre>
+</div>
+</section>
+
+<section>
+<h2>7. Database Standards</h2>
+<div class="card">
+<ul>
+<li>UUID primary keys.</li>
+<li>created_at / updated_at on all tables.</li>
+<li>organization_id on tenant tables.</li>
+<li>branch_id where applicable.</li>
+<li>JSONB for AI metadata.</li>
+<li>Timezone-aware timestamps.</li>
+</ul>
+</div>
+</section>
+
+<footer>
+<hr>
+<p><strong>Next:</strong> Part 5 – REST API specification, authentication, webhook/events, payment architecture, WhatsApp integration and service contracts.</p>
+</footer>
+
+</main>
+</body>
+</html>

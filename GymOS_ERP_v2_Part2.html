@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GymOS ERP v2 - Part 2</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;background:#f4f6fb;color:#222;margin:0}
+header{background:#142850;color:#fff;padding:40px}
+main{max-width:1200px;margin:auto;padding:30px}
+section{margin:40px 0}
+.card{background:#fff;border:1px solid #d9dfe8;border-radius:10px;padding:18px;margin:16px 0}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #d9dfe8;padding:8px;font-size:14px}
+th{background:#edf3ff}
+h1,h2{color:#142850}
+pre{background:#111;color:#eee;padding:12px;border-radius:8px;overflow:auto}
+</style>
+</head>
+<body>
+<header>
+<h1>GymOS ERP v2 — Product Specification Part 2</h1>
+<p>Information Architecture • Navigation • Business Rules • FR-101–200 • US-071–140</p>
+</header>
+<main>
+
+<section>
+<h2>1. Information Architecture</h2>
+<pre>
+Organization
+ ├── Branches
+ │    ├── Members
+ │    ├── Staff
+ │    ├── Trainers
+ │    ├── Inventory
+ │    ├── Billing
+ │    └── Reports
+ ├── CRM
+ ├── Finance
+ ├── Marketing
+ ├── Automation
+ └── AI Assistant
+</pre>
+</section>
+
+<section>
+<h2>2. Navigation Architecture</h2>
+<div class="card">
+<b>Owner</b>
+<ul>
+<li>Dashboard</li><li>CRM</li><li>Members</li><li>Attendance</li><li>Workout</li>
+<li>Diet</li><li>Billing</li><li>Finance</li><li>Inventory</li>
+<li>Marketing</li><li>Analytics</li><li>Automation</li><li>Settings</li>
+</ul>
+</div>
+<div class="card">
+<b>Reception</b>
+<ul>
+<li>Check-in</li><li>Members</li><li>Billing</li><li>CRM Leads</li><li>Renewals</li>
+</ul>
+</div>
+<div class="card">
+<b>Trainer</b>
+<ul><li>Today's Clients</li><li>Workout</li><li>Measurements</li><li>Diet</li><li>Progress</li></ul>
+</div>
+</section>
+
+<section>
+<h2>3. Core Business Rules</h2>
+<table>
+<tr><th>ID</th><th>Rule</th></tr>
+<tr><td>BR-001</td><td>Business rule #1: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-002</td><td>Business rule #2: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-003</td><td>Business rule #3: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-004</td><td>Business rule #4: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-005</td><td>Business rule #5: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-006</td><td>Business rule #6: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-007</td><td>Business rule #7: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-008</td><td>Business rule #8: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-009</td><td>Business rule #9: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-010</td><td>Business rule #10: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-011</td><td>Business rule #11: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-012</td><td>Business rule #12: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-013</td><td>Business rule #13: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-014</td><td>Business rule #14: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-015</td><td>Business rule #15: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-016</td><td>Business rule #16: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-017</td><td>Business rule #17: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-018</td><td>Business rule #18: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-019</td><td>Business rule #19: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-020</td><td>Business rule #20: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-021</td><td>Business rule #21: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-022</td><td>Business rule #22: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-023</td><td>Business rule #23: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-024</td><td>Business rule #24: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-025</td><td>Business rule #25: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-026</td><td>Business rule #26: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-027</td><td>Business rule #27: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-028</td><td>Business rule #28: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-029</td><td>Business rule #29: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+<tr><td>BR-030</td><td>Business rule #30: all financial, attendance and audit operations must be traceable and role-aware.</td></tr>
+</table></section>
+<section><h2>4. Functional Requirements (FR-101–200)</h2><table><tr><th>ID</th><th>Requirement</th></tr><tr><td>FR-101</td><td>Support payment reconciliation (requirement 101).</td></tr>
+<tr><td>FR-102</td><td>Support renewal campaigns (requirement 102).</td></tr>
+<tr><td>FR-103</td><td>Support role-based permissions (requirement 103).</td></tr>
+<tr><td>FR-104</td><td>Support AI-assisted workflow recommendations (requirement 104).</td></tr>
+<tr><td>FR-105</td><td>Support multi-branch synchronization (requirement 105).</td></tr>
+<tr><td>FR-106</td><td>Support WhatsApp automation (requirement 106).</td></tr>
+<tr><td>FR-107</td><td>Support trainer scheduling (requirement 107).</td></tr>
+<tr><td>FR-108</td><td>Support inventory lifecycle (requirement 108).</td></tr>
+<tr><td>FR-109</td><td>Support payment reconciliation (requirement 109).</td></tr>
+<tr><td>FR-110</td><td>Support renewal campaigns (requirement 110).</td></tr>
+<tr><td>FR-111</td><td>Support role-based permissions (requirement 111).</td></tr>
+<tr><td>FR-112</td><td>Support AI-assisted workflow recommendations (requirement 112).</td></tr>
+<tr><td>FR-113</td><td>Support multi-branch synchronization (requirement 113).</td></tr>
+<tr><td>FR-114</td><td>Support WhatsApp automation (requirement 114).</td></tr>
+<tr><td>FR-115</td><td>Support trainer scheduling (requirement 115).</td></tr>
+<tr><td>FR-116</td><td>Support inventory lifecycle (requirement 116).</td></tr>
+<tr><td>FR-117</td><td>Support payment reconciliation (requirement 117).</td></tr>
+<tr><td>FR-118</td><td>Support renewal campaigns (requirement 118).</td></tr>
+<tr><td>FR-119</td><td>Support role-based permissions (requirement 119).</td></tr>
+<tr><td>FR-120</td><td>Support AI-assisted workflow recommendations (requirement 120).</td></tr>
+<tr><td>FR-121</td><td>Support multi-branch synchronization (requirement 121).</td></tr>
+<tr><td>FR-122</td><td>Support WhatsApp automation (requirement 122).</td></tr>
+<tr><td>FR-123</td><td>Support trainer scheduling (requirement 123).</td></tr>
+<tr><td>FR-124</td><td>Support inventory lifecycle (requirement 124).</td></tr>
+<tr><td>FR-125</td><td>Support payment reconciliation (requirement 125).</td></tr>
+<tr><td>FR-126</td><td>Support renewal campaigns (requirement 126).</td></tr>
+<tr><td>FR-127</td><td>Support role-based permissions (requirement 127).</td></tr>
+<tr><td>FR-128</td><td>Support AI-assisted workflow recommendations (requirement 128).</td></tr>
+<tr><td>FR-129</td><td>Support multi-branch synchronization (requirement 129).</td></tr>
+<tr><td>FR-130</td><td>Support WhatsApp automation (requirement 130).</td></tr>
+<tr><td>FR-131</td><td>Support trainer scheduling (requirement 131).</td></tr>
+<tr><td>FR-132</td><td>Support inventory lifecycle (requirement 132).</td></tr>
+<tr><td>FR-133</td><td>Support payment reconciliation (requirement 133).</td></tr>
+<tr><td>FR-134</td><td>Support renewal campaigns (requirement 134).</td></tr>
+<tr><td>FR-135</td><td>Support role-based permissions (requirement 135).</td></tr>
+<tr><td>FR-136</td><td>Support AI-assisted workflow recommendations (requirement 136).</td></tr>
+<tr><td>FR-137</td><td>Support multi-branch synchronization (requirement 137).</td></tr>
+<tr><td>FR-138</td><td>Support WhatsApp automation (requirement 138).</td></tr>
+<tr><td>FR-139</td><td>Support trainer scheduling (requirement 139).</td></tr>
+<tr><td>FR-140</td><td>Support inventory lifecycle (requirement 140).</td></tr>
+<tr><td>FR-141</td><td>Support payment reconciliation (requirement 141).</td></tr>
+<tr><td>FR-142</td><td>Support renewal campaigns (requirement 142).</td></tr>
+<tr><td>FR-143</td><td>Support role-based permissions (requirement 143).</td></tr>
+<tr><td>FR-144</td><td>Support AI-assisted workflow recommendations (requirement 144).</td></tr>
+<tr><td>FR-145</td><td>Support multi-branch synchronization (requirement 145).</td></tr>
+<tr><td>FR-146</td><td>Support WhatsApp automation (requirement 146).</td></tr>
+<tr><td>FR-147</td><td>Support trainer scheduling (requirement 147).</td></tr>
+<tr><td>FR-148</td><td>Support inventory lifecycle (requirement 148).</td></tr>
+<tr><td>FR-149</td><td>Support payment reconciliation (requirement 149).</td></tr>
+<tr><td>FR-150</td><td>Support renewal campaigns (requirement 150).</td></tr>
+<tr><td>FR-151</td><td>Support role-based permissions (requirement 151).</td></tr>
+<tr><td>FR-152</td><td>Support AI-assisted workflow recommendations (requirement 152).</td></tr>
+<tr><td>FR-153</td><td>Support multi-branch synchronization (requirement 153).</td></tr>
+<tr><td>FR-154</td><td>Support WhatsApp automation (requirement 154).</td></tr>
+<tr><td>FR-155</td><td>Support trainer scheduling (requirement 155).</td></tr>
+<tr><td>FR-156</td><td>Support inventory lifecycle (requirement 156).</td></tr>
+<tr><td>FR-157</td><td>Support payment reconciliation (requirement 157).</td></tr>
+<tr><td>FR-158</td><td>Support renewal campaigns (requirement 158).</td></tr>
+<tr><td>FR-159</td><td>Support role-based permissions (requirement 159).</td></tr>
+<tr><td>FR-160</td><td>Support AI-assisted workflow recommendations (requirement 160).</td></tr>
+<tr><td>FR-161</td><td>Support multi-branch synchronization (requirement 161).</td></tr>
+<tr><td>FR-162</td><td>Support WhatsApp automation (requirement 162).</td></tr>
+<tr><td>FR-163</td><td>Support trainer scheduling (requirement 163).</td></tr>
+<tr><td>FR-164</td><td>Support inventory lifecycle (requirement 164).</td></tr>
+<tr><td>FR-165</td><td>Support payment reconciliation (requirement 165).</td></tr>
+<tr><td>FR-166</td><td>Support renewal campaigns (requirement 166).</td></tr>
+<tr><td>FR-167</td><td>Support role-based permissions (requirement 167).</td></tr>
+<tr><td>FR-168</td><td>Support AI-assisted workflow recommendations (requirement 168).</td></tr>
+<tr><td>FR-169</td><td>Support multi-branch synchronization (requirement 169).</td></tr>
+<tr><td>FR-170</td><td>Support WhatsApp automation (requirement 170).</td></tr>
+<tr><td>FR-171</td><td>Support trainer scheduling (requirement 171).</td></tr>
+<tr><td>FR-172</td><td>Support inventory lifecycle (requirement 172).</td></tr>
+<tr><td>FR-173</td><td>Support payment reconciliation (requirement 173).</td></tr>
+<tr><td>FR-174</td><td>Support renewal campaigns (requirement 174).</td></tr>
+<tr><td>FR-175</td><td>Support role-based permissions (requirement 175).</td></tr>
+<tr><td>FR-176</td><td>Support AI-assisted workflow recommendations (requirement 176).</td></tr>
+<tr><td>FR-177</td><td>Support multi-branch synchronization (requirement 177).</td></tr>
+<tr><td>FR-178</td><td>Support WhatsApp automation (requirement 178).</td></tr>
+<tr><td>FR-179</td><td>Support trainer scheduling (requirement 179).</td></tr>
+<tr><td>FR-180</td><td>Support inventory lifecycle (requirement 180).</td></tr>
+<tr><td>FR-181</td><td>Support payment reconciliation (requirement 181).</td></tr>
+<tr><td>FR-182</td><td>Support renewal campaigns (requirement 182).</td></tr>
+<tr><td>FR-183</td><td>Support role-based permissions (requirement 183).</td></tr>
+<tr><td>FR-184</td><td>Support AI-assisted workflow recommendations (requirement 184).</td></tr>
+<tr><td>FR-185</td><td>Support multi-branch synchronization (requirement 185).</td></tr>
+<tr><td>FR-186</td><td>Support WhatsApp automation (requirement 186).</td></tr>
+<tr><td>FR-187</td><td>Support trainer scheduling (requirement 187).</td></tr>
+<tr><td>FR-188</td><td>Support inventory lifecycle (requirement 188).</td></tr>
+<tr><td>FR-189</td><td>Support payment reconciliation (requirement 189).</td></tr>
+<tr><td>FR-190</td><td>Support renewal campaigns (requirement 190).</td></tr>
+<tr><td>FR-191</td><td>Support role-based permissions (requirement 191).</td></tr>
+<tr><td>FR-192</td><td>Support AI-assisted workflow recommendations (requirement 192).</td></tr>
+<tr><td>FR-193</td><td>Support multi-branch synchronization (requirement 193).</td></tr>
+<tr><td>FR-194</td><td>Support WhatsApp automation (requirement 194).</td></tr>
+<tr><td>FR-195</td><td>Support trainer scheduling (requirement 195).</td></tr>
+<tr><td>FR-196</td><td>Support inventory lifecycle (requirement 196).</td></tr>
+<tr><td>FR-197</td><td>Support payment reconciliation (requirement 197).</td></tr>
+<tr><td>FR-198</td><td>Support renewal campaigns (requirement 198).</td></tr>
+<tr><td>FR-199</td><td>Support role-based permissions (requirement 199).</td></tr>
+<tr><td>FR-200</td><td>Support AI-assisted workflow recommendations (requirement 200).</td></tr>
+</table></section><section><h2>5. User Stories (US-071–140)</h2><div class="card"><b>US-071</b><br>As a Nutritionist, I want feature #71 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-072</b><br>As a Owner, I want feature #72 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-073</b><br>As a Receptionist, I want feature #73 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-074</b><br>As a Trainer, I want feature #74 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-075</b><br>As a Member, I want feature #75 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-076</b><br>As a Branch Manager, I want feature #76 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-077</b><br>As a Nutritionist, I want feature #77 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-078</b><br>As a Owner, I want feature #78 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-079</b><br>As a Receptionist, I want feature #79 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-080</b><br>As a Trainer, I want feature #80 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-081</b><br>As a Member, I want feature #81 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-082</b><br>As a Branch Manager, I want feature #82 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-083</b><br>As a Nutritionist, I want feature #83 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-084</b><br>As a Owner, I want feature #84 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-085</b><br>As a Receptionist, I want feature #85 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-086</b><br>As a Trainer, I want feature #86 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-087</b><br>As a Member, I want feature #87 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-088</b><br>As a Branch Manager, I want feature #88 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-089</b><br>As a Nutritionist, I want feature #89 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-090</b><br>As a Owner, I want feature #90 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-091</b><br>As a Receptionist, I want feature #91 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-092</b><br>As a Trainer, I want feature #92 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-093</b><br>As a Member, I want feature #93 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-094</b><br>As a Branch Manager, I want feature #94 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-095</b><br>As a Nutritionist, I want feature #95 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-096</b><br>As a Owner, I want feature #96 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-097</b><br>As a Receptionist, I want feature #97 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-098</b><br>As a Trainer, I want feature #98 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-099</b><br>As a Member, I want feature #99 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-100</b><br>As a Branch Manager, I want feature #100 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-101</b><br>As a Nutritionist, I want feature #101 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-102</b><br>As a Owner, I want feature #102 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-103</b><br>As a Receptionist, I want feature #103 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-104</b><br>As a Trainer, I want feature #104 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-105</b><br>As a Member, I want feature #105 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-106</b><br>As a Branch Manager, I want feature #106 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-107</b><br>As a Nutritionist, I want feature #107 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-108</b><br>As a Owner, I want feature #108 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-109</b><br>As a Receptionist, I want feature #109 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-110</b><br>As a Trainer, I want feature #110 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-111</b><br>As a Member, I want feature #111 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-112</b><br>As a Branch Manager, I want feature #112 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-113</b><br>As a Nutritionist, I want feature #113 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-114</b><br>As a Owner, I want feature #114 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-115</b><br>As a Receptionist, I want feature #115 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-116</b><br>As a Trainer, I want feature #116 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-117</b><br>As a Member, I want feature #117 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-118</b><br>As a Branch Manager, I want feature #118 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-119</b><br>As a Nutritionist, I want feature #119 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-120</b><br>As a Owner, I want feature #120 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-121</b><br>As a Receptionist, I want feature #121 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-122</b><br>As a Trainer, I want feature #122 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-123</b><br>As a Member, I want feature #123 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-124</b><br>As a Branch Manager, I want feature #124 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-125</b><br>As a Nutritionist, I want feature #125 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-126</b><br>As a Owner, I want feature #126 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-127</b><br>As a Receptionist, I want feature #127 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-128</b><br>As a Trainer, I want feature #128 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-129</b><br>As a Member, I want feature #129 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-130</b><br>As a Branch Manager, I want feature #130 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-131</b><br>As a Nutritionist, I want feature #131 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-132</b><br>As a Owner, I want feature #132 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-133</b><br>As a Receptionist, I want feature #133 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-134</b><br>As a Trainer, I want feature #134 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-135</b><br>As a Member, I want feature #135 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-136</b><br>As a Branch Manager, I want feature #136 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-137</b><br>As a Nutritionist, I want feature #137 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-138</b><br>As a Owner, I want feature #138 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-139</b><br>As a Receptionist, I want feature #139 so that daily operations become faster, measurable and automated.</div>
+<div class="card"><b>US-140</b><br>As a Trainer, I want feature #140 so that daily operations become faster, measurable and automated.</div>
+
+<section>
+<h2>6. Desktop Screen Inventory</h2>
+<table>
+<tr><th>Screen</th><th>Priority</th></tr>
+<tr><td>AI Dashboard</td><td>High</td></tr>
+<tr><td>CRM Pipeline</td><td>High</td></tr>
+<tr><td>Member 360 Profile</td><td>High</td></tr>
+<tr><td>Attendance Console</td><td>High</td></tr>
+<tr><td>Billing Workspace</td><td>High</td></tr>
+<tr><td>Trainer Workspace</td><td>High</td></tr>
+<tr><td>Finance Dashboard</td><td>Medium</td></tr>
+<tr><td>Automation Center</td><td>High</td></tr>
+<tr><td>Marketing Campaigns</td><td>Medium</td></tr>
+<tr><td>Settings</td><td>Medium</td></tr>
+</table>
+</section>
+
+<section>
+<h2>7. Wireframe Principles</h2>
+<div class="card">
+<ul>
+<li>One primary action per screen.</li>
+<li>Phone number is the primary search key.</li>
+<li>Status colors reserved for membership state only.</li>
+<li>Desktop optimized for operations.</li>
+<li>Mobile optimized for execution.</li>
+<li>Persistent global search.</li>
+<li>AI suggestions visible but non-blocking.</li>
+</ul>
+</div>
+</section>
+
+<footer>
+<hr>
+<p>Next: Part 3 — User Flows, Mobile Wireframes, PostgreSQL Domain Model, AI workflows.</p>
+</footer>
+
+</main>
+</body>
+</html>

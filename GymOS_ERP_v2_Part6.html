@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GymOS ERP v2 - Part 6</title>
+<style>
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f8fc;color:#1e293b}
+header{background:#0f172a;color:#fff;padding:42px}
+main{max-width:1280px;margin:auto;padding:32px}
+section{margin:48px 0}
+.card{background:#fff;border:1px solid #dbe3ef;border-radius:12px;padding:18px;margin:18px 0}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #dbe3ef;padding:10px;text-align:left}
+th{background:#eef4ff}
+.token{display:inline-block;padding:8px 12px;border-radius:8px;border:1px solid #cbd5e1;margin:6px;font-family:monospace}
+pre{background:#111827;color:#f3f4f6;padding:14px;border-radius:10px;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+</style>
+</head>
+<body>
+<header>
+<h1>GymOS ERP v2 — Part 6</h1>
+<p>Design System • Component Library • UI Specification • Design Tokens</p>
+</header>
+
+<main>
+
+<section>
+<h2>1. Design Philosophy</h2>
+<div class="card">
+<ul>
+<li>Mobile-first, desktop-optimized.</li>
+<li>One primary action per screen.</li>
+<li>Consistent spacing, typography and hierarchy.</li>
+<li>AI suggestions assist users without blocking workflows.</li>
+<li>Role-aware interfaces: users only see what they need.</li>
+</ul>
+</div>
+</section>
+
+<section>
+<h2>2. Design Tokens</h2>
+<div class="card">
+<h3>Color Palette</h3>
+<div class="token">Primary #2563EB</div>
+<div class="token">Success #16A34A</div>
+<div class="token">Warning #F59E0B</div>
+<div class="token">Danger #DC2626</div>
+<div class="token">Background #F8FAFC</div>
+<div class="token">Surface #FFFFFF</div>
+
+<h3>Spacing Scale</h3>
+<table>
+<tr><th>Token</th><th>Value</th></tr>
+<tr><td>xs</td><td>4px</td></tr>
+<tr><td>sm</td><td>8px</td></tr>
+<tr><td>md</td><td>16px</td></tr>
+<tr><td>lg</td><td>24px</td></tr>
+<tr><td>xl</td><td>32px</td></tr>
+<tr><td>2xl</td><td>48px</td></tr>
+</table>
+</div>
+</section>
+
+<section>
+<h2>3. Typography</h2>
+<table>
+<tr><th>Element</th><th>Desktop</th><th>Mobile</th></tr>
+<tr><td>H1</td><td>40px</td><td>32px</td></tr>
+<tr><td>H2</td><td>32px</td><td>28px</td></tr>
+<tr><td>H3</td><td>24px</td><td>22px</td></tr>
+<tr><td>Body</td><td>16px</td><td>16px</td></tr>
+<tr><td>Caption</td><td>13px</td><td>12px</td></tr>
+</table>
+</section>
+
+<section>
+<h2>4. Component Library (CL-001 to CL-040)</h2>
+<table>
+<tr><th>ID</th><th>Component</th><th>Purpose</th></tr>
+<tr><td>CL-001</td><td>Primary Button</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-002</td><td>Secondary Button</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-003</td><td>Danger Button</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-004</td><td>Text Field</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-005</td><td>Phone Input</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-006</td><td>OTP Input</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-007</td><td>Search Bar</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-008</td><td>Filter Chip</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-009</td><td>Date Picker</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-010</td><td>Avatar</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-011</td><td>Status Badge</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-012</td><td>Membership Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-013</td><td>KPI Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-014</td><td>Revenue Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-015</td><td>Chart Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-016</td><td>Drawer</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-017</td><td>Modal</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-018</td><td>Toast</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-019</td><td>Snackbar</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-020</td><td>Stepper</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-021</td><td>Data Table</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-022</td><td>Pagination</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-023</td><td>Tabs</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-024</td><td>Accordion</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-025</td><td>Timeline</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-026</td><td>Activity Feed</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-027</td><td>Notification</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-028</td><td>QR Scanner</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-029</td><td>Camera View</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-030</td><td>Workout Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-031</td><td>Exercise Row</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-032</td><td>Diet Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-033</td><td>Calendar</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-034</td><td>Progress Ring</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-035</td><td>AI Suggestion Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-036</td><td>Lead Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-037</td><td>Invoice Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-038</td><td>Payment Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-039</td><td>Audit Card</td><td>Reusable enterprise UI component.</td></tr>
+<tr><td>CL-040</td><td>Empty State</td><td>Reusable enterprise UI component.</td></tr>
+
+</table>
+</section>
+
+<section>
+<h2>5. Dashboard Layout Specification</h2>
+<pre>
+----------------------------------------------------------
+ Global Search | Notifications | Profile
+----------------------------------------------------------
+ KPI Row
+----------------------------------------------------------
+ AI Insights
+----------------------------------------------------------
+ Revenue | Members | Attendance | PT | Finance
+----------------------------------------------------------
+ Recent Activity | Tasks | Alerts
+----------------------------------------------------------
+</pre>
+</section>
+
+<section>
+<h2>6. Mobile Design Rules</h2>
+<div class="grid">
+<div class="card"><h3>Navigation</h3><p>Bottom navigation with 5 items maximum.</p></div>
+<div class="card"><h3>Cards</h3><p>Single-column responsive layout.</p></div>
+<div class="card"><h3>Actions</h3><p>Primary CTA fixed at bottom when appropriate.</p></div>
+<div class="card"><h3>Search</h3><p>Always available on operational screens.</p></div>
+<div class="card"><h3>Performance</h3><p>Target &lt;2 second interaction time.</p></div>
+<div class="card"><h3>Offline</h3><p>Queue attendance and payments until online.</p></div>
+</div>
+</section>
+
+<section>
+<h2>7. Accessibility Standards</h2>
+<ul>
+<li>WCAG AA contrast compliance.</li>
+<li>Keyboard navigation on desktop.</li>
+<li>44px minimum touch targets.</li>
+<li>Visible focus states.</li>
+<li>Screen-reader labels for controls.</li>
+<li>No color-only status indicators.</li>
+</ul>
+</section>
+
+<section>
+<h2>8. Demo UI Priority</h2>
+<table>
+<tr><th>Priority</th><th>Screens</th></tr>
+<tr><td>P0</td><td>Dashboard, Check-in, CRM, Member Profile</td></tr>
+<tr><td>P1</td><td>Billing, Trainer Workspace, Workout, Diet</td></tr>
+<tr><td>P2</td><td>Inventory, Finance, Marketing</td></tr>
+<tr><td>P3</td><td>Settings, White-label, Franchise</td></tr>
+</table>
+</section>
+
+<footer>
+<hr>
+<p><strong>Next (Part 7):</strong> High-fidelity Desktop Wireframes (50+ screens), interaction patterns, navigation maps and screen specifications.</p>
+</footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,109 @@
+
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>GymOS ERP v2 - Part 5</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6fa;margin:0}
+header{background:#17365d;color:#fff;padding:36px}
+main{max-width:1200px;margin:auto;padding:24px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ccc;padding:8px;font-size:14px}
+th{background:#eef3ff}
+pre,.card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:16px}
+pre{background:#111;color:#eee}
+h2{color:#17365d}
+section{margin:34px 0}
+</style></head><body>
+<header><h1>GymOS ERP v2 – Part 5</h1>
+<p>REST APIs • Authentication • Payments • WhatsApp • Event Architecture</p></header>
+<main>
+<section><h2>1. API Standards</h2>
+<div class="card">
+<ul>
+<li>REST + JSON</li>
+<li>/api/v1 versioning</li>
+<li>JWT + Refresh Token</li>
+<li>Idempotency for payments</li>
+<li>OpenAPI documentation</li>
+<li>RFC7807 error responses</li>
+</ul>
+</div></section>
+
+<section><h2>2. Authentication Flow</h2>
+<pre>
+Login
+ ↓
+OTP / Password
+ ↓
+JWT Access Token
+ ↓
+Refresh Token
+ ↓
+Protected APIs
+ ↓
+RBAC Check
+</pre></section>
+
+<section><h2>3. Core API Inventory</h2>
+<table>
+<tr><th>Module</th><th>Sample Endpoints</th></tr>
+<tr><td>Auth</td><td>POST /auth/login, /auth/refresh, /auth/logout</td></tr>
+<tr><td>Members</td><td>GET /members, POST /members, GET /members/{id}</td></tr>
+<tr><td>Attendance</td><td>POST /attendance/checkin, GET /attendance/today</td></tr>
+<tr><td>Billing</td><td>POST /payments, GET /invoices</td></tr>
+<tr><td>CRM</td><td>POST /leads, PATCH /leads/{id}</td></tr>
+<tr><td>Workout</td><td>GET /workouts, POST /assignments</td></tr>
+<tr><td>Diet</td><td>GET /diets, POST /diet-assignments</td></tr>
+<tr><td>Inventory</td><td>GET /products, POST /stock</td></tr>
+<tr><td>Analytics</td><td>GET /dashboard</td></tr>
+<tr><td>AI</td><td>POST /ai/workout, /ai/diet, /ai/insights</td></tr>
+</table></section>
+
+<section><h2>4. Payment Lifecycle</h2>
+<pre>
+Invoice Created
+ ↓
+UPI / Razorpay
+ ↓
+Payment Success Webhook
+ ↓
+Invoice Paid
+ ↓
+Membership Activated
+ ↓
+Receipt + WhatsApp
+</pre></section>
+
+<section><h2>5. WhatsApp Automation</h2>
+<table>
+<tr><th>Trigger</th><th>Message</th></tr>
+<tr><td>New Lead</td><td>Welcome + Trial Link</td></tr>
+<tr><td>Renewal -7 days</td><td>Renew Membership</td></tr>
+<tr><td>Birthday</td><td>Greeting + Offer</td></tr>
+<tr><td>Missed Visits</td><td>We miss you</td></tr>
+<tr><td>Payment Success</td><td>Receipt</td></tr>
+</table></section>
+
+<section><h2>6. Event Bus</h2>
+<pre>
+member.created
+membership.renewed
+payment.success
+attendance.checked_in
+lead.converted
+trainer.assigned
+campaign.completed
+notification.sent
+</pre></section>
+
+<section><h2>7. Error Codes</h2>
+<table>
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td>AUTH_001</td><td>Invalid credentials</td></tr>
+<tr><td>MEMBER_001</td><td>Member not found</td></tr>
+<tr><td>PAYMENT_001</td><td>Payment failed</td></tr>
+<tr><td>PLAN_001</td><td>Membership expired</td></tr>
+<tr><td>RBAC_001</td><td>Permission denied</td></tr>
+</table></section>
+
+<footer><hr><p>Next: Part 6 – Design System, Component Library, Desktop & Mobile UI Specification.</p></footer>
+</main></body></html>
