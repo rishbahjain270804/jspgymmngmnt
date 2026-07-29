@@ -1,0 +1,517 @@
+/* Layout patterns shared by more than one screen. */
+
+.split-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+}
+
+.split-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--s-5);
+  align-items: start;
+}
+
+.split-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+}
+
+@media (max-width: 900px) {
+  .split-2,
+  .split-main,
+  .split-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* "Needs attention" rows on the dashboard. */
+.attention {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  transition:
+    border-color var(--d-fast) var(--e-out),
+    background var(--d-fast) var(--e-out);
+}
+
+.attention:hover {
+  border-color: var(--line-strong);
+}
+
+.attention__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-md);
+  flex-shrink: 0;
+}
+
+.attention__icon--warn {
+  background: var(--warn-tint);
+  color: var(--warn-fg);
+}
+.attention__icon--bad {
+  background: var(--bad-tint);
+  color: var(--bad-fg);
+}
+.attention__icon--neutral {
+  background: var(--neutral-tint);
+  color: var(--text-2);
+}
+
+.attention__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+
+.attention__title {
+  font-size: var(--t-body);
+  font-weight: var(--w-medium);
+}
+
+.attention__title b {
+  font-weight: var(--w-bold);
+}
+
+.attention__body {
+  font-size: var(--t-caption);
+  color: var(--text-3);
+}
+
+@media (max-width: 720px) {
+  .attention {
+    flex-wrap: wrap;
+  }
+  .attention__text {
+    flex-basis: calc(100% - 54px);
+  }
+  .attention .btn {
+    margin-left: auto;
+  }
+}
+
+/* A recommendation row: the attention row above, plus the arithmetic behind
+ * its figure on a native <details> disclosure. Reuses .attention__* for the
+ * icon and text so the two read as the same object across screens. */
+.rec {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  transition: border-color var(--d-fast) var(--e-out);
+}
+
+.rec:hover,
+.rec[open] {
+  border-color: var(--line-strong);
+}
+
+.rec__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--r-md);
+}
+
+/* Safari still paints its own triangle without this. */
+.rec__head::-webkit-details-marker {
+  display: none;
+}
+
+.rec__amount {
+  font-size: var(--t-section);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-tight);
+  white-space: nowrap;
+}
+
+.rec__amount--cost {
+  color: var(--bad-fg);
+}
+
+.rec__caret {
+  flex-shrink: 0;
+  color: var(--text-3);
+  transition: transform var(--d-base) var(--e-out);
+}
+
+.rec[open] .rec__caret {
+  transform: rotate(180deg);
+}
+
+.rec__work {
+  padding: 0 var(--s-4) var(--s-4);
+  border-top: 1px solid var(--line);
+  margin-top: var(--s-1);
+  padding-top: var(--s-3);
+}
+
+/* The working. Two columns: what was counted, and what it came to. */
+.work {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--s-3);
+}
+
+.work th {
+  text-align: left;
+  font-weight: var(--w-medium);
+  font-size: var(--t-label);
+  color: var(--text-2);
+  padding: var(--s-2) 0;
+  vertical-align: top;
+}
+
+.work th small {
+  display: block;
+  font-weight: var(--w-regular);
+  font-size: var(--t-caption);
+  color: var(--text-3);
+  margin-top: 1px;
+}
+
+.work td {
+  text-align: right;
+  padding: var(--s-2) 0 var(--s-2) var(--s-4);
+  font-size: var(--t-body);
+  font-weight: var(--w-semibold);
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.work tr + tr th,
+.work tr + tr td {
+  border-top: 1px solid var(--line);
+}
+
+/* The last row is the figure the headline claims — it should read as the
+ * conclusion of the rows above it, not as one more of them. */
+.work tr:last-child td {
+  color: var(--text);
+}
+
+.rec__assume {
+  display: flex;
+  gap: var(--s-2);
+  align-items: flex-start;
+  font-size: var(--t-caption);
+  color: var(--text-3);
+  background: var(--warn-tint);
+  border-radius: var(--r-sm);
+  padding: var(--s-2) var(--s-3);
+  margin-bottom: var(--s-3);
+}
+
+.rec__assume svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--warn-fg);
+}
+
+@media (max-width: 720px) {
+  .rec__head {
+    flex-wrap: wrap;
+  }
+  .rec__head .attention__text {
+    flex-basis: calc(100% - 54px);
+  }
+}
+
+/* The roll-up: a big total, then the per-branch split beneath it (§13). */
+.rollup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.rollup__branch {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  text-align: left;
+  transition:
+    border-color var(--d-base) var(--e-out),
+    transform var(--d-base) var(--e-out),
+    box-shadow var(--d-base) var(--e-out);
+}
+
+.rollup__branch:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.rollup__name {
+  font-size: var(--t-body);
+  font-weight: var(--w-semibold);
+  letter-spacing: var(--tr-tight);
+}
+
+.rollup__addr {
+  font-size: var(--t-caption);
+  color: var(--text-3);
+}
+
+.rollup__figures {
+  display: flex;
+  gap: var(--s-6);
+  margin-left: auto;
+  align-items: center;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.figure__value {
+  font-size: var(--t-section);
+  font-weight: var(--w-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tr-tight);
+}
+
+.figure__label {
+  font-size: var(--t-caption);
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-label);
+}
+
+@media (max-width: 720px) {
+  .rollup__branch {
+    flex-wrap: wrap;
+    padding: var(--s-4);
+  }
+  .rollup__figures {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding-top: var(--s-3);
+    border-top: 1px solid var(--line-faint);
+  }
+  .figure {
+    align-items: flex-start;
+  }
+}
+
+/* Toolbar above a list: search, filters, then the primary action. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.toolbar__search {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* Member/asset rows that become cards on a phone (layout rule: never a wide
+ * table on mobile). */
+@media (max-width: 900px) {
+  .table--responsive thead {
+    display: none;
+  }
+
+  .table--responsive tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--s-1) var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    margin-bottom: var(--s-2);
+    background: var(--surface);
+  }
+
+  .table--responsive tbody td {
+    border: none;
+    padding: 0;
+  }
+
+  .table--responsive tbody td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--t-caption);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-label);
+    color: var(--text-3);
+  }
+
+  .table--responsive .num {
+    text-align: left;
+  }
+}
+
+/* Definition grid — member profile, branch detail, asset detail. */
+.defs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-4) var(--s-5);
+}
+
+.def__label {
+  font-size: var(--t-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-label);
+  color: var(--text-3);
+  margin-bottom: 3px;
+}
+
+.def__value {
+  font-size: var(--t-body);
+  font-weight: var(--w-medium);
+}
+
+/* Ledger-style figure list — collect payment, P&L, receipts. */
+.ledger {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  margin: 0;
+}
+
+.ledger__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-1) 0;
+  font-size: var(--t-body);
+}
+
+.ledger__row dt {
+  color: var(--text-2);
+}
+
+.ledger__row dd {
+  margin: 0;
+  font-weight: var(--w-medium);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ledger__row.is-strong {
+  font-size: var(--t-body);
+}
+
+.ledger__row.is-strong dt,
+.ledger__row.is-strong dd {
+  color: var(--text);
+  font-weight: var(--w-bold);
+}
+
+.ledger__rule {
+  height: 1px;
+  background: var(--line);
+  margin: var(--s-2) 0;
+}
+
+/* The part-payment note — deliberately prominent, not a footnote. */
+.balance-note {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  margin-top: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  background: var(--warn-tint);
+  border: 1px solid var(--warn-line);
+  color: var(--warn-fg);
+  font-size: var(--t-label);
+}
+
+.balance-note b {
+  font-weight: var(--w-bold);
+}
+
+/* P&L — subtotals and the net line carry weight, everything else recedes. */
+.pnl tbody tr:hover {
+  background: var(--surface-hover);
+}
+
+.pnl__subtotal td {
+  font-weight: var(--w-semibold);
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.pnl__net td {
+  font-size: var(--t-body);
+  font-weight: var(--w-bold);
+  border-top: 2px solid var(--line-strong);
+  background: var(--surface-3);
+  padding-top: var(--s-4);
+  padding-bottom: var(--s-4);
+}
+
+/* Attendance heat grid. */
+.heat {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13px, 1fr));
+  gap: 4px;
+}
+
+.heat__cell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: var(--surface-3);
+  border: 1px solid transparent;
+}
+
+.heat__cell.is-on {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+/* Big-figure stat used inside cards (progress deltas, asset counts). */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat__value {
+  font-size: var(--t-h3);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-tight);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.stat__label {
+  font-size: var(--t-caption);
+  color: var(--text-3);
+}
+
+.stat__delta {
+  font-size: var(--t-caption);
+  font-weight: var(--w-semibold);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}

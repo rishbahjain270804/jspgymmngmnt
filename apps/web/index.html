@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en-IN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="OAN Fitness — gym operations across every branch." />
+    <meta name="color-scheme" content="dark light" />
+    <title>OAN Fitness</title>
+    <script>
+      // Theme before first paint, so the kiosk never flashes white at 6:30 AM.
+      try {
+        var t = localStorage.getItem('oan.theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

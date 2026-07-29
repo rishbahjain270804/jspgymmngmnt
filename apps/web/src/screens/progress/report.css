@@ -1,0 +1,256 @@
+/*
+ * The printable report.
+ *
+ * Always ink-on-white, whatever theme the app is in — it ends up on paper or
+ * in a WhatsApp image, and both want white. So this is the one place in the
+ * product that opts out of the token themes deliberately.
+ */
+
+.report-shell {
+  width: min(860px, 100%);
+  max-height: 92dvh;
+}
+
+.report-body {
+  background: #e9edf3;
+  padding: var(--s-5);
+}
+
+.report {
+  background: #ffffff;
+  color: #101828;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(16, 24, 40, 0.14);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.report__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #101828;
+}
+
+.report__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report__mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  background: #101828;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: -0.03em;
+}
+
+.report__name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.report__addr {
+  font-size: 11px;
+  color: #667085;
+  max-width: 40ch;
+}
+
+.report__meta {
+  text-align: right;
+  font-size: 11px;
+  color: #667085;
+}
+
+.report__meta div:first-child {
+  font-weight: 700;
+  color: #101828;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.report__member {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid #e4e7ec;
+}
+
+.report__eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #667085;
+  margin-bottom: 3px;
+}
+
+.report__member-name {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.report__member-sub {
+  font-size: 12px;
+  color: #475467;
+}
+
+.report__h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #667085;
+  margin: 24px 0 12px;
+}
+
+.report__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.report__stat {
+  padding: 14px;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.report__stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.report__stat-from {
+  font-size: 11px;
+  color: #667085;
+  margin-top: 2px;
+}
+
+.report__stat-from b {
+  color: #101828;
+}
+
+.report__chart {
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  padding: 12px;
+  /* The chart reads theme tokens; pin them light inside the report. */
+  --chart-grid: #e8edf5;
+  --text-3: #667085;
+  --surface: #ffffff;
+  --line-strong: #ced6e3;
+  --text: #101828;
+  --glass: #ffffff;
+  --glass-line: #e4e7ec;
+  --text-2: #475467;
+}
+
+.report__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.report__table th {
+  text-align: left;
+  padding: 8px 10px;
+  background: #f2f4f7;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #667085;
+  border-bottom: 1px solid #e4e7ec;
+}
+
+.report__table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.report__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px solid #e4e7ec;
+  font-size: 10px;
+  color: #667085;
+}
+
+@media (max-width: 720px) {
+  .report {
+    padding: 22px;
+  }
+  .report__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .report__head,
+  .report__member,
+  .report__foot {
+    flex-direction: column;
+  }
+  .report__meta {
+    text-align: left;
+  }
+}
+
+/* Printing: the report and nothing else. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .report-scrim,
+  .report-scrim * {
+    visibility: visible;
+  }
+
+  .report-scrim {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    backdrop-filter: none;
+    padding: 0;
+    display: block;
+  }
+
+  .report-shell {
+    width: 100%;
+    max-height: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .report-body {
+    background: #fff;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .report {
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+  }
+}

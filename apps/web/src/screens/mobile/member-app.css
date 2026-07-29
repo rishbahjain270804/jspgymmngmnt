@@ -1,0 +1,189 @@
+/*
+ * The member app, shown in a phone frame on desktop so it can be demoed
+ * beside the counter screens. On an actual phone the frame collapses and the
+ * app fills the viewport.
+ */
+
+.phone-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-9);
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: var(--s-8);
+  background:
+    radial-gradient(70% 60% at 20% 20%, var(--brand-tint), transparent 60%),
+    var(--bg-sunk);
+}
+
+.phone-note {
+  max-width: 42ch;
+  justify-self: end;
+}
+
+.phone-note__title {
+  margin-top: var(--s-2);
+  font-size: var(--t-h1);
+  font-weight: var(--w-bold);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.phone-note__body {
+  margin-top: var(--s-4);
+  color: var(--text-2);
+  line-height: var(--lh-relaxed);
+}
+
+.phone-note__actions {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+  flex-wrap: wrap;
+}
+
+.phone {
+  width: 390px;
+  height: 800px;
+  max-height: 88dvh;
+  padding: 10px;
+  border-radius: 46px;
+  background: var(--surface-3);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-lg);
+  flex-shrink: 0;
+}
+
+.phone__screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 36px;
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+
+.phone__header {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.phone__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--s-4);
+}
+
+.phone__tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--s-1);
+  padding: var(--s-2);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.phone__tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-height: var(--tap-min);
+  justify-content: center;
+  border-radius: var(--r-md);
+  font-size: var(--t-caption);
+  font-weight: var(--w-medium);
+  color: var(--text-3);
+  transition: color var(--d-fast) var(--e-out);
+}
+
+.phone__tab.is-active {
+  color: var(--brand);
+}
+
+:root[data-theme='dark'] .phone__tab.is-active {
+  color: var(--text);
+  background: var(--brand-tint);
+}
+
+.phone__big {
+  font-size: var(--t-h1);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-slab);
+  line-height: 1.05;
+}
+
+.phone__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+}
+
+.phone__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--line-faint);
+}
+
+.phone__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.qr-block {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.qr-block__code {
+  width: 96px;
+  height: 96px;
+  padding: 6px;
+  border-radius: var(--r-md);
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* On a real phone: no frame, the app is the page. */
+@media (max-width: 900px) {
+  .phone-stage {
+    padding: 0;
+    min-height: 100dvh;
+    grid-template-columns: 1fr;
+    background: var(--bg);
+  }
+
+  .phone {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--bg);
+  }
+
+  .phone__screen {
+    border-radius: 0;
+    border: none;
+  }
+
+  .phone__tabs {
+    padding-bottom: calc(var(--s-2) + env(safe-area-inset-bottom));
+  }
+}

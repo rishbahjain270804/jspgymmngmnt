@@ -1,0 +1,291 @@
+/*
+ * OAN design tokens.
+ *
+ * Two themes from one set of names. Components never write a hex value —
+ * they spend tokens, so the light build is the dark build with a different
+ * ledger underneath.
+ *
+ * The one hard rule from the research doc (§7): status colour is reserved for
+ * membership state. Nothing else in this product is allowed to be green,
+ * amber or red — so when the counter sees colour, it means exactly one thing.
+ * Status is never colour alone: every pill carries a glyph and a word too.
+ */
+
+:root {
+  /* ---- Spacing — 8px grid, with 4px available for dense table interiors -- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 40px;
+  --s-8: 48px;
+  --s-9: 64px;
+  --s-10: 80px;
+  --s-11: 96px;
+
+  /* ---- Radius — rounded, never pill-shaped except on status chips ------- */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-full: 999px;
+
+  /* ---- Type -------------------------------------------------------------
+   * System stack on purpose: the kiosk must paint in under a second and the
+   * .exe build runs offline, so there is no webfont round-trip to lose.
+   * Personality comes from weight, tracking and scale, not from a download.
+   */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', Menlo, Consolas, monospace;
+
+  /* The scale. Eight sizes, and nothing outside them — a screen that needs a
+   * ninth size is a screen with too much hierarchy in it. */
+  --t-h1: 42px;
+  --t-h2: 34px;
+  --t-h3: 28px;
+  --t-kpi: 40px; /* the number on a KPI card */
+  --t-section: 24px;
+  --t-body: 16px;
+  --t-label: 13px;
+  --t-caption: 12px;
+
+  /* Two counter-distance sizes, which are not UI type at all.
+   * The check-in verdict has to be legible across a counter, upside down, by
+   * someone not looking directly at it (§7); the "in the gym now" count is
+   * read from the floor. Both are signage, sized for viewing distance rather
+   * than for the reading hierarchy above. They appear on one screen each. */
+  --t-slab: clamp(56px, 9vw, 132px);
+  --t-signage: 72px;
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.65;
+
+  --tr-slab: -0.04em;
+  --tr-tight: -0.02em;
+  --tr-normal: 0;
+  --tr-label: 0.08em; /* uppercase micro-labels */
+
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-semibold: 600;
+  --w-bold: 700;
+  --w-black: 800;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --e-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --e-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --e-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --d-fast: 120ms;
+  --d-base: 200ms;
+  --d-slow: 320ms;
+  --d-slower: 520ms;
+
+  /* ---- Layout ----------------------------------------------------------- */
+  --sidebar-w: 236px;
+  --header-h: 60px;
+  --content-max: 1320px;
+  --tap-min: 44px; /* WCAG 2.5.5 — adopted from the ERP v2 spec's a11y list */
+
+  --z-sticky: 10;
+  --z-drawer: 40;
+  --z-dialog: 50;
+  --z-toast: 60;
+  --z-palette: 70;
+}
+
+/* =======================================================================
+ * DARK — the default. Chosen in the research doc (§7): it reads well on a
+ * counter screen and suits the brand. Not flat black: a blue-slate ink
+ * scale, layered so elevation reads without shadows (which vanish on black).
+ * ===================================================================== */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0a0d12;
+  --bg-sunk: #070910;
+  --surface: #11161f;
+  --surface-2: #171d28;
+  --surface-3: #1e2532;
+  --surface-hover: #212938;
+  --surface-active: #262f40;
+
+  --line: #232b38;
+  --line-strong: #303a4b;
+  --line-faint: #1a212c;
+
+  --text: #eef2f8;
+  --text-2: #a3aec1;
+  --text-3: #6f7b90;
+  --text-inverse: #0a0d12;
+
+  /* Brand — signal blue. Actions only, never status. */
+  --brand: #3d7dff;
+  --brand-hover: #5a91ff;
+  --brand-active: #2f6aeb;
+  --brand-tint: rgba(61, 125, 255, 0.14);
+  --brand-tint-strong: rgba(61, 125, 255, 0.24);
+  --brand-fg: #ffffff;
+
+  /* Status — membership state only. */
+  --ok: #21c07a;
+  --ok-fg: #6ff0b6;
+  --ok-tint: rgba(33, 192, 122, 0.14);
+  --ok-line: rgba(33, 192, 122, 0.34);
+
+  --warn: #f0a01e;
+  --warn-fg: #ffc95e;
+  --warn-tint: rgba(240, 160, 30, 0.14);
+  --warn-line: rgba(240, 160, 30, 0.34);
+
+  --bad: #f2555a;
+  --bad-fg: #ff9095;
+  --bad-tint: rgba(242, 85, 90, 0.14);
+  --bad-line: rgba(242, 85, 90, 0.34);
+
+  --neutral: #6f7b90;
+  --neutral-tint: rgba(111, 123, 144, 0.16);
+  --neutral-line: rgba(111, 123, 144, 0.32);
+
+  --focus: #7fb0ff;
+
+  /* Glass — subtle, used on the header and palette only. */
+  --glass: rgba(17, 22, 31, 0.72);
+  --glass-line: rgba(255, 255, 255, 0.06);
+  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.44);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.56);
+  --shadow-slab: 0 32px 90px rgba(0, 0, 0, 0.6);
+
+  --chart-grid: #1d2531;
+  --chart-1: #3d7dff;
+  --chart-2: #8b74ff;
+  --chart-3: #2bb8c4;
+}
+
+/* =======================================================================
+ * LIGHT — white background, per the product brief. Same names, so no
+ * component changes hands.
+ * ===================================================================== */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #ffffff;
+  --bg-sunk: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #f7f9fc;
+  --surface-3: #eff3f9;
+  --surface-hover: #f2f5fa;
+  --surface-active: #e8eef7;
+
+  --line: #e3e8f0;
+  --line-strong: #ced6e3;
+  --line-faint: #eef2f7;
+
+  --text: #0d1420;
+  --text-2: #4d5a6e;
+  --text-3: #77839a;
+  --text-inverse: #ffffff;
+
+  --brand: #2563eb;
+  --brand-hover: #1d55d4;
+  --brand-active: #1a49b8;
+  --brand-tint: rgba(37, 99, 235, 0.09);
+  --brand-tint-strong: rgba(37, 99, 235, 0.16);
+  --brand-fg: #ffffff;
+
+  --ok: #0f8f52;
+  --ok-fg: #0b7442;
+  --ok-tint: rgba(15, 143, 82, 0.1);
+  --ok-line: rgba(15, 143, 82, 0.28);
+
+  --warn: #b06c00;
+  --warn-fg: #8f5700;
+  --warn-tint: rgba(176, 108, 0, 0.1);
+  --warn-line: rgba(176, 108, 0, 0.28);
+
+  --bad: #d3323a;
+  --bad-fg: #b3242c;
+  --bad-tint: rgba(211, 50, 58, 0.09);
+  --bad-line: rgba(211, 50, 58, 0.26);
+
+  --neutral: #77839a;
+  --neutral-tint: rgba(119, 131, 154, 0.12);
+  --neutral-line: rgba(119, 131, 154, 0.3);
+
+  --focus: #2563eb;
+
+  --glass: rgba(255, 255, 255, 0.78);
+  --glass-line: rgba(13, 20, 32, 0.07);
+  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+
+  --shadow-sm: 0 1px 2px rgba(13, 20, 32, 0.06);
+  --shadow-md: 0 4px 16px rgba(13, 20, 32, 0.08);
+  --shadow-lg: 0 16px 44px rgba(13, 20, 32, 0.12);
+  --shadow-slab: 0 32px 80px rgba(13, 20, 32, 0.16);
+
+  --chart-grid: #e8edf5;
+  --chart-1: #2563eb;
+  --chart-2: #7c5cf0;
+  --chart-3: #0e9aa7;
+}
+
+/* Follow the OS only when the user has not chosen for themselves. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #ffffff;
+    --bg-sunk: #f5f7fa;
+    --surface: #ffffff;
+    --surface-2: #f7f9fc;
+    --surface-3: #eff3f9;
+    --surface-hover: #f2f5fa;
+    --surface-active: #e8eef7;
+    --line: #e3e8f0;
+    --line-strong: #ced6e3;
+    --line-faint: #eef2f7;
+    --text: #0d1420;
+    --text-2: #4d5a6e;
+    --text-3: #77839a;
+    --text-inverse: #ffffff;
+    --brand: #2563eb;
+    --brand-hover: #1d55d4;
+    --brand-active: #1a49b8;
+    --brand-tint: rgba(37, 99, 235, 0.09);
+    --brand-tint-strong: rgba(37, 99, 235, 0.16);
+    --ok: #0f8f52;
+    --ok-fg: #0b7442;
+    --ok-tint: rgba(15, 143, 82, 0.1);
+    --ok-line: rgba(15, 143, 82, 0.28);
+    --warn: #b06c00;
+    --warn-fg: #8f5700;
+    --warn-tint: rgba(176, 108, 0, 0.1);
+    --warn-line: rgba(176, 108, 0, 0.28);
+    --bad: #d3323a;
+    --bad-fg: #b3242c;
+    --bad-tint: rgba(211, 50, 58, 0.09);
+    --bad-line: rgba(211, 50, 58, 0.26);
+    --neutral: #77839a;
+    --neutral-tint: rgba(119, 131, 154, 0.12);
+    --neutral-line: rgba(119, 131, 154, 0.3);
+    --focus: #2563eb;
+    --glass: rgba(255, 255, 255, 0.78);
+    --glass-line: rgba(13, 20, 32, 0.07);
+    --shadow-sm: 0 1px 2px rgba(13, 20, 32, 0.06);
+    --shadow-md: 0 4px 16px rgba(13, 20, 32, 0.08);
+    --shadow-lg: 0 16px 44px rgba(13, 20, 32, 0.12);
+    --shadow-slab: 0 32px 80px rgba(13, 20, 32, 0.16);
+    --chart-grid: #e8edf5;
+    --chart-1: #2563eb;
+    --chart-2: #7c5cf0;
+    --chart-3: #0e9aa7;
+  }
+}
