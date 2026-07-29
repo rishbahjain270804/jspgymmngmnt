@@ -217,75 +217,39 @@ export function AppShell() {
         Skip to content
       </a>
 
-      <aside className="sidebar">
-        <Link to="/" className="brand">
-          <span className="brand__mark">OAN</span>
-          <span>
-            <span className="brand__name">OAN Fitness</span>
-            <span className="brand__sub">Jaipur</span>
-          </span>
-        </Link>
-
-        <nav className="nav" aria-label="Main">
-          {items.map((n) => (
-            <NavLink
-              key={n.to}
-              to={n.to}
-              end={n.end}
-              className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}
-            >
-              <Icon name={n.icon} size={18} className="nav__icon" />
-              {n.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="sidebar__foot">
-          {/* Demo affordance — three logins, switched live, same app. */}
-          <div className="role-switch">
-            <span className="eyebrow">Demo · sign in as</span>
-            <Select
-              value={staffId}
-              onChange={(e) => signInAs(e.target.value)}
-              aria-label="Switch demo user"
-            >
-              {STAFF.filter((s) => s.role !== 'MEMBER').map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name} — {ROLE_LABEL[s.role]}
-                </option>
-              ))}
-            </Select>
-          </div>
-
-          <div className="who">
-            <Avatar name={name} size={32} />
-            <span>
-              <span className="who__name">{name}</span>
-              <br />
-              <span className="who__role">{ROLE_LABEL[role]}</span>
+      {/* Desktop navigation lives across the top; mobile gets the tab bar at
+       * the foot of the screen. One nav list, two placements — the item set
+       * is still filtered by role, so front desk sees three and an Admin six. */}
+      <header className="topbar">
+        <div className="topbar__row">
+          <Link to="/" className="brand">
+            <span className="brand__mark">OAN</span>
+            <span className="brand__text">
+              <span className="brand__name">OAN Fitness</span>
+              <span className="brand__sub">Jaipur</span>
             </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              iconOnly
-              icon={theme === 'dark' ? 'sun' : 'moon'}
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              style={{ marginLeft: 'auto' }}
-            >
-              Switch to {theme === 'dark' ? 'light' : 'dark'} theme
-            </Button>
-          </div>
-        </div>
-      </aside>
+          </Link>
 
-      <div className="main">
-        <header className="header">
-          <Breadcrumbs />
-          <span className="header__spacer" />
-          <div className="header__tools">
+          <nav className="nav" aria-label="Main">
+            {items.map((n) => (
+              <NavLink
+                key={n.to}
+                to={n.to}
+                end={n.end}
+                className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}
+              >
+                <Icon name={n.icon} size={17} className="nav__icon" />
+                <span className="nav__label">{n.label}</span>
+              </NavLink>
+            ))}
+          </nav>
+
+          <span className="topbar__spacer" />
+
+          <div className="topbar__tools">
             <button type="button" className="omni" onClick={() => setPaletteOpen(true)}>
               <Icon name="search" size={16} />
-              <span>Search members…</span>
+              <span className="omni__label">Search members…</span>
               <kbd className="kbd">⌘K</kbd>
             </button>
             <BranchSwitcher />
@@ -301,27 +265,63 @@ export function AppShell() {
               </Button>
               {unread > 0 ? <span className="bell__dot" /> : null}
             </div>
-          </div>
-        </header>
-
-        <main id="main">
-          <Outlet />
-        </main>
-
-        <nav className="tabbar" aria-label="Main">
-          {mobileItems.map((n) => (
-            <NavLink
-              key={n.to}
-              to={n.to}
-              end={n.end}
-              className={({ isActive }) => `tabbar__link ${isActive ? 'is-active' : ''}`}
+            <Button
+              variant="ghost"
+              iconOnly
+              icon={theme === 'dark' ? 'sun' : 'moon'}
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              <Icon name={n.icon} size={20} />
-              {n.label}
-            </NavLink>
-          ))}
-        </nav>
-      </div>
+              Switch to {theme === 'dark' ? 'light' : 'dark'} theme
+            </Button>
+            <span className="who">
+              <Avatar name={name} size={30} />
+              <span className="who__text">
+                <span className="who__name">{name}</span>
+                <span className="who__role">{ROLE_LABEL[role]}</span>
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div className="subbar">
+          <Breadcrumbs />
+          <span className="topbar__spacer" />
+          {/* Demo affordance — the logins switched live during a walkthrough.
+           * Labelled and dashed so nobody mistakes it for a product feature. */}
+          <div className="role-switch">
+            <span className="eyebrow">Demo · sign in as</span>
+            <Select
+              value={staffId}
+              onChange={(e) => signInAs(e.target.value)}
+              aria-label="Switch demo user"
+            >
+              {STAFF.filter((s) => s.role !== 'MEMBER').map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name} — {ROLE_LABEL[s.role]}
+                </option>
+              ))}
+            </Select>
+          </div>
+        </div>
+      </header>
+
+      <main id="main">
+        <Outlet />
+      </main>
+
+      <nav className="tabbar" aria-label="Main">
+        {mobileItems.map((n) => (
+          <NavLink
+            key={n.to}
+            to={n.to}
+            end={n.end}
+            className={({ isActive }) => `tabbar__link ${isActive ? 'is-active' : ''}`}
+          >
+            <Icon name={n.icon} size={20} />
+            {n.label}
+          </NavLink>
+        ))}
+      </nav>
 
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
       <NotificationCentre open={notifOpen} onClose={() => setNotifOpen(false)} />

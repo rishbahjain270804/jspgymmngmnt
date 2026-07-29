@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GymOS ERP — Project Status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js"></script>
+<style>
+  :root {
+    --bg: #0d0f18;
+    --surface: #151821;
+    --surface2: #1c2030;
+    --border: #252a3a;
+    --text: #e2e8f0;
+    --muted: #7a8499;
+    --accent: #6c63ff;
+    --accent-glow: rgba(108,99,255,0.15);
+    --green: #22c55e;
+    --green-bg: rgba(34,197,94,0.1);
+    --amber: #f59e0b;
+    --amber-bg: rgba(245,158,11,0.1);
+    --red: #ef4444;
+    --red-bg: rgba(239,68,68,0.1);
+    --blue: #3b82f6;
+    --shadow: 0 4px 32px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADROOM NAV ── */
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(13,15,24,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    gap: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .site-nav.headroom--pinned { transform: translateY(0); box-shadow: var(--shadow); }
+  .site-nav.headroom--unpinned { transform: translateY(-100%); }
+  .site-nav.headroom--not-top { box-shadow: var(--shadow); }
+
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface2); }
+
+  .nav-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid rgba(34,197,94,0.3);
+    white-space: nowrap;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 120px 32px 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, #a0a8c0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 60ch;
+    margin-bottom: 32px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .chip.spec { color: var(--blue); background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.3); }
+  .chip.research { color: var(--amber); background: var(--amber-bg); border-color: rgba(245,158,11,0.3); }
+  .chip.next { color: var(--accent); background: var(--accent-glow); border-color: rgba(108,99,255,0.3); }
+
+  /* ── SUMMARY CARDS ── */
+  .summary-row {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .summary-card.done::before { background: var(--green); }
+  .summary-card.partial::before { background: var(--amber); }
+  .summary-card.notyet::before { background: var(--red); }
+  .summary-card.later::before { background: var(--muted); }
+  .summary-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .summary-card .value {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .summary-card.done .value { color: var(--green); }
+  .summary-card.partial .value { color: var(--amber); }
+  .summary-card.notyet .value { color: var(--red); }
+  .summary-card.later .value { color: var(--muted); }
+  .summary-card .sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  /* ── SECTION WRAPPER ── */
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  section { padding: 48px 0 16px; }
+
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .sec-head h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  /* ── STATUS TABLE ── */
+  .status-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+  }
+  .status-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  .status-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .status-table tr:last-child td { border-bottom: 0; }
+  .status-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .status-table td:first-child { font-weight: 600; color: #c8cfdf; }
+  .status-table td .desc { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+
+  /* STATUS PILLS */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pill::before { content: '●'; font-size: 8px; }
+  .pill.done { color: var(--green); background: var(--green-bg); border: 1px solid rgba(34,197,94,0.25); }
+  .pill.partial { color: var(--amber); background: var(--amber-bg); border: 1px solid rgba(245,158,11,0.25); }
+  .pill.notyet { color: var(--red); background: var(--red-bg); border: 1px solid rgba(239,68,68,0.25); }
+  .pill.later { color: var(--muted); background: var(--surface2); border: 1px solid var(--border); }
+  .pill.inprog { color: #a78bfa; background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); }
+
+  /* ── CALL BOX ── */
+  .call {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    background: var(--surface);
+    padding: 18px 20px;
+    margin: 0 0 24px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .call strong { color: var(--text); }
+  .call h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+
+  /* ── MODULE GRID ── */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .module-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .module-card:hover { border-color: rgba(108,99,255,0.4); }
+  .module-card .mc-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+  .module-card h3 { font-size: 15px; font-weight: 700; }
+  .module-card .mc-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+  .module-card .features { display: flex; flex-direction: column; gap: 5px; }
+  .feature-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+  }
+  .feature-row .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .feature-row .dot.done { background: var(--green); }
+  .feature-row .dot.notyet { background: var(--red); }
+  .feature-row .dot.later { background: var(--muted); }
+  .feature-row .dot.partial { background: var(--amber); }
+  .feature-row span { color: var(--muted); }
+  .feature-row span.done { color: var(--text); }
+
+  /* ── STACK TABLE ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media(max-width: 640px) { .stack-grid { grid-template-columns: 1fr; } }
+  .stack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .stack-card h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .stack-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .stack-item:last-child { border-bottom: 0; }
+  .stack-item .si-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .stack-item .si-dot.decided { background: var(--blue); }
+  .stack-item .si-dot.pending { background: var(--muted); }
+  .stack-item strong { color: var(--text); font-weight: 600; }
+  .stack-item .si-note { font-size: 11.5px; color: var(--muted); margin-left: auto; }
+
+  /* ── NEXT STEPS ── */
+  .next-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .next-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+  .next-item .ni-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-radius: 4px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .next-item strong { color: var(--text); display: block; margin-bottom: 2px; }
+  .next-item span { color: var(--muted); font-size: 13px; }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 64px;
+    padding: 32px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media(max-width: 768px) {
+    .site-nav { padding: 0 16px; }
+    .hero, .wrap, .summary-row { padding-left: 16px; padding-right: 16px; }
+    .summary-row { padding: 0 16px 32px; }
+    .module-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADROOM NAV ══ -->
+<nav class="site-nav" id="main-nav">
+  <div class="nav-brand">GymOS ERP</div>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#docs">Docs Status</a>
+    <a href="#demo-slice">Demo Slice</a>
+    <a href="#stack">Stack</a>
+    <a href="#blockers">Blockers</a>
+    <a href="#next">Next Steps</a>
+  </div>
+  <div class="nav-badge">JSP Coders → OAN Fitness</div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="eyebrow">Project Status — 29 July 2026</div>
+  <h1>What's done.<br>What's not.</h1>
+  <p>Research complete, stack decided, demo scope locked. Implementation has not started. Here's exactly where we are.</p>
+  <div class="hero-meta">
+    <span class="chip spec">Spec Phase</span>
+    <span class="chip research">Research Complete</span>
+    <span class="chip next">Implementation Next</span>
+  </div>
+</div>
+
+<!-- ══ SUMMARY CARDS ══ -->
+<div class="summary-row">
+  <div class="summary-card done">
+    <div class="label">Completed</div>
+    <div class="value">4</div>
+    <div class="sub">Research, arch, spec, wireframes</div>
+  </div>
+  <div class="summary-card partial">
+    <div class="label">In Progress / Partial</div>
+    <div class="value">3</div>
+    <div class="sub">Open questions, plans, RBAC model</div>
+  </div>
+  <div class="summary-card notyet">
+    <div class="label">Not Started</div>
+    <div class="value">8</div>
+    <div class="sub">All implementation modules</div>
+  </div>
+  <div class="summary-card later">
+    <div class="label">Later Phase</div>
+    <div class="value">10+</div>
+    <div class="sub">Tier C features, AI, POS, CRM…</div>
+  </div>
+</div>
+
+<!-- ══ SECTION 1: DOCS STATUS ══ -->
+<div class="wrap">
+<section id="docs">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>Documents & Planning Status</h2>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="pill done">Done</span> Fully complete</div>
+    <div class="legend-item"><span class="pill partial">Partial</span> Needs more detail</div>
+    <div class="legend-item"><span class="pill notyet">Not Yet</span> Not started</div>
+    <div class="legend-item"><span class="pill later">Later</span> Deferred to future phase</div>
+  </div>
+
+  <table class="status-table">
+    <thead>
+      <tr>
+        <th>Document / Artefact</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Rishabhresearch.md<div class="desc">OAN-specific product research, architecture decisions, RBAC, accounting model, module structure</div></td>
+        <td><span class="pill done">Done</span></td>
+        <td>1,712-line doc. Stack decided. 29 open questions for OAN listed.</td>
+      </tr>
+      <tr>
+        <td>Rishabhwireframes.html<div class="desc">Role-based user stories + wireframes for demo slice (11 screens)</div></td>
+        <td><span class="pill done">Done</span></td>
+        <td>Demo, Next, Later chips on every story. Desktop + mobile wireframes for all 11 screens.</td>
+      </tr>
+      <tr>
+        <td>GymOS_ERP_v2_Part1.html<div class="desc">Product vision, roles, modules, FR-001–100, US-001–070</div></td>
+        <td><span class="pill partial">Partial</span></td>
+        <td>FR rows are boilerplate placeholders — need real requirement text.</td>
+      </tr>
+      <tr>
+        <td>GymOS_ERP_v2_Part2.html<div class="desc">IA, navigation, business rules, FR-101–200, US-071–140</div></td>
+        <td><span class="pill partial">Partial</span></td>
+        <td>BR rows are copy-pasted placeholders. FR rows only partially real.</td>
+      </tr>
+      <tr>
+        <td>GymOS_ERP_v2_Part3.html<div class="desc">User flows, mobile wireframes, PostgreSQL domain model</div></td>
+        <td><span class="pill partial">Partial</span></td>
+        <td>Generated content — needs OAN-specific database schema.</td>
+      </tr>
+      <tr>
+        <td>GymOS_ERP_v2_Part4–6.html<div class="desc">Non-functional requirements, API spec, integrations</div></td>
+        <td><span class="pill partial">Partial</span></td>
+        <td>Generic structure, not yet populated with real specs.</td>
+      </tr>
+      <tr>
+        <td>GymOS_ERP_v2_Part7.html<div class="desc">Desktop UX specification + high-level wireframes (20 screens)</div></td>
+        <td><span class="pill partial">Partial</span></td>
+        <td>Screen inventory complete. All wireframes use identical placeholder layout — not differentiated per screen.</td>
+      </tr>
+      <tr>
+        <td>GymOS_ERP_v2_Part8–10.html<div class="desc">Mobile UX, AI/automation flows, deployment spec</div></td>
+        <td><span class="pill partial">Partial</span></td>
+        <td>Structure only, content needs fleshing out from research findings.</td>
+      </tr>
+      <tr>
+        <td>Database schema SQL<div class="desc">CREATE TABLE statements for all operational tables</div></td>
+        <td><span class="pill notyet">Not Yet</span></td>
+        <td>Schema decisions documented in research. SQL not written yet.</td>
+      </tr>
+      <tr>
+        <td>Monorepo setup<div class="desc">React+TS, Tauri, Expo, Node API scaffolding</div></td>
+        <td><span class="pill notyet">Not Yet</span></td>
+        <td>Stack decided (see §8 of research). Code not started.</td>
+      </tr>
+      <tr>
+        <td>OAN answers to 29 open questions<div class="desc">Plan prices, GSTIN, branch count, discount caps, etc.</div></td>
+        <td><span class="pill notyet">Not Yet</span></td>
+        <td>Blocking for seed data and billing logic. These must come from OAN before building.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ SECTION 2: DEMO SLICE ══ -->
+<section id="demo-slice">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>Demo Slice — 7 Modules</h2>
+  </div>
+
+  <div class="call">
+    <h4>What the demo must prove</h4>
+    <strong>Two things at once:</strong> it solves OAN's revenue leak (expired members still training, renewals missed, cash unreconciled) — and the same product genuinely runs as a website, a <code style="font-family:monospace;background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px">.exe</code>, and a phone app. Every included feature works end-to-end against a real database —no mock screens.
+  </div>
+
+  <div class="module-grid">
+    <!-- Members -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>1. Members</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">Phone-first member list, add/edit, full member detail with history.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>Member list with phone-first search</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Add / edit member form</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Member detail (profile, membership, payments, attendance, progress)</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Role-scoped view (branch → assigned → self)</span></div>
+      </div>
+    </div>
+
+    <!-- Plans & Memberships -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>2. Plans & Memberships</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">Plan builder, assign to member, auto expiry, status derivation.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>Plan creation (name, duration, price, GST)</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Assign plan to member</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Auto expiry date calculation</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Status: Active / Expiring / Expired</span></div>
+      </div>
+    </div>
+
+    <!-- Check-in -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>3. Check-in ← hero screen</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">QR + phone lookup, big colour verdict, live "in the gym now" count.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>QR scan (mobile camera)</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Phone number lookup</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Green / Amber / Red verdict block</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Live "who's in the gym" count + list</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Sub-2-second response time</span></div>
+      </div>
+    </div>
+
+    <!-- Payments -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>4. Payments</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">Collect payment, partial pay + pending balance, GST invoice, WhatsApp receipt.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>Collect UPI / cash payment</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Partial payment + record pending balance</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>GST-compliant invoice generation</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>WhatsApp receipt via wa.me link</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Discount cap by role</span></div>
+      </div>
+    </div>
+
+    <!-- Equipment -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>5. Equipment</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">Asset register with per-branch counts, condition flag, service dates.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>Asset list (Level 1 aggregate, Level 2 per branch)</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Condition: Working / Needs service / Out of order</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Service log + next-service-due date</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Front desk "report fault" action</span></div>
+      </div>
+    </div>
+
+    <!-- Accounts -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>6. Accounts</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">Expense entry per branch, branch-wise P&amp;L, day book, cash/accrual toggle.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>Expense recording per branch</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Branch-wise P&L</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Day book (collection log by mode)</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Cash ↔ Accrual toggle</span></div>
+      </div>
+    </div>
+
+    <!-- Member Progress -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>7. Member Progress</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">Measurements over time, progress chart, printable branded progress report.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>Measurement log (weight, body fat, circumferences)</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Progress chart over time</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Printable branded progress report</span></div>
+        <div class="feature-row"><div class="dot later"></div><span>Before/after photos (with consent) — later</span></div>
+      </div>
+    </div>
+
+    <!-- Owner Dashboard -->
+    <div class="module-card">
+      <div class="mc-top">
+        <h3>+ Owner Dashboard (thin layer)</h3>
+        <span class="pill notyet">Not Started</span>
+      </div>
+      <p class="mc-desc">Today's collection, check-ins, expiring count — six numbers, branch switcher.</p>
+      <div class="features">
+        <div class="feature-row"><div class="dot notyet"></div><span>6 KPI numbers above the fold</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Branch switcher (All / Branch A / Branch B)</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Branch comparison table</span></div>
+        <div class="feature-row"><div class="dot notyet"></div><span>Needs attention panel (expiring, broken machines, absent)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="call">
+    <h4>Multi-branch in the demo</h4>
+    <strong>Two seeded branches.</strong> Seed data: ~50 OAN-realistic members across 8 programs, backdated check-ins and payments, deliberately including expiring-soon / expired / partial-payment cases. 3–4 months of expenses per branch with <strong>different profitability</strong> — so the branch comparison says something real.
+  </div>
+</section>
+
+<!-- ══ SECTION 3: STACK ══ -->
+<section id="stack">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>Tech Stack — Decided</h2>
+  </div>
+
+  <div class="stack-grid">
+    <div class="stack-card">
+      <h4>Frontend / Apps</h4>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>React + TypeScript</strong><span class="si-note">web shell</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Vite</strong><span class="si-note">dev server + bundler</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Tauri 2</strong><span class="si-note">.exe, ~5 MB vs Electron's 100 MB</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Expo / React Native</strong><span class="si-note">iOS + Android</span></div>
+      <div class="stack-item"><div class="si-dot pending"></div><strong>packages/ui</strong><span class="si-note">shared design tokens — not built</span></div>
+    </div>
+    <div class="stack-card">
+      <h4>Backend</h4>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Node + TypeScript</strong><span class="si-note">API server</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Fastify</strong><span class="si-note">framework</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>PostgreSQL</strong><span class="si-note">primary database</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Phone + OTP auth</strong><span class="si-note">no email login</span></div>
+      <div class="stack-item"><div class="si-dot pending"></div><strong>Offline-tolerant check-in</strong><span class="si-note">queue locally, sync later — not built</span></div>
+    </div>
+    <div class="stack-card">
+      <h4>Shared Core Package</h4>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>packages/core</strong><span class="si-note">all business logic lives here</span></div>
+      <div class="stack-item"><div class="si-dot pending"></div><strong>Zod validation schemas</strong><span class="si-note">not written</span></div>
+      <div class="stack-item"><div class="si-dot pending"></div><strong>can(user, permission, resource)</strong><span class="si-note">RBAC helper — not written</span></div>
+      <div class="stack-item"><div class="si-dot pending"></div><strong>Expiry/status derivation</strong><span class="si-note">logic not written</span></div>
+      <div class="stack-item"><div class="si-dot pending"></div><strong>GST split calculation</strong><span class="si-note">not written</span></div>
+    </div>
+    <div class="stack-card">
+      <h4>Schema Rules — Decided</h4>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>branch_id on every table</strong><span class="si-note">non-negotiable from day 1</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Money as integer paise</strong><span class="si-note">never floats</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Payments are append-only</strong><span class="si-note">immutable ledger rows</span></div>
+      <div class="stack-item"><div class="si-dot decided"></div><strong>Plan price snapshots</strong><span class="si-note">historical invoices don't change</span></div>
+      <div class="stack-item"><div class="si-dot pending"></div><strong>SQL CREATE TABLE scripts</strong><span class="si-note">not written yet</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 4: BLOCKERS ══ -->
+<section id="blockers">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>Blockers </h2>
+  </div>
+
+  <table class="status-table">
+    <thead>
+      <tr>
+        <th>Blocker</th>
+        <th>Why it blocks</th>
+        <th>Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>OAN plan prices + durations<div class="desc">Q2 of the open questions list</div></td>
+        <td>Needed for seed data and plan master. Every demo invoice is wrong without this.</td>
+        <td><span class="pill partial">Awaiting OAN</span></td>
+      </tr>
+      <tr>
+        <td>OAN GSTIN + GST-inclusive vs exclusive pricing<div class="desc">Q3 + Q20</div></td>
+        <td>Off-by-18% on every invoice if wrong. Cannot generate mock invoices.</td>
+        <td><span class="pill partial">Awaiting OAN</span></td>
+      </tr>
+      <tr>
+        <td>Home branch vs all-access membership<div class="desc">Q10 — changes membership schema</div></td>
+        <td>Schema decision. If branch_access is a column on the plan, it must be set before the first migration.</td>
+        <td><span class="pill partial">Awaiting OAN</span></td>
+      </tr>
+      <tr>
+        <td>Who can extend expiry without payment<div class="desc">Q15 — revenue leak permission</div></td>
+        <td>The single permission most likely to be abused. Must be confirmed before RBAC is coded.</td>
+        <td><span class="pill partial">Awaiting OAN</span></td>
+      </tr>
+      <tr>
+        <td>Front-desk discount cap<div class="desc">Q14 — currently assumed 10%</div></td>
+        <td>Coded in RBAC permission matrix. Wrong value → revenue leak on every discounted sale.</td>
+        <td><span class="pill partial">Assumed 10%</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ SECTION 5: WHAT'S NOT IN DEMO ══ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>Explicitly Excluded from Demo (Name as Roadmap)</h2>
+  </div>
+
+  <table class="status-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Phase</th>
+        <th>Why deferred</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lead / Enquiry CRM</td>
+        <td><span class="pill later">Tier B – Next</span></td>
+        <td>Walk-in enquiry, pipeline, trial booking. Real but not the core revenue leak.</td>
+      </tr>
+      <tr>
+        <td>Class scheduling + booking</td>
+        <td><span class="pill later">Tier B – Next</span></td>
+        <td>Needed for OAN's Aerobics program. Complex enough to be a separate phase.</td>
+      </tr>
+      <tr>
+        <td>PT session packs</td>
+        <td><span class="pill later">Tier B – Next</span></td>
+        <td>Sessions bought / used / remaining, trainer commission. Deferred from demo.</td>
+      </tr>
+      <tr>
+        <td>Diet & workout plan assignment</td>
+        <td><span class="pill later">Tier B – Next</span></td>
+        <td>Exercise library → program templates → assigned program → session log.</td>
+      </tr>
+      <tr>
+        <td>Staff management beyond basic roles</td>
+        <td><span class="pill later">Tier B – Next</span></td>
+        <td>Shift roster, salary, commission. RBAC is in demo — HR module is not.</td>
+      </tr>
+      <tr>
+        <td>POS / supplement inventory</td>
+        <td><span class="pill later">Tier C – Later</span></td>
+        <td>Only if OAN sells supplements. Not confirmed yet.</td>
+      </tr>
+      <tr>
+        <td>Biometric hardware integration</td>
+        <td><span class="pill later">Tier C – Later</span></td>
+        <td>ZKTeco / eSSL. Needs physical device. QR + phone covers the demo.</td>
+      </tr>
+      <tr>
+        <td>Real payment gateway (Razorpay/Cashfree)</td>
+        <td><span class="pill later">Tier C – Later</span></td>
+        <td>wa.me deep-link receipt in demo. Real gateway = post-demo.</td>
+      </tr>
+      <tr>
+        <td>WhatsApp Business API</td>
+        <td><span class="pill later">Tier C – Later</span></td>
+        <td>Paid + template approval required. Demo uses click-to-chat links.</td>
+      </tr>
+      <tr>
+        <td>AI churn prediction / AI diet</td>
+        <td><span class="pill later">Tier C – Later</span></td>
+        <td>Needs 1+ year of real data. Ship boring reliable slice first.</td>
+      </tr>
+      <tr>
+        <td>Lockers, RFID, eNACH, Tally export</td>
+        <td><span class="pill later">Tier C – Later</span></td>
+        <td>Real features; not for the demo.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ SECTION 6: NEXT STEPS ══ -->
+<section id="next">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>Next Steps — In Order</h2>
+  </div>
+
+  <div class="next-list">
+    <div class="next-item">
+      <div class="ni-num">01</div>
+      <div>
+        <strong>Get the 5 blocking answers from OAN</strong>
+        <span>Plan prices, GSTIN, branch access model, discount cap, who can extend expiry. These 5 answers unblock seed data and the RBAC code.</span>
+      </div>
+    </div>
+    <div class="next-item">
+      <div class="ni-num">02</div>
+      <div>
+        <strong>Write the database schema (Postgres SQL)</strong>
+        <span>CREATE TABLE for: branches, members, plans, memberships, checkins, payments, invoices, equipment, expenses, measurements, staff, roles. branch_id as FK on every operational table.</span>
+      </div>
+    </div>
+    <div class="next-item">
+      <div class="ni-num">03</div>
+      <div>
+        <strong>Scaffold the monorepo</strong>
+        <span>pnpm workspace: apps/web (React+Vite), apps/desktop (Tauri), apps/mobile (Expo), apps/api (Node+Fastify), packages/core, packages/ui.</span>
+      </div>
+    </div>
+    <div class="next-item">
+      <div class="ni-num">04</div>
+      <div>
+        <strong>Build packages/core first</strong>
+        <span>Expiry calculation, GST split, status derivation (active/expiring/expired), the can(user, permission, resource) RBAC helper, Zod schemas. This is the rule that makes all three shells right at once.</span>
+      </div>
+    </div>
+    <div class="next-item">
+      <div class="ni-num">05</div>
+      <div>
+        <strong>Seed data before any UI</strong>
+        <span>~50 realistic OAN members, 8 programs, 2 branches with different profitability, backdated check-ins, various payment states. The demo only lands if the data looks alive.</span>
+      </div>
+    </div>
+    <div class="next-item">
+      <div class="ni-num">06</div>
+      <div>
+        <strong>Build Check-in first (hero moment)</strong>
+        <span>The screen OAN will use 200+ times a day. QR scan + phone lookup → green/amber/red verdict. This is the demo moment. Build it until it's sub-2-second and works on all three shells.</span>
+      </div>
+    </div>
+    <div class="next-item">
+      <div class="ni-num">07</div>
+      <div>
+        <strong>Then: Members → Payments → Dashboard</strong>
+        <span>In that order. Accounts (P&L) and Equipment (roll-up pattern) are the last two — they're the most impressive to owners but depend on Payments being complete.</span>
+      </div>
+    </div>
+    <div class="next-item">
+      <div class="ni-num">08</div>
+      <div>
+        <strong>RBAC demo moment: 3 logins live</strong>
+        <span>Admin (all branches + revenue), Branch Manager (one branch + revenue), Front Desk (same branch, money hidden). Switch live during the demo. This is a selling point, not a technical detail.</span>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- /wrap -->
+
+<footer>
+  <strong style="color:var(--text)">GymOS ERP</strong> — JSP Coders → OAN Fitness &nbsp;·&nbsp; Status: Research complete, implementation not started &nbsp;·&nbsp; 29 Jul 2026
+</footer>
+
+<script>
+  // Initialise headroom.js on the nav
+  var nav = document.getElementById('main-nav');
+  var headroom = new Headroom(nav, {
+    offset: 80,
+    tolerance: { up: 5, down: 0 },
+    classes: {
+      initial: 'headroom',
+      pinned: 'headroom--pinned',
+      unpinned: 'headroom--unpinned',
+      top: 'headroom--top',
+      notTop: 'headroom--not-top',
+      bottom: 'headroom--bottom',
+      notBottom: 'headroom--not-bottom',
+    }
+  });
+  headroom.init();
+</script>
+</body>
+</html>

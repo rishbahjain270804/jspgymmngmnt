@@ -1,326 +1,911 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GymOS ERP v2 - Product Specification (Part 1)</title>
-<style>
-body{font-family:Inter,Arial,sans-serif;margin:0;background:#f5f7fb;color:#222;line-height:1.6}
-header{background:#1b2a52;color:#fff;padding:50px}
-nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #ddd;padding:10px 20px}
-nav a{margin-right:15px;color:#1b2a52;text-decoration:none;font-weight:bold}
-main{max-width:1100px;margin:auto;padding:30px}
-section{margin-bottom:60px}
-.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin:15px 0}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #ddd;padding:8px}
-th{background:#eef3ff}
-.code{background:#111;color:#eee;padding:12px;border-radius:8px;overflow:auto}
-h1,h2,h3{color:#1b2a52}
-small{color:#666}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymOS ERP v2 - Product Specification (Part 1)</title>
+    <style>
+        body {
+            font-family: Inter, Arial, sans-serif;
+            margin: 0;
+            background: #f5f7fb;
+            color: #222;
+            line-height: 1.6
+        }
+
+        header {
+            background: #1b2a52;
+            color: #fff;
+            padding: 50px
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 20px;
+            z-index: 100;
+            transition: transform 0.3s ease, box-shadow 0.3s ease
+        }
+
+        nav.headroom--unpinned {
+            transform: translateY(-100%)
+        }
+
+        nav.headroom--pinned {
+            transform: translateY(0)
+        }
+
+        nav.headroom--not-top {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1)
+        }
+
+        main {
+            margin-top: 44px
+        }
+
+        nav a {
+            margin-right: 15px;
+            color: #1b2a52;
+            text-decoration: none;
+            font-weight: bold
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px
+        }
+
+        section {
+            margin-bottom: 60px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px
+        }
+
+        th {
+            background: #eef3ff
+        }
+
+        .code {
+            background: #111;
+            color: #eee;
+            padding: 12px;
+            border-radius: 8px;
+            overflow: auto
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #1b2a52
+        }
+
+        small {
+            color: #666
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js"></script>
 </head>
+
 <body>
-<header>
-<h1>GymOS ERP v2</h1>
-<p>Enterprise Product Specification – Part 1</p>
-<p>AI Powered Fitness Business Operating System</p>
-</header>
+    <header>
+        <h1>GymOS ERP v2</h1>
+        <p>Enterprise Product Specification – Part 1</p>
+        <p>AI Powered Fitness Business Operating System</p>
+    </header>
 
-<nav>
-<a href="#vision">Vision</a>
-<a href="#goals">Goals</a>
-<a href="#roles">Roles</a>
-<a href="#modules">Modules</a>
-<a href="#fr">Functional Requirements</a>
-<a href="#stories">User Stories</a>
-</nav>
+    <nav>
+        <a href="#vision">Vision</a>
+        <a href="#goals">Goals</a>
+        <a href="#roles">Roles</a>
+        <a href="#modules">Modules</a>
+        <a href="#fr">Functional Requirements</a>
+        <a href="#stories">User Stories</a>
+    </nav>
 
-<main>
+    <main>
 
-<section id="vision">
-<h2>1. Product Vision</h2>
-<div class="card">
-<p>Build India's most complete AI-first Gym Operating System instead of a traditional gym management application.</p>
-<ul>
-<li>Multi-tenant SaaS</li>
-<li>Mobile-first</li>
-<li>AI-first workflows</li>
-<li>GST + UPI + WhatsApp native</li>
-<li>Cloud architecture</li>
-<li>Enterprise ready</li>
-</ul>
-</div>
-</section>
+        <section id="vision">
+            <h2>1. Product Vision</h2>
+            <div class="card">
+                <p>Build India's most complete AI-first Gym Operating System instead of a traditional gym management
+                    application.</p>
+                <ul>
+                    <li>Multi-tenant SaaS</li>
+                    <li>Mobile-first</li>
+                    <li>AI-first workflows</li>
+                    <li>GST + UPI + WhatsApp native</li>
+                    <li>Cloud architecture</li>
+                    <li>Enterprise ready</li>
+                </ul>
+            </div>
+        </section>
 
-<section id="goals">
-<h2>2. Product Goals</h2>
-<table>
-<tr><th>Goal</th><th>Description</th></tr>
-<tr><td>Reduce Admin Work</td><td>Automate attendance, renewals and billing.</td></tr>
-<tr><td>Increase Revenue</td><td>CRM, renewals and PT tracking.</td></tr>
-<tr><td>Improve Retention</td><td>AI inactivity detection and follow-up.</td></tr>
-<tr><td>Scale</td><td>Support franchises and chains.</td></tr>
-</table>
-</section>
+        <section id="goals">
+            <h2>2. Product Goals</h2>
+            <table>
+                <tr>
+                    <th>Goal</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Reduce Admin Work</td>
+                    <td>Automate attendance, renewals and billing.</td>
+                </tr>
+                <tr>
+                    <td>Increase Revenue</td>
+                    <td>CRM, renewals and PT tracking.</td>
+                </tr>
+                <tr>
+                    <td>Improve Retention</td>
+                    <td>AI inactivity detection and follow-up.</td>
+                </tr>
+                <tr>
+                    <td>Scale</td>
+                    <td>Support franchises and chains.</td>
+                </tr>
+            </table>
+        </section>
 
-<section id="roles">
-<h2>3. Roles</h2>
-<div class="card">
-<ol>
-<li>Super Admin</li>
-<li>Organization Owner</li>
-<li>Branch Manager</li>
-<li>Reception</li>
-<li>Trainer</li>
-<li>Nutritionist</li>
-<li>Accountant</li>
-<li>Member</li>
-</ol>
-</div>
-</section>
+        <section id="roles">
+            <h2>3. Roles</h2>
+            <div class="card">
+                <ol>
+                    <li>Super Admin</li>
+                    <li>Organization Owner</li>
+                    <li>Branch Manager</li>
+                    <li>Reception</li>
+                    <li>Trainer</li>
+                    <li>Nutritionist</li>
+                    <li>Accountant</li>
+                    <li>Member</li>
+                </ol>
+            </div>
+        </section>
 
-<section id="modules">
-<h2>4. Enterprise Modules</h2>
-<div class="card">
-<ol>
-<li>Dashboard</li>
-<li>CRM</li>
-<li>Members</li>
-<li>Attendance</li>
-<li>Memberships</li>
-<li>Billing</li>
-<li>Workout</li>
-<li>Diet</li>
-<li>PT</li>
-<li>Inventory</li>
-<li>POS</li>
-<li>Finance</li>
-<li>Marketing</li>
-<li>Automation</li>
-<li>AI Assistant</li>
-<li>Analytics</li>
-<li>Settings</li>
-</ol>
-</div>
-</section>
+        <section id="modules">
+            <h2>4. Enterprise Modules</h2>
+            <div class="card">
+                <ol>
+                    <li>Dashboard</li>
+                    <li>CRM</li>
+                    <li>Members</li>
+                    <li>Attendance</li>
+                    <li>Memberships</li>
+                    <li>Billing</li>
+                    <li>Workout</li>
+                    <li>Diet</li>
+                    <li>PT</li>
+                    <li>Inventory</li>
+                    <li>POS</li>
+                    <li>Finance</li>
+                    <li>Marketing</li>
+                    <li>Automation</li>
+                    <li>AI Assistant</li>
+                    <li>Analytics</li>
+                    <li>Settings</li>
+                </ol>
+            </div>
+        </section>
 
-<section id="fr">
-<h2>5. Functional Requirements (FR-001 to FR-100)</h2>
-<table>
-<tr><th>ID</th><th>Requirement</th></tr>
-<tr><td>FR-001</td><td>System shall support enterprise feature #1. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-002</td><td>System shall support enterprise feature #2. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-003</td><td>System shall support enterprise feature #3. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-004</td><td>System shall support enterprise feature #4. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-005</td><td>System shall support enterprise feature #5. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-006</td><td>System shall support enterprise feature #6. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-007</td><td>System shall support enterprise feature #7. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-008</td><td>System shall support enterprise feature #8. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-009</td><td>System shall support enterprise feature #9. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-010</td><td>System shall support enterprise feature #10. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-011</td><td>System shall support enterprise feature #11. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-012</td><td>System shall support enterprise feature #12. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-013</td><td>System shall support enterprise feature #13. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-014</td><td>System shall support enterprise feature #14. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-015</td><td>System shall support enterprise feature #15. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-016</td><td>System shall support enterprise feature #16. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-017</td><td>System shall support enterprise feature #17. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-018</td><td>System shall support enterprise feature #18. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-019</td><td>System shall support enterprise feature #19. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-020</td><td>System shall support enterprise feature #20. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-021</td><td>System shall support enterprise feature #21. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-022</td><td>System shall support enterprise feature #22. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-023</td><td>System shall support enterprise feature #23. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-024</td><td>System shall support enterprise feature #24. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-025</td><td>System shall support enterprise feature #25. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-026</td><td>System shall support enterprise feature #26. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-027</td><td>System shall support enterprise feature #27. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-028</td><td>System shall support enterprise feature #28. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-029</td><td>System shall support enterprise feature #29. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-030</td><td>System shall support enterprise feature #30. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-031</td><td>System shall support enterprise feature #31. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-032</td><td>System shall support enterprise feature #32. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-033</td><td>System shall support enterprise feature #33. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-034</td><td>System shall support enterprise feature #34. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-035</td><td>System shall support enterprise feature #35. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-036</td><td>System shall support enterprise feature #36. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-037</td><td>System shall support enterprise feature #37. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-038</td><td>System shall support enterprise feature #38. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-039</td><td>System shall support enterprise feature #39. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-040</td><td>System shall support enterprise feature #40. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-041</td><td>System shall support enterprise feature #41. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-042</td><td>System shall support enterprise feature #42. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-043</td><td>System shall support enterprise feature #43. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-044</td><td>System shall support enterprise feature #44. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-045</td><td>System shall support enterprise feature #45. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-046</td><td>System shall support enterprise feature #46. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-047</td><td>System shall support enterprise feature #47. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-048</td><td>System shall support enterprise feature #48. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-049</td><td>System shall support enterprise feature #49. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-050</td><td>System shall support enterprise feature #50. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-051</td><td>System shall support enterprise feature #51. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-052</td><td>System shall support enterprise feature #52. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-053</td><td>System shall support enterprise feature #53. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-054</td><td>System shall support enterprise feature #54. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-055</td><td>System shall support enterprise feature #55. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-056</td><td>System shall support enterprise feature #56. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-057</td><td>System shall support enterprise feature #57. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-058</td><td>System shall support enterprise feature #58. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-059</td><td>System shall support enterprise feature #59. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-060</td><td>System shall support enterprise feature #60. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-061</td><td>System shall support enterprise feature #61. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-062</td><td>System shall support enterprise feature #62. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-063</td><td>System shall support enterprise feature #63. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-064</td><td>System shall support enterprise feature #64. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-065</td><td>System shall support enterprise feature #65. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-066</td><td>System shall support enterprise feature #66. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-067</td><td>System shall support enterprise feature #67. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-068</td><td>System shall support enterprise feature #68. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-069</td><td>System shall support enterprise feature #69. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-070</td><td>System shall support enterprise feature #70. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-071</td><td>System shall support enterprise feature #71. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-072</td><td>System shall support enterprise feature #72. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-073</td><td>System shall support enterprise feature #73. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-074</td><td>System shall support enterprise feature #74. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-075</td><td>System shall support enterprise feature #75. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-076</td><td>System shall support enterprise feature #76. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-077</td><td>System shall support enterprise feature #77. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-078</td><td>System shall support enterprise feature #78. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-079</td><td>System shall support enterprise feature #79. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-080</td><td>System shall support enterprise feature #80. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-081</td><td>System shall support enterprise feature #81. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-082</td><td>System shall support enterprise feature #82. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-083</td><td>System shall support enterprise feature #83. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-084</td><td>System shall support enterprise feature #84. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-085</td><td>System shall support enterprise feature #85. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-086</td><td>System shall support enterprise feature #86. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-087</td><td>System shall support enterprise feature #87. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-088</td><td>System shall support enterprise feature #88. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-089</td><td>System shall support enterprise feature #89. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-090</td><td>System shall support enterprise feature #90. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-091</td><td>System shall support enterprise feature #91. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-092</td><td>System shall support enterprise feature #92. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-093</td><td>System shall support enterprise feature #93. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-094</td><td>System shall support enterprise feature #94. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-095</td><td>System shall support enterprise feature #95. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-096</td><td>System shall support enterprise feature #96. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-097</td><td>System shall support enterprise feature #97. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-098</td><td>System shall support enterprise feature #98. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-099</td><td>System shall support enterprise feature #99. (Replace with detailed requirement during later iterations.)</td></tr>
-<tr><td>FR-100</td><td>System shall support enterprise feature #100. (Replace with detailed requirement during later iterations.)</td></tr>
-</table>
-</section>
+        <section id="fr">
+            <h2>5. Functional Requirements (FR-001 to FR-100)</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Requirement</th>
+                </tr>
+                <tr>
+                    <td>FR-001</td>
+                    <td>System shall support enterprise feature #1. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-002</td>
+                    <td>System shall support enterprise feature #2. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-003</td>
+                    <td>System shall support enterprise feature #3. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-004</td>
+                    <td>System shall support enterprise feature #4. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-005</td>
+                    <td>System shall support enterprise feature #5. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-006</td>
+                    <td>System shall support enterprise feature #6. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-007</td>
+                    <td>System shall support enterprise feature #7. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-008</td>
+                    <td>System shall support enterprise feature #8. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-009</td>
+                    <td>System shall support enterprise feature #9. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-010</td>
+                    <td>System shall support enterprise feature #10. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-011</td>
+                    <td>System shall support enterprise feature #11. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-012</td>
+                    <td>System shall support enterprise feature #12. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-013</td>
+                    <td>System shall support enterprise feature #13. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-014</td>
+                    <td>System shall support enterprise feature #14. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-015</td>
+                    <td>System shall support enterprise feature #15. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-016</td>
+                    <td>System shall support enterprise feature #16. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-017</td>
+                    <td>System shall support enterprise feature #17. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-018</td>
+                    <td>System shall support enterprise feature #18. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-019</td>
+                    <td>System shall support enterprise feature #19. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-020</td>
+                    <td>System shall support enterprise feature #20. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-021</td>
+                    <td>System shall support enterprise feature #21. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-022</td>
+                    <td>System shall support enterprise feature #22. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-023</td>
+                    <td>System shall support enterprise feature #23. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-024</td>
+                    <td>System shall support enterprise feature #24. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-025</td>
+                    <td>System shall support enterprise feature #25. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-026</td>
+                    <td>System shall support enterprise feature #26. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-027</td>
+                    <td>System shall support enterprise feature #27. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-028</td>
+                    <td>System shall support enterprise feature #28. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-029</td>
+                    <td>System shall support enterprise feature #29. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-030</td>
+                    <td>System shall support enterprise feature #30. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-031</td>
+                    <td>System shall support enterprise feature #31. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-032</td>
+                    <td>System shall support enterprise feature #32. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-033</td>
+                    <td>System shall support enterprise feature #33. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-034</td>
+                    <td>System shall support enterprise feature #34. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-035</td>
+                    <td>System shall support enterprise feature #35. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-036</td>
+                    <td>System shall support enterprise feature #36. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-037</td>
+                    <td>System shall support enterprise feature #37. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-038</td>
+                    <td>System shall support enterprise feature #38. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-039</td>
+                    <td>System shall support enterprise feature #39. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-040</td>
+                    <td>System shall support enterprise feature #40. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-041</td>
+                    <td>System shall support enterprise feature #41. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-042</td>
+                    <td>System shall support enterprise feature #42. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-043</td>
+                    <td>System shall support enterprise feature #43. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-044</td>
+                    <td>System shall support enterprise feature #44. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-045</td>
+                    <td>System shall support enterprise feature #45. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-046</td>
+                    <td>System shall support enterprise feature #46. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-047</td>
+                    <td>System shall support enterprise feature #47. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-048</td>
+                    <td>System shall support enterprise feature #48. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-049</td>
+                    <td>System shall support enterprise feature #49. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-050</td>
+                    <td>System shall support enterprise feature #50. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-051</td>
+                    <td>System shall support enterprise feature #51. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-052</td>
+                    <td>System shall support enterprise feature #52. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-053</td>
+                    <td>System shall support enterprise feature #53. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-054</td>
+                    <td>System shall support enterprise feature #54. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-055</td>
+                    <td>System shall support enterprise feature #55. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-056</td>
+                    <td>System shall support enterprise feature #56. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-057</td>
+                    <td>System shall support enterprise feature #57. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-058</td>
+                    <td>System shall support enterprise feature #58. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-059</td>
+                    <td>System shall support enterprise feature #59. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-060</td>
+                    <td>System shall support enterprise feature #60. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-061</td>
+                    <td>System shall support enterprise feature #61. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-062</td>
+                    <td>System shall support enterprise feature #62. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-063</td>
+                    <td>System shall support enterprise feature #63. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-064</td>
+                    <td>System shall support enterprise feature #64. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-065</td>
+                    <td>System shall support enterprise feature #65. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-066</td>
+                    <td>System shall support enterprise feature #66. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-067</td>
+                    <td>System shall support enterprise feature #67. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-068</td>
+                    <td>System shall support enterprise feature #68. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-069</td>
+                    <td>System shall support enterprise feature #69. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-070</td>
+                    <td>System shall support enterprise feature #70. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-071</td>
+                    <td>System shall support enterprise feature #71. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-072</td>
+                    <td>System shall support enterprise feature #72. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-073</td>
+                    <td>System shall support enterprise feature #73. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-074</td>
+                    <td>System shall support enterprise feature #74. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-075</td>
+                    <td>System shall support enterprise feature #75. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-076</td>
+                    <td>System shall support enterprise feature #76. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-077</td>
+                    <td>System shall support enterprise feature #77. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-078</td>
+                    <td>System shall support enterprise feature #78. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-079</td>
+                    <td>System shall support enterprise feature #79. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-080</td>
+                    <td>System shall support enterprise feature #80. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-081</td>
+                    <td>System shall support enterprise feature #81. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-082</td>
+                    <td>System shall support enterprise feature #82. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-083</td>
+                    <td>System shall support enterprise feature #83. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-084</td>
+                    <td>System shall support enterprise feature #84. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-085</td>
+                    <td>System shall support enterprise feature #85. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-086</td>
+                    <td>System shall support enterprise feature #86. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-087</td>
+                    <td>System shall support enterprise feature #87. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-088</td>
+                    <td>System shall support enterprise feature #88. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-089</td>
+                    <td>System shall support enterprise feature #89. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-090</td>
+                    <td>System shall support enterprise feature #90. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-091</td>
+                    <td>System shall support enterprise feature #91. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-092</td>
+                    <td>System shall support enterprise feature #92. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-093</td>
+                    <td>System shall support enterprise feature #93. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-094</td>
+                    <td>System shall support enterprise feature #94. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-095</td>
+                    <td>System shall support enterprise feature #95. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-096</td>
+                    <td>System shall support enterprise feature #96. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-097</td>
+                    <td>System shall support enterprise feature #97. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-098</td>
+                    <td>System shall support enterprise feature #98. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-099</td>
+                    <td>System shall support enterprise feature #99. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+                <tr>
+                    <td>FR-100</td>
+                    <td>System shall support enterprise feature #100. (Replace with detailed requirement during later
+                        iterations.)</td>
+                </tr>
+            </table>
+        </section>
 
-<section id="stories">
-<h2>6. User Stories (US-001 to US-070)</h2>
-<div class="card"><strong>US-001</strong><br>As a user, I want capability #1 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-002</strong><br>As a user, I want capability #2 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-003</strong><br>As a user, I want capability #3 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-004</strong><br>As a user, I want capability #4 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-005</strong><br>As a user, I want capability #5 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-006</strong><br>As a user, I want capability #6 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-007</strong><br>As a user, I want capability #7 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-008</strong><br>As a user, I want capability #8 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-009</strong><br>As a user, I want capability #9 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-010</strong><br>As a user, I want capability #10 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-011</strong><br>As a user, I want capability #11 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-012</strong><br>As a user, I want capability #12 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-013</strong><br>As a user, I want capability #13 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-014</strong><br>As a user, I want capability #14 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-015</strong><br>As a user, I want capability #15 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-016</strong><br>As a user, I want capability #16 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-017</strong><br>As a user, I want capability #17 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-018</strong><br>As a user, I want capability #18 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-019</strong><br>As a user, I want capability #19 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-020</strong><br>As a user, I want capability #20 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-021</strong><br>As a user, I want capability #21 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-022</strong><br>As a user, I want capability #22 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-023</strong><br>As a user, I want capability #23 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-024</strong><br>As a user, I want capability #24 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-025</strong><br>As a user, I want capability #25 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-026</strong><br>As a user, I want capability #26 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-027</strong><br>As a user, I want capability #27 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-028</strong><br>As a user, I want capability #28 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-029</strong><br>As a user, I want capability #29 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-030</strong><br>As a user, I want capability #30 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-031</strong><br>As a user, I want capability #31 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-032</strong><br>As a user, I want capability #32 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-033</strong><br>As a user, I want capability #33 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-034</strong><br>As a user, I want capability #34 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-035</strong><br>As a user, I want capability #35 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-036</strong><br>As a user, I want capability #36 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-037</strong><br>As a user, I want capability #37 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-038</strong><br>As a user, I want capability #38 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-039</strong><br>As a user, I want capability #39 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-040</strong><br>As a user, I want capability #40 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-041</strong><br>As a user, I want capability #41 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-042</strong><br>As a user, I want capability #42 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-043</strong><br>As a user, I want capability #43 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-044</strong><br>As a user, I want capability #44 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-045</strong><br>As a user, I want capability #45 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-046</strong><br>As a user, I want capability #46 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-047</strong><br>As a user, I want capability #47 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-048</strong><br>As a user, I want capability #48 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-049</strong><br>As a user, I want capability #49 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-050</strong><br>As a user, I want capability #50 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-051</strong><br>As a user, I want capability #51 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-052</strong><br>As a user, I want capability #52 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-053</strong><br>As a user, I want capability #53 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-054</strong><br>As a user, I want capability #54 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-055</strong><br>As a user, I want capability #55 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-056</strong><br>As a user, I want capability #56 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-057</strong><br>As a user, I want capability #57 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-058</strong><br>As a user, I want capability #58 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-059</strong><br>As a user, I want capability #59 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-060</strong><br>As a user, I want capability #60 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-061</strong><br>As a user, I want capability #61 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-062</strong><br>As a user, I want capability #62 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-063</strong><br>As a user, I want capability #63 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-064</strong><br>As a user, I want capability #64 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-065</strong><br>As a user, I want capability #65 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-066</strong><br>As a user, I want capability #66 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-067</strong><br>As a user, I want capability #67 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-068</strong><br>As a user, I want capability #68 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-069</strong><br>As a user, I want capability #69 so that I can complete my workflow efficiently.</div>
-<div class="card"><strong>US-070</strong><br>As a user, I want capability #70 so that I can complete my workflow efficiently.</div>
+        <section id="stories">
+            <h2>6. User Stories (US-001 to US-070)</h2>
+            <div class="card"><strong>US-001</strong><br>As a user, I want capability #1 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-002</strong><br>As a user, I want capability #2 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-003</strong><br>As a user, I want capability #3 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-004</strong><br>As a user, I want capability #4 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-005</strong><br>As a user, I want capability #5 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-006</strong><br>As a user, I want capability #6 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-007</strong><br>As a user, I want capability #7 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-008</strong><br>As a user, I want capability #8 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-009</strong><br>As a user, I want capability #9 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-010</strong><br>As a user, I want capability #10 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-011</strong><br>As a user, I want capability #11 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-012</strong><br>As a user, I want capability #12 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-013</strong><br>As a user, I want capability #13 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-014</strong><br>As a user, I want capability #14 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-015</strong><br>As a user, I want capability #15 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-016</strong><br>As a user, I want capability #16 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-017</strong><br>As a user, I want capability #17 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-018</strong><br>As a user, I want capability #18 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-019</strong><br>As a user, I want capability #19 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-020</strong><br>As a user, I want capability #20 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-021</strong><br>As a user, I want capability #21 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-022</strong><br>As a user, I want capability #22 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-023</strong><br>As a user, I want capability #23 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-024</strong><br>As a user, I want capability #24 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-025</strong><br>As a user, I want capability #25 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-026</strong><br>As a user, I want capability #26 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-027</strong><br>As a user, I want capability #27 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-028</strong><br>As a user, I want capability #28 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-029</strong><br>As a user, I want capability #29 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-030</strong><br>As a user, I want capability #30 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-031</strong><br>As a user, I want capability #31 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-032</strong><br>As a user, I want capability #32 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-033</strong><br>As a user, I want capability #33 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-034</strong><br>As a user, I want capability #34 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-035</strong><br>As a user, I want capability #35 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-036</strong><br>As a user, I want capability #36 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-037</strong><br>As a user, I want capability #37 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-038</strong><br>As a user, I want capability #38 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-039</strong><br>As a user, I want capability #39 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-040</strong><br>As a user, I want capability #40 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-041</strong><br>As a user, I want capability #41 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-042</strong><br>As a user, I want capability #42 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-043</strong><br>As a user, I want capability #43 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-044</strong><br>As a user, I want capability #44 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-045</strong><br>As a user, I want capability #45 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-046</strong><br>As a user, I want capability #46 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-047</strong><br>As a user, I want capability #47 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-048</strong><br>As a user, I want capability #48 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-049</strong><br>As a user, I want capability #49 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-050</strong><br>As a user, I want capability #50 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-051</strong><br>As a user, I want capability #51 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-052</strong><br>As a user, I want capability #52 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-053</strong><br>As a user, I want capability #53 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-054</strong><br>As a user, I want capability #54 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-055</strong><br>As a user, I want capability #55 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-056</strong><br>As a user, I want capability #56 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-057</strong><br>As a user, I want capability #57 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-058</strong><br>As a user, I want capability #58 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-059</strong><br>As a user, I want capability #59 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-060</strong><br>As a user, I want capability #60 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-061</strong><br>As a user, I want capability #61 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-062</strong><br>As a user, I want capability #62 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-063</strong><br>As a user, I want capability #63 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-064</strong><br>As a user, I want capability #64 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-065</strong><br>As a user, I want capability #65 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-066</strong><br>As a user, I want capability #66 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-067</strong><br>As a user, I want capability #67 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-068</strong><br>As a user, I want capability #68 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-069</strong><br>As a user, I want capability #69 so that I can complete my
+                workflow efficiently.</div>
+            <div class="card"><strong>US-070</strong><br>As a user, I want capability #70 so that I can complete my
+                workflow efficiently.</div>
 
-<section>
-<h2>7. Architecture Principles</h2>
-<div class="card">
-<ul>
-<li>PostgreSQL</li>
-<li>Next.js Frontend</li>
-<li>NestJS Backend</li>
-<li>Redis Cache</li>
-<li>Supabase Auth</li>
-<li>S3 Object Storage</li>
-<li>Docker Deployment</li>
-<li>Kubernetes Ready</li>
-</ul>
-</div>
-</section>
+            <section>
+                <h2>7. Architecture Principles</h2>
+                <div class="card">
+                    <ul>
+                        <li>PostgreSQL</li>
+                        <li>Next.js Frontend</li>
+                        <li>NestJS Backend</li>
+                        <li>Redis Cache</li>
+                        <li>Supabase Auth</li>
+                        <li>S3 Object Storage</li>
+                        <li>Docker Deployment</li>
+                        <li>Kubernetes Ready</li>
+                    </ul>
+                </div>
+            </section>
 
-<section>
-<h2>8. Coming in Part 2</h2>
-<div class="card">
-<ul>
-<li>FR-101 to FR-200</li>
-<li>User Stories 71-140</li>
-<li>Desktop Wireframes</li>
-<li>Information Architecture</li>
-<li>Navigation Trees</li>
-<li>Business Rules</li>
-<li>Mermaid Diagrams</li>
-</ul>
-</div>
-</section>
+            <section>
+                <h2>8. Coming in Part 2</h2>
+                <div class="card">
+                    <ul>
+                        <li>FR-101 to FR-200</li>
+                        <li>User Stories 71-140</li>
+                        <li>Desktop Wireframes</li>
+                        <li>Information Architecture</li>
+                        <li>Navigation Trees</li>
+                        <li>Business Rules</li>
+                        <li>Mermaid Diagrams</li>
+                    </ul>
+                </div>
+            </section>
 
-<footer>
-<hr>
-<p><strong>GymOS ERP v2</strong> — Enterprise Specification Part 1</p>
-</footer>
+            <footer>
+                <hr>
+                <p><strong>GymOS ERP v2</strong> — Enterprise Specification Part 1</p>
+            </footer>
 
-</main>
+    </main>
 </body>
+<script>
+    var nav = document.querySelector('nav');
+    nav.id = 'site-nav';
+    var headroom = new Headroom(nav, { offset: 80, tolerance: { up: 5, down: 0 } });
+    headroom.init();
+</script>
+
 </html>

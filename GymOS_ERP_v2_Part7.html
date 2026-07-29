@@ -1,396 +1,852 @@
-<!DOCTYPE html><html><head><meta charset="utf-8">
-<title>GymOS ERP v2 - Part 7</title>
-<style>
-body{font-family:Arial,sans-serif;margin:0;background:#f5f7fb;color:#222}
-header{background:#0b2545;color:#fff;padding:40px}
-main{max-width:1300px;margin:auto;padding:28px}
-section{margin:42px 0}
-.card{background:#fff;border:1px solid #d9dfe8;border-radius:12px;padding:18px;margin:18px 0}
-.wf{border:2px solid #9aa8bf;border-radius:10px;background:#fff;font-family:monospace}
-.bar{background:#eef3ff;padding:10px;border-bottom:1px solid #cfd7e6;font-weight:bold}
-.row{display:flex}
-.side{width:180px;border-right:1px solid #d9dfe8;padding:10px;background:#f8fbff}
-.main{flex:1;padding:12px}
-.box{border:1px dashed #98a6bf;padding:10px;margin:8px 0;border-radius:6px}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #d9dfe8;padding:8px}
-th{background:#eef3ff}
-</style></head><body>
-<header><h1>GymOS ERP v2 – Part 7</h1><p>Desktop UX Specification & High-Level Wireframes</p></header>
-<main>
-<section>
-<h2>Desktop UX Principles</h2>
-<div class="card">
-<ul>
-<li>Global search on every operational screen.</li>
-<li>Context-aware AI panel.</li>
-<li>Sticky action bar.</li>
-<li>Role-based navigation.</li>
-<li>Keyboard shortcuts for high-frequency tasks.</li>
-<li>Audit trail for sensitive actions.</li>
-</ul>
-</div>
-</section>
+<!DOCTYPE html>
+<html>
 
-<section>
-<h2>Screen Inventory</h2>
-<table>
-<tr><th>#</th><th>Screen</th><th>Goal</th><th>Priority</th></tr>
-<tr><td>1</td><td>Owner Dashboard</td><td>Executive KPI overview</td><td>P0</td></tr><tr><td>2</td><td>AI Command Center</td><td>AI recommendations</td><td>P0</td></tr><tr><td>3</td><td>CRM Pipeline</td><td>Lead management</td><td>P0</td></tr><tr><td>4</td><td>Lead Details</td><td>Timeline and follow-up</td><td>P0</td></tr><tr><td>5</td><td>Reception Check-in</td><td>QR/phone entry</td><td>P0</td></tr><tr><td>6</td><td>Member 360</td><td>Complete member profile</td><td>P0</td></tr><tr><td>7</td><td>Membership Plans</td><td>Plan management</td><td>P0</td></tr><tr><td>8</td><td>Billing</td><td>Invoice & payments</td><td>P0</td></tr><tr><td>9</td><td>Renewals</td><td>Expiring members</td><td>P0</td></tr><tr><td>10</td><td>Attendance</td><td>Live attendance</td><td>P0</td></tr><tr><td>11</td><td>Trainer Workspace</td><td>Today's clients</td><td>P1</td></tr><tr><td>12</td><td>Workout Builder</td><td>Exercise programming</td><td>P1</td></tr><tr><td>13</td><td>Diet Builder</td><td>Nutrition plans</td><td>P1</td></tr><tr><td>14</td><td>Progress Tracking</td><td>Measurements & photos</td><td>P1</td></tr><tr><td>15</td><td>Finance Dashboard</td><td>Revenue & expenses</td><td>P1</td></tr><tr><td>16</td><td>Inventory</td><td>Products & stock</td><td>P1</td></tr><tr><td>17</td><td>Equipment</td><td>Machine status</td><td>P1</td></tr><tr><td>18</td><td>Marketing</td><td>Campaigns</td><td>P1</td></tr><tr><td>19</td><td>Automation</td><td>Rules & triggers</td><td>P1</td></tr><tr><td>20</td><td>Settings</td><td>Organization config</td><td>P1</td></tr></table></section>
-<section>
-<h2>Screen 1: Owner Dashboard</h2>
-<div class="card"><b>Goal:</b> Executive KPI overview<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+<head>
+    <meta charset="utf-8">
+    <title>GymOS ERP v2 - Part 7</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f7fb;
+            color: #222
+        }
 
-<div class="wf">
-<div class="bar">Owner Dashboard</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+        header {
+            background: #0b2545;
+            color: #fff;
+            padding: 40px
+        }
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        .hnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-bottom: 1px solid #cfd7e6;
+            padding: 10px 20px;
+            z-index: 100;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease
+        }
 
-<section>
-<h2>Screen 2: AI Command Center</h2>
-<div class="card"><b>Goal:</b> AI recommendations<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+        .hnav a {
+            color: #0b2545;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px
+        }
 
-<div class="wf">
-<div class="bar">AI Command Center</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+        .hnav.headroom--unpinned {
+            transform: translateY(-100%)
+        }
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        .hnav.headroom--pinned {
+            transform: translateY(0)
+        }
 
-<section>
-<h2>Screen 3: CRM Pipeline</h2>
-<div class="card"><b>Goal:</b> Lead management<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+        .hnav.headroom--not-top {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1)
+        }
 
-<div class="wf">
-<div class="bar">CRM Pipeline</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+        main {
+            max-width: 1300px;
+            margin: auto;
+            padding: 28px;
+            margin-top: 44px
+        }
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        section {
+            margin: 42px 0
+        }
 
-<section>
-<h2>Screen 4: Lead Details</h2>
-<div class="card"><b>Goal:</b> Timeline and follow-up<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+        .card {
+            background: #fff;
+            border: 1px solid #d9dfe8;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 18px 0
+        }
 
-<div class="wf">
-<div class="bar">Lead Details</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+        .wf {
+            border: 2px solid #9aa8bf;
+            border-radius: 10px;
+            background: #fff;
+            font-family: monospace
+        }
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        .bar {
+            background: #eef3ff;
+            padding: 10px;
+            border-bottom: 1px solid #cfd7e6;
+            font-weight: bold
+        }
 
-<section>
-<h2>Screen 5: Reception Check-in</h2>
-<div class="card"><b>Goal:</b> QR/phone entry<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+        .row {
+            display: flex
+        }
 
-<div class="wf">
-<div class="bar">Reception Check-in</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+        .side {
+            width: 180px;
+            border-right: 1px solid #d9dfe8;
+            padding: 10px;
+            background: #f8fbff
+        }
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        .main {
+            flex: 1;
+            padding: 12px
+        }
 
-<section>
-<h2>Screen 6: Member 360</h2>
-<div class="card"><b>Goal:</b> Complete member profile<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+        .box {
+            border: 1px dashed #98a6bf;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px
+        }
 
-<div class="wf">
-<div class="bar">Member 360</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        th,
+        td {
+            border: 1px solid #d9dfe8;
+            padding: 8px
+        }
 
-<section>
-<h2>Screen 7: Membership Plans</h2>
-<div class="card"><b>Goal:</b> Plan management<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+        th {
+            background: #eef3ff
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js"></script>
+</head>
 
-<div class="wf">
-<div class="bar">Membership Plans</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+<body>
+    <header>
+        <h1>GymOS ERP v2 – Part 7</h1>
+        <p>Desktop UX Specification & High-Level Wireframes</p>
+    </header>
+    <nav class="hnav" id="site-nav">
+        <span
+            style="font-weight:800;color:#0b2545;font-family:monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase">GymOS
+            v2 · Part 7</span>
+        <a href="#">UX Principles</a>
+        <a href="#">Screen Inventory</a>
+        <a href="#">Wireframes</a>
+        <a href="#">Patterns</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Desktop UX Principles</h2>
+            <div class="card">
+                <ul>
+                    <li>Global search on every operational screen.</li>
+                    <li>Context-aware AI panel.</li>
+                    <li>Sticky action bar.</li>
+                    <li>Role-based navigation.</li>
+                    <li>Keyboard shortcuts for high-frequency tasks.</li>
+                    <li>Audit trail for sensitive actions.</li>
+                </ul>
+            </div>
+        </section>
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        <section>
+            <h2>Screen Inventory</h2>
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Screen</th>
+                    <th>Goal</th>
+                    <th>Priority</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Owner Dashboard</td>
+                    <td>Executive KPI overview</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>AI Command Center</td>
+                    <td>AI recommendations</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>CRM Pipeline</td>
+                    <td>Lead management</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Lead Details</td>
+                    <td>Timeline and follow-up</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Reception Check-in</td>
+                    <td>QR/phone entry</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Member 360</td>
+                    <td>Complete member profile</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Membership Plans</td>
+                    <td>Plan management</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Billing</td>
+                    <td>Invoice & payments</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Renewals</td>
+                    <td>Expiring members</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Attendance</td>
+                    <td>Live attendance</td>
+                    <td>P0</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Trainer Workspace</td>
+                    <td>Today's clients</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>Workout Builder</td>
+                    <td>Exercise programming</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>Diet Builder</td>
+                    <td>Nutrition plans</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>Progress Tracking</td>
+                    <td>Measurements & photos</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>Finance Dashboard</td>
+                    <td>Revenue & expenses</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>Inventory</td>
+                    <td>Products & stock</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td>Equipment</td>
+                    <td>Machine status</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td>Marketing</td>
+                    <td>Campaigns</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>19</td>
+                    <td>Automation</td>
+                    <td>Rules & triggers</td>
+                    <td>P1</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>Settings</td>
+                    <td>Organization config</td>
+                    <td>P1</td>
+                </tr>
+            </table>
+        </section>
+        <section>
+            <h2>Screen 1: Owner Dashboard</h2>
+            <div class="card"><b>Goal:</b> Executive KPI overview<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
 
-<section>
-<h2>Screen 8: Billing</h2>
-<div class="card"><b>Goal:</b> Invoice & payments<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+            <div class="wf">
+                <div class="bar">Owner Dashboard</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
 
-<div class="wf">
-<div class="bar">Billing</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        <section>
+            <h2>Screen 2: AI Command Center</h2>
+            <div class="card"><b>Goal:</b> AI recommendations<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
 
-<section>
-<h2>Screen 9: Renewals</h2>
-<div class="card"><b>Goal:</b> Expiring members<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+            <div class="wf">
+                <div class="bar">AI Command Center</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
 
-<div class="wf">
-<div class="bar">Renewals</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        <section>
+            <h2>Screen 3: CRM Pipeline</h2>
+            <div class="card"><b>Goal:</b> Lead management<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
 
-<section>
-<h2>Screen 10: Attendance</h2>
-<div class="card"><b>Goal:</b> Live attendance<br>
-<b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
-<b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
-<b>AI:</b> Contextual suggestions and anomaly detection.
-</div>
+            <div class="wf">
+                <div class="bar">CRM Pipeline</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
 
-<div class="wf">
-<div class="bar">Attendance</div>
-<div class="row">
-<div class="side">
-Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
-</div>
-<div class="main">
-<div class="box">Global Search / Filters</div>
-<div class="box">KPI / Summary Cards</div>
-<div class="box">Primary Workspace</div>
-<div class="box">AI Assistant Panel</div>
-<div class="box">Recent Activity / Audit Timeline</div>
-</div>
-</div>
-</div>
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
 
-<table>
-<tr><th>Interaction</th><th>Behavior</th></tr>
-<tr><td>Loading</td><td>Skeleton placeholders</td></tr>
-<tr><td>Empty State</td><td>Illustration + CTA</td></tr>
-<tr><td>Error</td><td>Retry with diagnostics</td></tr>
-<tr><td>Validation</td><td>Inline field validation</td></tr>
-<tr><td>Permissions</td><td>Role-based action visibility</td></tr>
-</table>
-</section>
+        <section>
+            <h2>Screen 4: Lead Details</h2>
+            <div class="card"><b>Goal:</b> Timeline and follow-up<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
 
-<section>
-<h2>Global Interaction Patterns</h2>
-<table>
-<tr><th>Pattern</th><th>Specification</th></tr>
-<tr><td>Search</td><td>Phone number is primary lookup key.</td></tr>
-<tr><td>Tables</td><td>Virtual scrolling after 100 rows.</td></tr>
-<tr><td>Forms</td><td>Autosave drafts where possible.</td></tr>
-<tr><td>Notifications</td><td>Toast + notification center.</td></tr>
-<tr><td>AI</td><td>Non-blocking recommendations.</td></tr>
-</table>
-</section>
+            <div class="wf">
+                <div class="bar">Lead Details</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
 
-<footer>
-<hr>
-<p><strong>Next (Part 8):</strong> Mobile UX Specification, Member App, Trainer App, Reception App, Owner App, complete mobile journeys and high-fidelity mobile wireframes.</p>
-</footer>
-</main></body></html>
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Screen 5: Reception Check-in</h2>
+            <div class="card"><b>Goal:</b> QR/phone entry<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
+
+            <div class="wf">
+                <div class="bar">Reception Check-in</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Screen 6: Member 360</h2>
+            <div class="card"><b>Goal:</b> Complete member profile<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
+
+            <div class="wf">
+                <div class="bar">Member 360</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Screen 7: Membership Plans</h2>
+            <div class="card"><b>Goal:</b> Plan management<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
+
+            <div class="wf">
+                <div class="bar">Membership Plans</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Screen 8: Billing</h2>
+            <div class="card"><b>Goal:</b> Invoice & payments<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
+
+            <div class="wf">
+                <div class="bar">Billing</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Screen 9: Renewals</h2>
+            <div class="card"><b>Goal:</b> Expiring members<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
+
+            <div class="wf">
+                <div class="bar">Renewals</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Screen 10: Attendance</h2>
+            <div class="card"><b>Goal:</b> Live attendance<br>
+                <b>Primary Users:</b> Owner / Manager / Reception (role dependent)<br>
+                <b>Primary Actions:</b> Search • Create • Edit • View • Export<br>
+                <b>AI:</b> Contextual suggestions and anomaly detection.
+            </div>
+
+            <div class="wf">
+                <div class="bar">Attendance</div>
+                <div class="row">
+                    <div class="side">
+                        Dashboard<br>CRM<br>Members<br>Billing<br>Reports<br>Settings
+                    </div>
+                    <div class="main">
+                        <div class="box">Global Search / Filters</div>
+                        <div class="box">KPI / Summary Cards</div>
+                        <div class="box">Primary Workspace</div>
+                        <div class="box">AI Assistant Panel</div>
+                        <div class="box">Recent Activity / Audit Timeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Behavior</th>
+                </tr>
+                <tr>
+                    <td>Loading</td>
+                    <td>Skeleton placeholders</td>
+                </tr>
+                <tr>
+                    <td>Empty State</td>
+                    <td>Illustration + CTA</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>Retry with diagnostics</td>
+                </tr>
+                <tr>
+                    <td>Validation</td>
+                    <td>Inline field validation</td>
+                </tr>
+                <tr>
+                    <td>Permissions</td>
+                    <td>Role-based action visibility</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Global Interaction Patterns</h2>
+            <table>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Specification</th>
+                </tr>
+                <tr>
+                    <td>Search</td>
+                    <td>Phone number is primary lookup key.</td>
+                </tr>
+                <tr>
+                    <td>Tables</td>
+                    <td>Virtual scrolling after 100 rows.</td>
+                </tr>
+                <tr>
+                    <td>Forms</td>
+                    <td>Autosave drafts where possible.</td>
+                </tr>
+                <tr>
+                    <td>Notifications</td>
+                    <td>Toast + notification center.</td>
+                </tr>
+                <tr>
+                    <td>AI</td>
+                    <td>Non-blocking recommendations.</td>
+                </tr>
+            </table>
+        </section>
+
+        <footer>
+            <hr>
+            <p><strong>Next (Part 8):</strong> Mobile UX Specification, Member App, Trainer App, Reception App, Owner
+                App, complete mobile journeys and high-fidelity mobile wireframes.</p>
+        </footer>
+    </main>
+</body>
+<script>
+    var nav = document.getElementById('site-nav');
+    var headroom = new Headroom(nav, { offset: 80, tolerance: { up: 5, down: 0 } });
+    headroom.init();
+</script>
+
+</html>

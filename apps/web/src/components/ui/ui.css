@@ -204,7 +204,7 @@
 .pill--brand {
   background: var(--brand-tint);
   border-color: var(--brand-tint-strong);
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .pill--sm {
@@ -499,7 +499,7 @@ select.input {
 }
 /* Deltas are brand/neutral, not green/red — status colour is spoken for. */
 .delta--up {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 .delta--down {
   color: var(--text-2);
@@ -742,7 +742,7 @@ select.input {
 .state__icon--lock {
   background: var(--brand-tint);
   border-color: var(--brand-tint-strong);
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .state__title {
@@ -1015,7 +1015,7 @@ select.input {
 }
 
 .drill:hover {
-  color: var(--brand);
+  color: var(--brand-text);
   border-color: var(--brand);
 }
 

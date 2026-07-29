@@ -108,7 +108,7 @@
 }
 
 .phone__tab.is-active {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 :root[data-theme='dark'] .phone__tab.is-active {

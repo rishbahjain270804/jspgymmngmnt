@@ -1,30 +1,95 @@
-/* The application shell: sidebar, header, page frame, mobile tab bar. */
+/* The application shell: top bar on desktop, bottom tab bar on mobile.
+ *
+ * Navigation runs across the top rather than down the side. A gym screen is
+ * wider than it is tall — a counter PC, a laptop on the owner's desk — so
+ * horizontal space is the cheap axis and vertical is the scarce one. Giving
+ * the width back to the content means the KPI row and the branch comparison
+ * both fit above the fold instead of one pushing the other down. */
 
 .shell {
-  display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
+  display: flex;
+  flex-direction: column;
   min-height: 100dvh;
   background: var(--bg);
 }
 
-/* ------------------------------ Sidebar ------------------------------- */
-.sidebar {
+/* ------------------------------ Top bar -------------------------------- */
+.topbar {
   position: sticky;
   top: 0;
-  height: 100dvh;
+  z-index: var(--z-sticky);
+  background: var(--glass);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* The page column starts at the same x as the logo and the breadcrumb, so the
+ * eye has one left edge to follow from the bar down into the content. */
+.page {
+  padding-inline: var(--s-5);
+}
+
+#main {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+/* Both bars run edge to edge, but their contents line up with the page
+ * column so nav, breadcrumb and content share one left margin. */
+.topbar__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  min-height: var(--header-h);
+  padding: var(--s-2) var(--s-5);
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.topbar__spacer {
+  flex: 1;
+}
+
+.topbar__tools {
+  display: flex;
+  align-items: center;
   gap: var(--s-2);
-  padding: var(--s-4) var(--s-3);
-  background: var(--bg-sunk);
-  border-right: 1px solid var(--line);
+}
+
+/* Second row: where you are, and (for the demo) who you are signed in as.
+ * Kept off the first row so the nav never competes with the breadcrumb, and
+ * short — it is orientation, not content. */
+.subbar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: var(--subbar-h);
+  padding: 0 var(--s-5);
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+  border-top: 1px solid var(--line-faint);
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  padding: var(--s-2) var(--s-2) var(--s-4);
+  flex-shrink: 0;
+  /* The bar's own padding already spaces the mark; extra left padding here
+   * would push the logo out of line with the page column below it. */
+  padding: 0;
+}
+
+/* The two lines have to stack. Left as inline spans they ran together and
+ * the lockup read "OAN FitnessJAIPUR". */
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
 }
 
 .brand__mark {
@@ -57,20 +122,22 @@
 
 .nav {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 2px;
+  min-width: 0;
 }
 
 .nav__link {
   display: flex;
   align-items: center;
-  gap: var(--s-3);
-  min-height: var(--tap-min);
+  gap: var(--s-2);
+  min-height: 38px;
   padding: 0 var(--s-3);
   border-radius: var(--r-md);
   color: var(--text-2);
-  font-size: var(--t-body);
+  font-size: var(--t-label);
   font-weight: var(--w-medium);
+  white-space: nowrap;
   transition:
     background var(--d-fast) var(--e-out),
     color var(--d-fast) var(--e-out);
@@ -83,7 +150,7 @@
 
 .nav__link.is-active {
   background: var(--brand-tint);
-  color: var(--brand);
+  color: var(--brand-text);
   font-weight: var(--w-semibold);
 }
 
@@ -92,7 +159,7 @@
 }
 
 .nav__link.is-active .nav__icon {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .nav__icon {
@@ -105,37 +172,53 @@
   color: var(--text-2);
 }
 
-.sidebar__foot {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-2);
-}
-
 /* Demo-only role switcher. Labelled as such so nobody mistakes it for a
  * product feature during a walkthrough. */
 .role-switch {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
   border: 1px dashed var(--line-strong);
   border-radius: var(--r-md);
-  padding: var(--s-3);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-2);
+  padding: var(--s-1) var(--s-2);
   background: var(--surface);
+  flex-shrink: 0;
+}
+
+.role-switch .eyebrow {
+  white-space: nowrap;
+}
+
+/* The name column has to be allowed to size to its content, or the longest
+ * staff name gets clipped mid-word in the select. */
+.role-switch select {
+  min-width: 15ch;
+  width: auto;
 }
 
 .who {
   display: flex;
   align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-2);
-  border-radius: var(--r-md);
+  gap: var(--s-2);
+  padding-left: var(--s-3);
+  border-left: 1px solid var(--line);
+  margin-left: var(--s-1);
+  /* Without this the identity block is the first thing the flex row squeezes,
+   * and the name wraps mid-word into the role beneath it. */
+  flex-shrink: 0;
+}
+
+.who__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.25;
+  white-space: nowrap;
 }
 
 .who__name {
   font-size: var(--t-label);
   font-weight: var(--w-semibold);
-  line-height: 1.2;
 }
 
 .who__role {
@@ -143,27 +226,7 @@
   color: var(--text-3);
 }
 
-/* ------------------------------ Header -------------------------------- */
-.main {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.header {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  min-height: var(--header-h);
-  padding: var(--s-2) var(--s-5);
-  background: var(--glass);
-  backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid var(--line);
-}
-
+/* ------------------------------ Breadcrumbs ---------------------------- */
 .header__crumbs {
   display: flex;
   align-items: center;
@@ -190,15 +253,9 @@ a.crumb:hover {
   font-weight: var(--w-semibold);
 }
 
-.header__spacer {
-  flex: 1;
-}
-
-.header__tools {
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
-}
+/* .header__spacer / .header__tools were the sidebar-era names; the top bar
+ * uses .topbar__spacer and .topbar__tools. Removed rather than left as dead
+ * rules that a later reader would have to check for. */
 
 /* ⌘K trigger */
 .omni {
@@ -268,7 +325,14 @@ a.crumb:hover {
   background: var(--surface-2);
   font-size: var(--t-label);
   font-weight: var(--w-medium);
+  /* "All branches" was wrapping onto two lines and pushing the bar taller. */
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: border-color var(--d-fast) var(--e-out);
+}
+
+.branch-pick__btn .icon:last-child {
+  color: var(--text-3);
 }
 
 .branch-pick__btn:hover {
@@ -453,23 +517,38 @@ a.crumb:hover {
 }
 
 @media (max-width: 900px) {
-  .shell {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
+  /* The top nav hands over to the bottom tab bar: one thumb, four targets,
+   * and nothing at the top of the screen to stretch for. */
+  .topbar .nav {
     display: none;
   }
 
-  .header {
+  .topbar__row {
     padding: var(--s-2) var(--s-4);
+    gap: var(--s-2);
+  }
+
+  .subbar {
+    padding: var(--s-2) var(--s-4);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .subbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Name and role are already in the tab bar context; the avatar is enough. */
+  .who__text,
+  .brand__sub {
+    display: none;
   }
 
   .omni {
     min-width: 0;
   }
 
-  .omni span,
+  .omni__label,
   .omni .kbd {
     display: none;
   }
@@ -516,7 +595,7 @@ a.crumb:hover {
   }
 
   .tabbar__link.is-active {
-    color: var(--brand);
+    color: var(--brand-text);
   }
 
   :root[data-theme='dark'] .tabbar__link.is-active {
