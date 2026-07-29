@@ -1,0 +1,58 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: oan-db
+    command:
+      # Everything is stored and compared in UTC. Calendar dates (expiry,
+      # start) are DATE columns and never converted; the gym's timezone lives
+      # in the app, not the server.
+      - --default-time-zone=+00:00
+      # utf8mb4 throughout so member names and notes handle any script.
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      # Strict mode is not optional here. Without it MySQL silently truncates
+      # and coerces bad values instead of failing, which is exactly what you
+      # do not want under a ledger.
+      - --sql-mode=STRICT_ALL_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE
+      # With binary logging on, MySQL demands SUPER to create triggers and
+      # routines, because a non-deterministic one would break replication. Ours
+      # are deterministic (they only SIGNAL or maintain a running total), so we
+      # trust the creator rather than handing the application account SUPER.
+      # On managed MySQL this is a parameter-group setting; on RDS it is
+      # log_bin_trust_function_creators = 1.
+      - --log-bin-trust-function-creators=1
+    environment:
+      MYSQL_ROOT_PASSWORD: oan_root
+      MYSQL_DATABASE: oan
+      MYSQL_USER: oan
+      MYSQL_PASSWORD: oan_dev
+      TZ: UTC
+    ports:
+      - '3307:3306'
+    volumes:
+      - oan-mysqldata:/var/lib/mysql
+      # Runs once on a fresh volume — grants the app user rights on the
+      # throwaway `oan_test_*` databases the schema tests create.
+      - ./apps/api/db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-uoan', '-poan_dev']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: oan-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - '8081:80'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  oan-mysqldata:

@@ -1,0 +1,25 @@
+{
+  "name": "@oan/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "OAN gym API — Fastify + MySQL 8",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json",
+    "migrate": "node dist/scripts/migrate.js",
+    "start": "node dist/index.js",
+    "dev": "tsc -p tsconfig.json && node dist/index.js"
+  },
+  "dependencies": {
+    "@oan/core": "workspace:*",
+    "fastify": "^5.2.0",
+    "mysql2": "^3.11.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

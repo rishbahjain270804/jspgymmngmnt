@@ -1,0 +1,1074 @@
+<title>OAN Gym ERP — User Stories & Wireframes</title>
+
+<style>
+  :root{
+    --paper:#F2F3F6; --card:#FFFFFF; --ink:#16181F; --body:#3A3F4D;
+    --mute:#6B7185; --rule:#D8DBE3; --rule-soft:#E7E9EF;
+    --accent:#3D4EA8; --accent-soft:#E8EAF6; --accent-ink:#2A377A;
+    --ok:#1E7A4A; --ok-bg:#E3F3EA;
+    --warn:#9A6300; --warn-bg:#FBEFD8;
+    --bad:#AE3226; --bad-bg:#FAE6E3;
+    --wf-line:#C7CBD6; --wf-fill:#EDEFF4; --wf-edge:#B3B9C8; --wf-ink:#565C6E;
+    --shadow:0 1px 2px rgba(20,24,40,.06),0 8px 24px -12px rgba(20,24,40,.14);
+    --mono:ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#101219; --card:#171A23; --ink:#EEF0F6; --body:#B9BECD;
+      --mute:#858B9E; --rule:#2A2E3B; --rule-soft:#222633;
+      --accent:#8E9DE8; --accent-soft:#1E2440; --accent-ink:#B4BEF2;
+      --ok:#5FC98F; --ok-bg:#14301F;
+      --warn:#E0AC4E; --warn-bg:#332409;
+      --bad:#EE8579; --bad-bg:#361714;
+      --wf-line:#3A4051; --wf-fill:#1E2230; --wf-edge:#454C60; --wf-ink:#9AA1B4;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+      --paper:#101219; --card:#171A23; --ink:#EEF0F6; --body:#B9BECD;
+      --mute:#858B9E; --rule:#2A2E3B; --rule-soft:#222633;
+      --accent:#8E9DE8; --accent-soft:#1E2440; --accent-ink:#B4BEF2;
+      --ok:#5FC98F; --ok-bg:#14301F;
+      --warn:#E0AC4E; --warn-bg:#332409;
+      --bad:#EE8579; --bad-bg:#361714;
+      --wf-line:#3A4051; --wf-fill:#1E2230; --wf-edge:#454C60; --wf-ink:#9AA1B4;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+  :root[data-theme="light"]{
+      --paper:#F2F3F6; --card:#FFFFFF; --ink:#16181F; --body:#3A3F4D;
+      --mute:#6B7185; --rule:#D8DBE3; --rule-soft:#E7E9EF;
+      --accent:#3D4EA8; --accent-soft:#E8EAF6; --accent-ink:#2A377A;
+      --ok:#1E7A4A; --ok-bg:#E3F3EA;
+      --warn:#9A6300; --warn-bg:#FBEFD8;
+      --bad:#AE3226; --bad-bg:#FAE6E3;
+      --wf-line:#C7CBD6; --wf-fill:#EDEFF4; --wf-edge:#B3B9C8; --wf-ink:#565C6E;
+      --shadow:0 1px 2px rgba(20,24,40,.06),0 8px 24px -12px rgba(20,24,40,.14);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--body);
+       font-family:var(--sans);font-size:16px;line-height:1.6;
+       -webkit-font-smoothing:antialiased}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* ---------- masthead ---------- */
+  .mast{border-bottom:1px solid var(--rule);background:var(--card)}
+  .mast .wrap{padding-top:56px;padding-bottom:40px;
+              display:flex;flex-direction:column;gap:18px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+           text-transform:uppercase;color:var(--accent);font-weight:600}
+  h1{font-size:clamp(30px,4.6vw,50px);line-height:1.05;letter-spacing:-.024em;
+     font-weight:800;color:var(--ink);margin:0;text-wrap:balance;max-width:19ch}
+  .standfirst{font-size:18px;max-width:60ch;margin:0;color:var(--body)}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+
+  /* ---------- nav ---------- */
+  nav.toc{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--card) 92%,transparent);
+          backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:9px;padding-bottom:9px;
+                scrollbar-width:thin}
+  nav.toc a{font-family:var(--mono);font-size:12px;letter-spacing:.02em;
+            color:var(--mute);text-decoration:none;padding:6px 11px;border-radius:6px;
+            white-space:nowrap;border:1px solid transparent}
+  nav.toc a:hover{color:var(--ink);background:var(--rule-soft)}
+  nav.toc a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0 8px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+            border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:28px}
+  .sec-tag{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600;
+           letter-spacing:.08em;text-transform:uppercase}
+  h2{font-size:clamp(22px,3vw,31px);line-height:1.12;letter-spacing:-.018em;
+     font-weight:800;color:var(--ink);margin:0;text-wrap:balance}
+  h3{font-size:19px;font-weight:750;letter-spacing:-.01em;color:var(--ink);
+     margin:0;text-wrap:balance}
+  h4{font-size:14px;font-weight:700;color:var(--ink);margin:0 0 8px;
+     font-family:var(--mono);letter-spacing:.03em;text-transform:uppercase}
+  p{margin:0 0 14px;max-width:68ch}
+  .lede{font-size:17px;color:var(--body);max-width:66ch}
+  strong{color:var(--ink);font-weight:650}
+  code{font-family:var(--mono);font-size:.88em;background:var(--rule-soft);
+       padding:1px 5px;border-radius:4px;color:var(--ink)}
+
+  /* ---------- chips ---------- */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);
+        font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+        padding:3px 8px;border-radius:5px;border:1px solid var(--rule);
+        color:var(--mute);background:var(--card);white-space:nowrap}
+  .chip.demo{color:var(--accent-ink);background:var(--accent-soft);border-color:transparent}
+  .chip.next{color:var(--warn);background:var(--warn-bg);border-color:transparent}
+  .chip.later{color:var(--mute);background:var(--rule-soft);border-color:transparent}
+  .chip.role{color:var(--ink);background:transparent;border-color:var(--rule)}
+
+  /* ---------- diagram ---------- */
+  .diagram{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+           padding:22px;margin:0 0 26px;overflow-x:auto;box-shadow:var(--shadow)}
+  .diagram .mermaid{display:flex;justify-content:center;min-width:520px}
+
+  /* ---------- story tables ---------- */
+  .stories{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+           overflow:hidden;margin:0 0 22px;box-shadow:var(--shadow)}
+  .stories-head{display:flex;align-items:center;gap:10px;padding:13px 18px;
+                border-bottom:1px solid var(--rule);background:var(--rule-soft)}
+  .stories-head h3{font-size:15px}
+  .stories-head .who{font-family:var(--mono);font-size:11.5px;color:var(--mute);
+                     margin-left:auto;letter-spacing:.04em}
+  .story{display:grid;grid-template-columns:62px 1fr 78px;gap:14px;align-items:start;
+         padding:13px 18px;border-bottom:1px solid var(--rule-soft)}
+  .story:last-child{border-bottom:0}
+  .story .id{font-family:var(--mono);font-size:12px;color:var(--mute);
+             font-weight:600;padding-top:2px}
+  .story .txt{font-size:14.5px;line-height:1.55}
+  .story .txt b{color:var(--ink);font-weight:650}
+  .story .txt .so{color:var(--mute)}
+  .story .pri{justify-self:end;padding-top:1px}
+
+  /* ---------- screen blocks ---------- */
+  .screen{border-top:1px solid var(--rule);padding:34px 0 10px}
+  .screen:first-of-type{border-top:0}
+  .screen-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .screen-note{font-size:14.5px;color:var(--mute);max-width:74ch;margin:0 0 20px}
+  .screen-note b{color:var(--body)}
+
+  .frames{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start}
+  @media(max-width:900px){.frames{grid-template-columns:1fr}}
+  figure{margin:0}
+  figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+             text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+
+  /* ---------- WIREFRAME KIT ---------- */
+  .wf{font-family:var(--mono);font-size:10.5px;line-height:1.35;color:var(--wf-ink);
+      background:var(--card);border:1.5px solid var(--wf-edge);border-radius:6px;
+      overflow:hidden}
+  .wf-mob{border-radius:16px;max-width:300px}
+  .wf * {box-sizing:border-box}
+  .b{display:block}
+  .r{display:flex;gap:6px;align-items:center}
+  .r.w{flex-wrap:wrap}
+  .g{display:grid;gap:6px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .p{padding:8px}
+  .p10{padding:10px}
+  .gap{gap:8px}
+  .grow{flex:1}
+  .ctr{text-align:center}
+  .rt{text-align:right}
+  .mt{margin-top:8px}
+
+  .bar{background:var(--wf-fill);border-bottom:1px solid var(--wf-edge);
+       padding:7px 9px;display:flex;align-items:center;gap:8px}
+  .bar .brand{font-weight:700;color:var(--ink);letter-spacing:.04em}
+  .side{border-right:1px solid var(--wf-edge);background:var(--wf-fill);
+        padding:8px 7px;display:flex;flex-direction:column;gap:3px;min-width:104px}
+  .nv{padding:4px 7px;border-radius:4px}
+  .nv.on{background:var(--accent);color:#fff;font-weight:600}
+  .box{border:1px solid var(--wf-edge);border-radius:4px;padding:8px;background:var(--card)}
+  .box.f{background:var(--wf-fill)}
+  .dash{border:1.5px dashed var(--wf-line);border-radius:4px;padding:10px;
+        text-align:center;color:var(--wf-ink)}
+  .ln{height:6px;background:var(--wf-line);border-radius:3px;display:block}
+  .ln.s{width:38%} .ln.m{width:62%} .ln.l{width:88%}
+  .ln.t{height:4px;opacity:.6}
+  .btn{background:var(--accent);color:#fff;border-radius:4px;padding:6px 10px;
+       text-align:center;font-weight:600;letter-spacing:.03em}
+  .btn.o{background:transparent;color:var(--wf-ink);border:1px solid var(--wf-edge);font-weight:500}
+  .inp{border:1px solid var(--wf-edge);border-radius:4px;padding:7px 8px;
+       background:var(--card);color:var(--wf-line)}
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--wf-edge);overflow:hidden}
+  .tab{padding:5px 8px;color:var(--wf-ink);white-space:nowrap}
+  .tab.on{border-bottom:2px solid var(--accent);color:var(--ink);font-weight:650}
+  .kpi{border:1px solid var(--wf-edge);border-radius:4px;padding:8px;background:var(--card)}
+  .kpi .k{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--wf-ink)}
+  .kpi .v{font-size:15px;font-weight:700;color:var(--ink);
+          font-variant-numeric:tabular-nums;margin-top:2px}
+  .row{display:flex;align-items:center;gap:7px;padding:6px 0;
+       border-bottom:1px solid var(--rule-soft)}
+  .row:last-child{border-bottom:0}
+  .av{width:20px;height:20px;border-radius:50%;background:var(--wf-line);flex:none}
+  .pill{font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;
+        letter-spacing:.04em;white-space:nowrap}
+  .ok{background:var(--ok-bg);color:var(--ok)}
+  .wn{background:var(--warn-bg);color:var(--warn)}
+  .bd{background:var(--bad-bg);color:var(--bad)}
+  .verdict{padding:20px 12px;text-align:center;border-radius:5px}
+  .verdict .big{font-size:19px;font-weight:800;letter-spacing:.02em}
+  .verdict.ok{background:var(--ok-bg);color:var(--ok)}
+  .verdict.wn{background:var(--warn-bg);color:var(--warn)}
+  .verdict.bd{background:var(--bad-bg);color:var(--bad)}
+  .tabbar{display:flex;border-top:1px solid var(--wf-edge);background:var(--wf-fill)}
+  .tabbar div{flex:1;text-align:center;padding:7px 2px;font-size:9px}
+  .tabbar div.on{color:var(--accent);font-weight:700}
+  .chart{height:52px;background:
+     linear-gradient(to top,var(--accent-soft),transparent);
+     border-bottom:1px solid var(--wf-edge);border-left:1px solid var(--wf-edge);
+     position:relative;border-radius:2px}
+  .chart::after{content:"";position:absolute;inset:auto 0 0 0;height:100%;
+     background:linear-gradient(105deg,transparent 46%,var(--accent) 46%,var(--accent) 48%,transparent 48%);
+     opacity:.5}
+  .note{font-size:9px;color:var(--wf-ink);opacity:.8}
+  .scope{font-size:9px;color:var(--accent);font-weight:700;letter-spacing:.05em}
+
+  /* ---------- callout ---------- */
+  .call{border-left:3px solid var(--accent);background:var(--card);
+        border-radius:0 8px 8px 0;padding:15px 18px;margin:0 0 22px;
+        border-top:1px solid var(--rule);border-right:1px solid var(--rule);
+        border-bottom:1px solid var(--rule)}
+  .call p:last-child{margin-bottom:0}
+  .call h4{color:var(--accent)}
+
+  /* ---------- matrix ---------- */
+  .tbl-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--rule);
+            border-radius:10px;margin:0 0 22px;box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--rule-soft)}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+     color:var(--mute);background:var(--rule-soft);font-weight:600;white-space:nowrap}
+  td:first-child{color:var(--ink);font-weight:600}
+  tbody tr:last-child td{border-bottom:0}
+  .y{color:var(--ok);font-weight:700}
+  .n{color:var(--bad);font-weight:700}
+  .p-{color:var(--mute)}
+
+  footer{border-top:1px solid var(--rule);margin-top:64px;background:var(--card)}
+  footer .wrap{padding:28px 24px 46px;font-size:13.5px;color:var(--mute)}
+  footer p{max-width:70ch}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="eyebrow">OAN Fitness · JSP Coders · Build spec</div>
+    <h1>User stories &amp; wireframes</h1>
+    <p class="standfirst">Every screen in the demo slice, drawn for desktop and mobile, with the user story each one answers. Companion to <code>Rishabhresearch.md</code>.</p>
+    <div class="meta">
+      <span class="chip role">5 roles</span>
+      <span class="chip role">6 modules</span>
+      <span class="chip role">11 screens</span>
+      <span class="chip demo">Demo scope</span>
+      <span class="chip next">Next</span>
+      <span class="chip later">Later</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#roles">Roles</a>
+    <a href="#map">Story map</a>
+    <a href="#stories">User stories</a>
+    <a href="#nav">Navigation</a>
+    <a href="#flow">Check-in flow</a>
+    <a href="#wire">Wireframes</a>
+    <a href="#rules">Layout rules</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ ROLES ============ -->
+<section id="roles">
+  <div class="sec-head"><span class="sec-tag">01</span><h2>Who the product is for</h2></div>
+  <p class="lede">Five roles, almost no overlap in what they need. The product is one backend behind five thin, role-specific frontends — which is also how it stays small. Nobody ever sees a feature that isn't theirs.</p>
+
+  <div class="diagram">
+<pre class="mermaid">
+flowchart TD
+  OAN["OAN Fitness<br/>one brand · many branches"]
+  OAN --> AD["ADMIN<br/>scope: all branches"]
+  OAN --> BR["Branch<br/>Vidhyadhar Nagar · Branch 2"]
+  BR --> BM["BRANCH MANAGER<br/>scope: one branch"]
+  BR --> FD["FRONT DESK<br/>scope: one branch, no money"]
+  BR --> CO["COACH<br/>scope: assigned clients"]
+  BR --> ME["MEMBER<br/>scope: self"]
+  AD -. "sees everything<br/>every branch rolls up" .-> BR
+  CO --> ME
+</pre>
+  </div>
+
+  <div class="call">
+    <h4>The rule that shapes every screen</h4>
+    <p>A branch manager doesn't get a <em>weaker</em> permission than an Admin — they get the <strong>same permission at a narrower scope</strong>. So each screen is built once, and scope decides where you enter it: Admin lands on the all-branch roll-up, everyone else lands directly inside their own branch.</p>
+  </div>
+</section>
+
+<!-- ============ STORY MAP ============ -->
+<section id="map">
+  <div class="sec-head"><span class="sec-tag">02</span><h2>Story map</h2></div>
+  <p class="lede">Reading left to right is a member's life at the gym. Reading down is depth of build — the top row is the demo, below it is what follows.</p>
+
+  <div class="diagram">
+<pre class="mermaid">
+flowchart LR
+  subgraph A["1 · ATTRACT"]
+    A1["Walk-in enquiry"]
+    A2["Free trial session"]
+  end
+  subgraph B["2 · JOIN"]
+    B1["Register member"]
+    B2["Assign plan"]
+    B3["Collect payment"]
+    B4["GST receipt"]
+  end
+  subgraph C["3 · TRAIN"]
+    C1["Daily check-in"]
+    C2["Assess &amp; measure"]
+    C3["Workout program"]
+    C4["Diet plan"]
+  end
+  subgraph D["4 · RETAIN"]
+    D1["Progress report"]
+    D2["Absent alert"]
+    D3["Plateau alert"]
+  end
+  subgraph E["5 · RENEW"]
+    E1["Expiry list"]
+    E2["WhatsApp reminder"]
+    E3["Renewal payment"]
+  end
+  subgraph F["6 · RUN THE BUSINESS"]
+    F1["Branch P&amp;L"]
+    F2["Expenses"]
+    F3["Equipment"]
+    F4["Staff &amp; access"]
+  end
+  A --> B --> C --> D --> E
+  E -. "renews into" .-> C
+  F -. "spans all of it" .-> C
+</pre>
+  </div>
+</section>
+
+<!-- ============ STORIES ============ -->
+<section id="stories">
+  <div class="sec-head"><span class="sec-tag">03</span><h2>User stories</h2></div>
+  <p class="lede">Ordered by how often the person actually does the thing. Front desk is first because it is, by a wide margin, the highest-frequency screen in the product.</p>
+
+  <div class="stories">
+    <div class="stories-head"><h3>Front Desk</h3><span class="who">scope: one branch · money hidden</span></div>
+    <div class="story"><span class="id">FD-01</span><span class="txt">Check a member in by <b>scanning their QR or typing their phone</b>, <span class="so">so the 6:30 AM queue keeps moving.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-02</span><span class="txt">See instantly whether a membership is <b>active, expiring or expired</b>, <span class="so">so an expired member doesn't train for free.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-03</span><span class="txt">Register a new member in <b>under two minutes</b>, <span class="so">so joining doesn't hold up the counter.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-04</span><span class="txt">Collect cash or UPI and issue a <b>GST receipt on WhatsApp</b>, <span class="so">so nothing is written in a register.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-05</span><span class="txt">Accept a <b>part payment and record the balance</b>, <span class="so">because half-now-half-later is normal here.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-06</span><span class="txt">See <b>who is in the gym right now</b>, <span class="so">so I can answer that question without walking the floor.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-07</span><span class="txt">Send a renewal reminder on <b>WhatsApp in one tap</b>, <span class="so">so follow-ups actually happen.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-08</span><span class="txt">Report a <b>broken machine</b> from the floor, <span class="so">so it gets fixed before members complain.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">FD-09</span><span class="txt">Close the day's cash and see <b>what should be in the drawer</b>, <span class="so">so shortfalls surface the same day.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+  </div>
+
+  <div class="stories">
+    <div class="stories-head"><h3>Admin (Owner)</h3><span class="who">scope: all branches</span></div>
+    <div class="story"><span class="id">AD-01</span><span class="txt">See <b>today's collection across every branch</b> on one screen, <span class="so">so I don't ring three people to ask.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-02</span><span class="txt">Compare branches <b>side by side</b>, <span class="so">so I know which one needs attention.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-03</span><span class="txt">See <b>profit per branch, not just revenue</b>, <span class="so">because collection tells me nothing about whether I'm making money.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-04</span><span class="txt">Toggle <b>cash vs accrual</b>, <span class="so">so I can see what came in and what I actually earned.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-05</span><span class="txt">See everyone <b>expiring in the next 7 days</b>, all branches, <span class="so">so renewals stop depending on memory.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-06</span><span class="txt">Create and price <b>membership plans</b> myself, <span class="so">so I don't call a developer to change a rate.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-07</span><span class="txt">Know my <b>front desk cannot see revenue</b>, <span class="so">so I can hand over the counter without handing over the books.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-08</span><span class="txt">See <b>total equipment by branch</b> and what's out of order, <span class="so">so I know what I own and what's broken.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">AD-09</span><span class="txt">Have <b>every change logged and never disableable</b>, <span class="so">because MCA rules require it and cash businesses need it.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+    <div class="story"><span class="id">AD-10</span><span class="txt">Approve a <b>discount above the front-desk cap</b>, <span class="so">so giveaways are a decision, not a habit.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+    <div class="story"><span class="id">AD-11</span><span class="txt">Export <b>GST-ready reports</b> for my CA, <span class="so">so filing isn't a week of spreadsheets.</span></span><span class="pri"><span class="chip later">Later</span></span></div>
+  </div>
+
+  <div class="stories">
+    <div class="stories-head"><h3>Branch Manager</h3><span class="who">scope: one branch, including its revenue</span></div>
+    <div class="story"><span class="id">BM-01</span><span class="txt">See <b>my branch's revenue and expenses</b> and nothing from other branches, <span class="so">so I'm accountable for what I control.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">BM-02</span><span class="txt">Work my branch's <b>expiring list</b> and assign follow-ups, <span class="so">so renewals are somebody's job.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">BM-03</span><span class="txt">Record <b>my branch's expenses</b> as they happen, <span class="so">so month-end isn't reconstruction.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">BM-04</span><span class="txt">See <b>staff shift attendance</b>, <span class="so">so I know who actually opened at six.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+  </div>
+
+  <div class="stories">
+    <div class="stories-head"><h3>Coach</h3><span class="who">scope: assigned clients · no money at all</span></div>
+    <div class="story"><span class="id">CO-01</span><span class="txt">See <b>my clients who checked in today</b>, <span class="so">so I know who I'm training before they find me.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+    <div class="story"><span class="id">CO-02</span><span class="txt">Log a session in <b>under a minute with last week's loads prefilled</b>, <span class="so">because if it takes longer I won't do it.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+    <div class="story"><span class="id">CO-03</span><span class="txt">Record <b>measurements</b> and see the trend, <span class="so">so progress is measured, not remembered.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">CO-04</span><span class="txt">Generate a <b>printable progress report</b> for a member, <span class="so">so they can see what six months bought them.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">CO-05</span><span class="txt">Assign a <b>workout program from a template</b>, <span class="so">so I'm not rewriting the same split every time.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+    <div class="story"><span class="id">CO-06</span><span class="txt">Be alerted when a client <b>plateaus or stops coming</b>, <span class="so">so I catch it before they quit.</span></span><span class="pri"><span class="chip later">Later</span></span></div>
+    <div class="story"><span class="id">CO-07</span><span class="txt">Assign a <b>diet plan using Indian foods</b> in household measures, <span class="so">because nobody weighs a roti in grams.</span></span><span class="pri"><span class="chip later">Later</span></span></div>
+  </div>
+
+  <div class="stories">
+    <div class="stories-head"><h3>Member</h3><span class="who">scope: self</span></div>
+    <div class="story"><span class="id">ME-01</span><span class="txt">Check in by <b>showing a QR on my phone</b>, <span class="so">so I don't queue to sign a book.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">ME-02</span><span class="txt">See <b>how many days are left</b> on my plan, <span class="so">so renewal isn't a surprise.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">ME-03</span><span class="txt">See <b>my progress chart</b>, <span class="so">so I can tell whether this is working.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">ME-04</span><span class="txt">Get my <b>progress report on WhatsApp</b>, <span class="so">so I can keep it and show people.</span></span><span class="pri"><span class="chip demo">Demo</span></span></div>
+    <div class="story"><span class="id">ME-05</span><span class="txt">See <b>my workout and diet plan</b>, <span class="so">so I'm not carrying a paper chart.</span></span><span class="pri"><span class="chip next">Next</span></span></div>
+    <div class="story"><span class="id">ME-06</span><span class="txt">Renew and <b>pay by UPI</b> from my phone, <span class="so">so I never have to visit the desk to pay.</span></span><span class="pri"><span class="chip later">Later</span></span></div>
+  </div>
+</section>
+
+<!-- ============ NAV ============ -->
+<section id="nav">
+  <div class="sec-head"><span class="sec-tag">04</span><h2>Navigation by role</h2></div>
+  <p class="lede">Same app, filtered. Front desk sees three items and never learns the rest exists.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Module</th><th>Admin</th><th>Manager</th><th>Front Desk</th><th>Coach</th><th>Member</th></tr></thead>
+      <tbody>
+        <tr><td>Dashboard</td><td class="y">all branches</td><td class="y">one branch</td><td class="p-">—</td><td class="p-">—</td><td class="p-">—</td></tr>
+        <tr><td>Check-in</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="p-">—</td><td class="y">own QR</td></tr>
+        <tr><td>Members</td><td class="y">all</td><td class="y">branch</td><td class="y">branch</td><td class="y">assigned</td><td class="y">self</td></tr>
+        <tr><td>Equipment</td><td class="y">all</td><td class="y">branch</td><td class="y">report fault</td><td class="y">report fault</td><td class="p-">—</td></tr>
+        <tr><td>Staff</td><td class="y">all</td><td class="y">view branch</td><td class="p-">—</td><td class="p-">—</td><td class="p-">—</td></tr>
+        <tr><td>Branches</td><td class="y">✓</td><td class="p-">—</td><td class="p-">—</td><td class="p-">—</td><td class="p-">—</td></tr>
+        <tr><td>Accounts</td><td class="y">all + P&amp;L</td><td class="y">branch P&amp;L</td><td class="n">never</td><td class="n">never</td><td class="p-">—</td></tr>
+        <tr><td><em>Nav items visible</em></td><td><b>6</b></td><td><b>5</b></td><td><b>3</b></td><td><b>2</b></td><td><b>4 tabs</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ FLOW ============ -->
+<section id="flow">
+  <div class="sec-head"><span class="sec-tag">05</span><h2>Check-in flow</h2></div>
+  <p class="lede">The highest-frequency interaction in the product, and the one with the tightest budget: under two seconds, twice a day, at a counter with forty people waiting.</p>
+
+  <div class="diagram">
+<pre class="mermaid">
+flowchart TD
+  S["Member arrives"] --> I{"Identify"}
+  I -->|"QR scan"| L["Look up member"]
+  I -->|"Phone digits"| L
+  L --> F{"Found?"}
+  F -->|No| NF["Not found<br/>→ offer Add member"]
+  F -->|Yes| BR{"Plan valid<br/>at THIS branch?"}
+  BR -->|"No — other branch only"| XB["AMBER<br/>Home branch is Vidhyadhar Nagar<br/>→ allow with override"]
+  BR -->|Yes| ST{"Membership status"}
+  ST -->|"Active"| G["GREEN — Welcome back<br/>record check-in"]
+  ST -->|"Expires in ≤7 days"| A["AMBER — 4 days left<br/>record + offer renewal"]
+  ST -->|"Expired"| R["RED — Expired 12 Mar<br/>block + Collect payment"]
+  ST -->|"Dues pending"| A2["AMBER — ₹2,000 due<br/>record + prompt"]
+  G --> D["Done · under 2s"]
+  A --> D
+  A2 --> D
+</pre>
+  </div>
+
+  <div class="call">
+    <h4>Why amber is not just "nearly red"</h4>
+    <p>Three different situations produce amber — expiring soon, dues pending, wrong branch — and staff must be able to tell them apart at a glance. Each carries its <strong>own one-line reason and its own next action</strong>. An amber that just says "warning" makes the person at the counter guess, and they will guess wrong at 6:30 AM.</p>
+  </div>
+</section>
+
+<!-- ============ WIREFRAMES ============ -->
+<section id="wire">
+  <div class="sec-head"><span class="sec-tag">06</span><h2>Wireframes</h2></div>
+  <p class="lede">Deliberately greyscale and monospaced — these fix layout, hierarchy and content, not visual design. Colour appears only where it carries meaning: the green / amber / red status system.</p>
+
+  <!-- 01 LOGIN -->
+  <div class="screen">
+    <div class="screen-head"><h3>Login</h3><span class="chip demo">Demo</span><span class="chip role">All roles</span></div>
+    <p class="screen-note">Phone plus OTP — <b>never email.</b> Many members and some staff have no email address at all. The role and branch come from the staff record, never from anything the client sends.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop / .exe — 1440</figcaption>
+        <div class="wf">
+          <div class="p10" style="display:grid;place-items:center;min-height:250px;background:var(--wf-fill)">
+            <div class="box" style="width:250px;background:var(--card)">
+              <div class="ctr b" style="font-weight:800;color:var(--ink);font-size:13px;letter-spacing:.08em">OAN FITNESS</div>
+              <div class="ctr note mt">Staff sign in</div>
+              <div class="g gap mt">
+                <div class="inp">+91 · phone number</div>
+                <div class="btn">Send OTP</div>
+                <div class="r gap" style="justify-content:center">
+                  <div class="inp ctr" style="width:26px">·</div><div class="inp ctr" style="width:26px">·</div>
+                  <div class="inp ctr" style="width:26px">·</div><div class="inp ctr" style="width:26px">·</div>
+                </div>
+                <div class="btn">Verify &amp; continue</div>
+              </div>
+              <div class="ctr note mt">Branch is set by your staff record</div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — 390</figcaption>
+        <div class="wf wf-mob">
+          <div class="p10" style="min-height:250px;display:flex;flex-direction:column;justify-content:center;gap:8px">
+            <div class="ctr b" style="font-weight:800;color:var(--ink);font-size:13px;letter-spacing:.08em">OAN FITNESS</div>
+            <div class="ctr note">Sign in</div>
+            <div class="inp mt">+91 · phone number</div>
+            <div class="btn">Send OTP</div>
+            <div class="r gap" style="justify-content:center">
+              <div class="inp ctr grow">·</div><div class="inp ctr grow">·</div>
+              <div class="inp ctr grow">·</div><div class="inp ctr grow">·</div>
+            </div>
+            <div class="btn">Verify</div>
+            <div class="ctr note">Member? Same screen — we know who you are from your number.</div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 02 CHECK-IN -->
+  <div class="screen">
+    <div class="screen-head"><h3>Check-in — the hero screen</h3><span class="chip demo">Demo</span><span class="chip role">Front Desk</span><span class="chip role">FD-01 · FD-02 · FD-06</span></div>
+    <p class="screen-note">One screen, one job. The verdict block is <b>enormous on purpose</b> — it has to be readable across a counter, upside down, by someone who isn't looking directly at it. Desktop runs as a permanently-open kiosk; mobile uses the camera, which the web build can't match.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop / .exe — kiosk mode</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="brand">OAN</span><span class="note">Check-in</span><span class="grow"></span><span class="scope">VIDHYADHAR NAGAR</span><span class="note">· Front Desk</span></div>
+          <div style="display:flex">
+            <div class="p10 grow g gap">
+              <div class="inp" style="font-size:13px;padding:11px">Scan QR or type phone number…</div>
+              <div class="verdict ok">
+                <div class="big">ACTIVE · WELCOME BACK</div>
+                <div class="mt" style="font-weight:700;color:var(--ink);font-size:12px">RAHUL SHARMA · 98xxx 43210</div>
+                <div class="note">Muscle Building · Annual · 214 days left</div>
+              </div>
+              <div class="g g2 gap">
+                <div class="verdict wn"><div class="big">EXPIRING</div><div class="note">4 days left · offer renewal</div></div>
+                <div class="verdict bd"><div class="big">EXPIRED</div><div class="note">since 12 Mar · collect payment</div></div>
+              </div>
+            </div>
+            <div class="p10 side" style="min-width:130px;border-right:0;border-left:1px solid var(--wf-edge)">
+              <div class="note" style="font-weight:700;color:var(--ink)">IN THE GYM NOW</div>
+              <div class="v" style="font-size:22px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums">37</div>
+              <div class="row"><span class="av"></span><span class="grow"><span class="ln s b"></span></span></div>
+              <div class="row"><span class="av"></span><span class="grow"><span class="ln m b"></span></span></div>
+              <div class="row"><span class="av"></span><span class="grow"><span class="ln s b"></span></span></div>
+              <div class="row"><span class="av"></span><span class="grow"><span class="ln m b"></span></span></div>
+              <div class="note mt">Morning shift · 06:00–12:00</div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — camera scanner</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="brand">OAN</span><span class="grow"></span><span class="scope">V. NAGAR</span></div>
+          <div class="p10 g gap">
+            <div class="dash" style="padding:30px 10px">
+              <div style="font-weight:700;color:var(--ink)">◻ CAMERA</div>
+              <div class="note mt">Point at member's QR</div>
+            </div>
+            <div class="btn o">or type phone number</div>
+            <div class="verdict ok" style="padding:14px 8px">
+              <div class="big" style="font-size:15px">ACTIVE</div>
+              <div class="note" style="color:var(--ink);font-weight:700;margin-top:4px">RAHUL SHARMA</div>
+              <div class="note">214 days left</div>
+            </div>
+            <div class="r gap"><div class="box f grow ctr">In gym<br/><b style="color:var(--ink);font-size:14px">37</b></div>
+              <div class="box f grow ctr">Today<br/><b style="color:var(--ink);font-size:14px">128</b></div></div>
+          </div>
+          <div class="tabbar"><div class="on">Check-in</div><div>Members</div><div>Collect</div></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 03 ADMIN DASHBOARD -->
+  <div class="screen">
+    <div class="screen-head"><h3>Dashboard — Admin, all branches</h3><span class="chip demo">Demo</span><span class="chip role">Admin</span><span class="chip role">AD-01 · AD-02 · AD-04</span></div>
+    <p class="screen-note">Six numbers above the fold, then the branch comparison. The <b>branch switcher and the cash/accrual toggle sit in the header</b> and apply to everything below — they're not per-card filters.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop / .exe — 1440</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="brand">OAN</span><span class="grow"></span>
+            <span class="box" style="padding:3px 8px">All branches ▾</span>
+            <span class="box" style="padding:3px 8px">Cash | <b style="color:var(--accent)">Accrual</b></span>
+            <span class="note">⌘K</span><span class="av"></span></div>
+          <div style="display:flex">
+            <div class="side">
+              <div class="nv on">Dashboard</div><div class="nv">Members</div><div class="nv">Equipment</div>
+              <div class="nv">Staff</div><div class="nv">Branches</div><div class="nv">Accounts</div>
+            </div>
+            <div class="p10 grow">
+              <div class="g g3 gap">
+                <div class="kpi"><div class="k">Collected today</div><div class="v">₹48,200</div></div>
+                <div class="kpi"><div class="k">Earned (accrual)</div><div class="v">₹31,050</div></div>
+                <div class="kpi"><div class="k">Net profit · month</div><div class="v">₹2.4L</div></div>
+              </div>
+              <div class="g g3 gap mt">
+                <div class="kpi"><div class="k">Check-ins today</div><div class="v">128</div></div>
+                <div class="kpi"><div class="k">Expiring ≤7 days</div><div class="v" style="color:var(--warn)">23</div></div>
+                <div class="kpi"><div class="k">Outstanding dues</div><div class="v">₹86,400</div></div>
+              </div>
+              <div class="box mt">
+                <div class="r"><b style="color:var(--ink)">Branch comparison</b><span class="grow"></span><span class="note">this month</span></div>
+                <div class="row mt"><span class="grow">Vidhyadhar Nagar</span><span class="note">780 members</span><b style="color:var(--ink)">₹1.8L</b><span class="pill ok">+12%</span></div>
+                <div class="row"><span class="grow">Branch 2</span><span class="note">460 members</span><b style="color:var(--ink)">₹0.6L</b><span class="pill bd">−4%</span></div>
+              </div>
+              <div class="g g2 gap mt">
+                <div class="box"><div class="note">Revenue trend</div><div class="chart mt"></div></div>
+                <div class="box"><div class="note" style="color:var(--warn);font-weight:700">NEEDS ATTENTION</div>
+                  <div class="row mt"><span class="grow">23 expiring this week</span><span class="btn" style="padding:3px 7px">Open</span></div>
+                  <div class="row"><span class="grow">4 machines out of order</span><span class="btn o" style="padding:3px 7px">Open</span></div>
+                  <div class="row"><span class="grow">9 members absent 14+ days</span><span class="btn o" style="padding:3px 7px">Open</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — 390</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="brand">OAN</span><span class="grow"></span><span class="box" style="padding:2px 6px">All ▾</span><span class="av"></span></div>
+          <div class="p10 g gap">
+            <div class="box f r"><span class="grow note">Cash</span><b style="color:var(--accent)">Accrual</b></div>
+            <div class="g g2 gap">
+              <div class="kpi"><div class="k">Collected</div><div class="v">₹48.2k</div></div>
+              <div class="kpi"><div class="k">Net profit</div><div class="v">₹2.4L</div></div>
+              <div class="kpi"><div class="k">Check-ins</div><div class="v">128</div></div>
+              <div class="kpi"><div class="k">Expiring</div><div class="v" style="color:var(--warn)">23</div></div>
+            </div>
+            <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">By branch</div>
+              <div class="row mt"><span class="grow">V. Nagar</span><b style="color:var(--ink)">₹1.8L</b><span class="pill ok">+12%</span></div>
+              <div class="row"><span class="grow">Branch 2</span><b style="color:var(--ink)">₹0.6L</b><span class="pill bd">−4%</span></div>
+            </div>
+            <div class="box"><div class="note" style="color:var(--warn);font-weight:700">NEEDS ATTENTION</div>
+              <div class="row mt"><span class="grow">23 expiring</span><span class="note">›</span></div>
+              <div class="row"><span class="grow">4 machines down</span><span class="note">›</span></div>
+            </div>
+          </div>
+          <div class="tabbar"><div class="on">Home</div><div>Members</div><div>Accounts</div><div>More</div></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 04 MEMBERS ROLLUP -->
+  <div class="screen">
+    <div class="screen-head"><h3>Members — Level 1, the roll-up</h3><span class="chip demo">Demo</span><span class="chip role">Admin only</span></div>
+    <p class="screen-note">Total outside, branch-wise inside. <b>This is the pattern every entity follows</b> — Members, Staff, Equipment. A branch manager never sees this screen; they land directly on Level 2 for their own branch, because the aggregate is a permission rather than a page.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop — aggregate view</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="brand">OAN</span><span class="note">Members</span><span class="grow"></span><span class="box" style="padding:3px 8px">All branches ▾</span><span class="btn" style="padding:4px 9px">+ Add member</span></div>
+          <div style="display:flex">
+            <div class="side"><div class="nv">Dashboard</div><div class="nv on">Members</div><div class="nv">Equipment</div><div class="nv">Staff</div><div class="nv">Branches</div><div class="nv">Accounts</div></div>
+            <div class="p10 grow">
+              <div class="g g4 gap">
+                <div class="kpi"><div class="k">Total active</div><div class="v">1,240</div></div>
+                <div class="kpi"><div class="k">Expiring ≤7d</div><div class="v" style="color:var(--warn)">23</div></div>
+                <div class="kpi"><div class="k">Expired</div><div class="v" style="color:var(--bad)">88</div></div>
+                <div class="kpi"><div class="k">New this month</div><div class="v">64</div></div>
+              </div>
+              <div class="box mt">
+                <div class="note" style="font-weight:700;color:var(--ink)">SPLIT BY BRANCH — click to open</div>
+                <div class="row mt" style="padding:9px 0">
+                  <span class="grow" style="color:var(--ink);font-weight:700">Vidhyadhar Nagar</span>
+                  <span class="note">780 active</span><span class="pill wn">14 expiring</span><span class="pill bd">52 expired</span><span class="note">›</span>
+                </div>
+                <div class="row" style="padding:9px 0">
+                  <span class="grow" style="color:var(--ink);font-weight:700">Branch 2</span>
+                  <span class="note">460 active</span><span class="pill wn">9 expiring</span><span class="pill bd">36 expired</span><span class="note">›</span>
+                </div>
+              </div>
+              <div class="dash mt">Aggregate only. No merged list of 1,240 members across branches — that list is the thing that makes gym software feel heavy.</div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — aggregate</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="brand">OAN</span><span class="note">Members</span><span class="grow"></span><span class="box" style="padding:2px 6px">All ▾</span></div>
+          <div class="p10 g gap">
+            <div class="g g2 gap">
+              <div class="kpi"><div class="k">Active</div><div class="v">1,240</div></div>
+              <div class="kpi"><div class="k">Expiring</div><div class="v" style="color:var(--warn)">23</div></div>
+            </div>
+            <div class="note" style="font-weight:700;color:var(--ink)">BY BRANCH</div>
+            <div class="box"><div class="r"><span class="grow" style="color:var(--ink);font-weight:700">V. Nagar</span><span class="note">›</span></div>
+              <div class="r mt"><span class="note grow">780 active</span><span class="pill wn">14</span><span class="pill bd">52</span></div></div>
+            <div class="box"><div class="r"><span class="grow" style="color:var(--ink);font-weight:700">Branch 2</span><span class="note">›</span></div>
+              <div class="r mt"><span class="note grow">460 active</span><span class="pill wn">9</span><span class="pill bd">36</span></div></div>
+            <div class="btn">+ Add member</div>
+          </div>
+          <div class="tabbar"><div>Home</div><div class="on">Members</div><div>Accounts</div><div>More</div></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 05 MEMBER LIST -->
+  <div class="screen">
+    <div class="screen-head"><h3>Members — Level 2, one branch</h3><span class="chip demo">Demo</span><span class="chip role">Front Desk entry point</span><span class="chip role">FD-03 · FD-07</span></div>
+    <p class="screen-note">Search is <b>always phone-number-first</b> — it's how staff and members both think about identity. Status colour is carried on every row so the expiring list needs no separate screen.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop — branch member list</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="brand">OAN</span><span class="note">Members / Vidhyadhar Nagar</span><span class="grow"></span><span class="btn" style="padding:4px 9px">+ Add member</span></div>
+          <div style="display:flex">
+            <div class="side"><div class="nv on">Check-in</div><div class="nv">Members</div><div class="nv">Collect</div></div>
+            <div class="p10 grow">
+              <div class="r gap"><div class="inp grow">🔍 Search by phone or name…</div>
+                <div class="box" style="padding:6px 9px">Status ▾</div><div class="box" style="padding:6px 9px">Plan ▾</div></div>
+              <div class="r gap mt"><span class="pill ok">Active 780</span><span class="pill wn">Expiring 14</span><span class="pill bd">Expired 52</span><span class="note">saved views ▾</span></div>
+              <div class="box mt">
+                <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Rahul Sharma</b><br/><span class="note">98xxx 43210 · Muscle Building</span></span><span class="note">214d left</span><span class="pill ok">Active</span></div>
+                <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Priya Meena</b><br/><span class="note">99xxx 11204 · Weight Loss</span></span><span class="note">4d left</span><span class="pill wn">Expiring</span><span class="btn" style="padding:3px 7px">WhatsApp</span></div>
+                <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Amit Jain</b><br/><span class="note">70xxx 88190 · Annual · ₹2,000 due</span></span><span class="note">exp 12 Mar</span><span class="pill bd">Expired</span><span class="btn" style="padding:3px 7px">Collect</span></div>
+                <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Sneha Gupta</b><br/><span class="note">81xxx 55021 · Aerobics</span></span><span class="note">96d left</span><span class="pill ok">Active</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — branch member list</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="note">‹ V. Nagar</span><span class="grow"></span><span class="note">+</span></div>
+          <div class="p10 g gap">
+            <div class="inp">🔍 Phone or name…</div>
+            <div class="r gap w"><span class="pill ok">Active</span><span class="pill wn">Expiring 14</span><span class="pill bd">Expired 52</span></div>
+            <div class="box">
+              <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Rahul Sharma</b><br/><span class="note">214d left</span></span><span class="pill ok">Active</span></div>
+              <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Priya Meena</b><br/><span class="note">4d left</span></span><span class="pill wn">Exp</span></div>
+              <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Amit Jain</b><br/><span class="note">₹2,000 due</span></span><span class="pill bd">Expired</span></div>
+            </div>
+            <div class="note">Row tap → member. Long-press → WhatsApp / Collect.</div>
+          </div>
+          <div class="tabbar"><div>Check-in</div><div class="on">Members</div><div>Collect</div></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 06 MEMBER DETAIL -->
+  <div class="screen">
+    <div class="screen-head"><h3>Member detail</h3><span class="chip demo">Demo</span><span class="chip role">All staff, scoped</span></div>
+    <p class="screen-note">Seven tabs, but <b>front desk only sees four</b> — Profile, Membership, Payments, Attendance. Progress, Workout and Diet require health access, which counter staff don't get. Medical conditions and body-fat numbers are not counter-desk data.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop — member record</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="note">‹ Members</span><span class="grow"></span><span class="btn o" style="padding:4px 9px">WhatsApp</span><span class="btn" style="padding:4px 9px">Collect payment</span></div>
+          <div class="p10">
+            <div class="r gap">
+              <div class="av" style="width:44px;height:44px;border-radius:6px"></div>
+              <div class="grow">
+                <div style="color:var(--ink);font-weight:800;font-size:14px">RAHUL SHARMA</div>
+                <div class="note">98xxx 43210 · M · 28 · Member #1042 · joined 12 Jan 2024</div>
+              </div>
+              <div class="rt"><span class="pill ok">Active</span><div class="note mt">Muscle Building · Annual</div><div class="note">expires 28 Feb 2027 · 214 days</div></div>
+            </div>
+            <div class="tabs mt"><div class="tab on">Profile</div><div class="tab">Membership</div><div class="tab">Payments</div><div class="tab">Attendance</div><div class="tab">Progress</div><div class="tab">Workout</div><div class="tab">Diet</div></div>
+            <div class="g g2 gap mt">
+              <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">GOAL &amp; INTAKE</div>
+                <div class="mt g" style="gap:5px"><span class="ln l b"></span><span class="ln m b"></span><span class="ln l b"></span></div>
+                <div class="note mt">Goal · Muscle gain · target 78 kg by Dec</div></div>
+              <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">COACH &amp; BRANCH</div>
+                <div class="row mt"><span class="av"></span><span class="grow">Coach Vikram</span><span class="note">assigned</span></div>
+                <div class="note">Home branch · Vidhyadhar Nagar</div>
+                <div class="note">Access · this branch only</div></div>
+              <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">ATTENDANCE · 30 DAYS</div>
+                <div class="chart mt"></div><div class="note mt">22 of 26 · longest gap 3 days</div></div>
+              <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">LEDGER</div>
+                <div class="row mt"><span class="grow">Paid to date</span><b style="color:var(--ink)">₹24,000</b></div>
+                <div class="row"><span class="grow">Outstanding</span><b style="color:var(--ok)">₹0</b></div></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — member record</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="note">‹</span><span class="grow" style="color:var(--ink);font-weight:700">Rahul Sharma</span><span class="note">⋯</span></div>
+          <div class="p10 g gap">
+            <div class="box f r gap"><div class="av" style="width:34px;height:34px;border-radius:5px"></div>
+              <div class="grow"><span class="pill ok">Active</span><div class="note mt">214 days left</div></div></div>
+            <div class="tabs" style="font-size:9.5px"><div class="tab on">Profile</div><div class="tab">Plan</div><div class="tab">Pay</div><div class="tab">Attend</div><div class="tab">Progress</div></div>
+            <div class="box"><div class="note">98xxx 43210 · #1042</div>
+              <div class="mt g" style="gap:5px"><span class="ln l b"></span><span class="ln m b"></span></div></div>
+            <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">ATTENDANCE 30d</div><div class="chart mt"></div></div>
+            <div class="r gap"><div class="btn o grow">WhatsApp</div><div class="btn grow">Collect</div></div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 07 COLLECT PAYMENT -->
+  <div class="screen">
+    <div class="screen-head"><h3>Collect payment</h3><span class="chip demo">Demo</span><span class="chip role">Front Desk</span><span class="chip role">FD-04 · FD-05</span></div>
+    <p class="screen-note">Part payment is <b>first-class, not an edge case</b> — "₹3,000 now, ₹2,000 next week" is normal here and foreign software handles it badly. The GST split is computed and shown, never typed. Discount above the role's cap becomes an approval request rather than a silent giveaway.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop — collect</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="note">Collect payment · Rahul Sharma</span><span class="grow"></span><span class="note">✕</span></div>
+          <div class="p10 g gap">
+            <div class="g g2 gap">
+              <div class="box"><div class="note">PLAN</div><div class="inp mt">Muscle Building · Annual ▾</div>
+                <div class="r mt"><span class="note grow">Price (incl. GST)</span><b style="color:var(--ink)">₹12,000</b></div>
+                <div class="r"><span class="note grow">Discount</span><span class="inp" style="padding:3px 6px;width:70px">₹0</span></div>
+                <div class="note" style="color:var(--warn)">Cap 10% · above this needs Admin approval</div>
+              </div>
+              <div class="box f"><div class="note">BREAKDOWN — computed</div>
+                <div class="r mt"><span class="note grow">Taxable value</span><span style="color:var(--ink)">₹10,169.49</span></div>
+                <div class="r"><span class="note grow">CGST 9%</span><span style="color:var(--ink)">₹915.25</span></div>
+                <div class="r"><span class="note grow">SGST 9%</span><span style="color:var(--ink)">₹915.26</span></div>
+                <div class="row"></div>
+                <div class="r"><b class="grow" style="color:var(--ink)">Total</b><b style="color:var(--ink);font-size:13px">₹12,000</b></div>
+              </div>
+            </div>
+            <div class="box"><div class="note">PAY NOW</div>
+              <div class="r gap mt"><div class="btn grow">UPI</div><div class="btn o grow">Cash</div><div class="btn o grow">Card</div></div>
+              <div class="r gap mt"><span class="note grow">Amount received</span><span class="inp" style="width:100px">₹8,000</span></div>
+              <div class="r mt"><span class="grow" style="color:var(--warn);font-weight:700">Balance due ₹4,000</span><span class="note">due date ▾</span></div>
+            </div>
+            <div class="r gap"><div class="btn o grow">Print receipt</div><div class="btn grow">Save &amp; send on WhatsApp</div></div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — collect</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="note">‹ Collect</span><span class="grow"></span><span class="note">Rahul S.</span></div>
+          <div class="p10 g gap">
+            <div class="inp">Muscle Building · Annual ▾</div>
+            <div class="box f"><div class="r"><span class="note grow">Total</span><b style="color:var(--ink);font-size:14px">₹12,000</b></div>
+              <div class="note">incl. CGST ₹915.25 + SGST ₹915.26</div></div>
+            <div class="r gap"><div class="btn grow">UPI</div><div class="btn o grow">Cash</div></div>
+            <div class="r gap"><span class="note grow">Received</span><span class="inp" style="width:84px">₹8,000</span></div>
+            <div class="box" style="border-color:var(--warn)"><span style="color:var(--warn);font-weight:700">Balance due ₹4,000</span></div>
+            <div class="btn">Save &amp; send on WhatsApp</div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 08 ACCOUNTS -->
+  <div class="screen">
+    <div class="screen-head"><h3>Accounts — branch P&amp;L</h3><span class="chip demo">Demo</span><span class="chip role">Admin</span><span class="chip role">Manager (own branch)</span><span class="chip role">AD-03 · BM-01</span></div>
+    <p class="screen-note">The most owner-impressive screen in the product, and the one no Indian competitor offers. <b>Front desk can never reach it.</b> Every figure drills to the source document — Tally's habit, worth copying exactly.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop — P&amp;L, branches side by side</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="brand">OAN</span><span class="note">Accounts</span><span class="grow"></span><span class="box" style="padding:3px 8px">Jul 2026 ▾</span><span class="box" style="padding:3px 8px">Cash | <b style="color:var(--accent)">Accrual</b></span></div>
+          <div style="display:flex">
+            <div class="side"><div class="nv">Dashboard</div><div class="nv">Members</div><div class="nv">Equipment</div><div class="nv">Staff</div><div class="nv">Branches</div><div class="nv on">Accounts</div></div>
+            <div class="p10 grow">
+              <div class="tabs"><div class="tab on">P&amp;L</div><div class="tab">Day book</div><div class="tab">Expenses</div><div class="tab">Receivables</div><div class="tab">GST</div></div>
+              <div class="box mt">
+                <div class="r"><span class="grow"></span><span class="note" style="width:78px;text-align:right">V. NAGAR</span><span class="note" style="width:78px;text-align:right">BRANCH 2</span><span class="note" style="width:78px;text-align:right">TOTAL</span></div>
+                <div class="row"><b class="grow" style="color:var(--ink)">Income</b><span class="rt" style="width:78px">₹4,10,000</span><span class="rt" style="width:78px">₹2,20,000</span><b class="rt" style="width:78px;color:var(--ink)">₹6,30,000</b></div>
+                <div class="row"><span class="grow note">Membership</span><span class="rt" style="width:78px">₹3,20,000</span><span class="rt" style="width:78px">₹1,90,000</span><span class="rt" style="width:78px">₹5,10,000</span></div>
+                <div class="row"><span class="grow note">Personal training</span><span class="rt" style="width:78px">₹78,000</span><span class="rt" style="width:78px">₹26,000</span><span class="rt" style="width:78px">₹1,04,000</span></div>
+                <div class="row"><b class="grow" style="color:var(--ink)">Direct expenses</b><span class="rt" style="width:78px">₹2,05,000</span><span class="rt" style="width:78px">₹1,72,000</span><b class="rt" style="width:78px;color:var(--ink)">₹3,77,000</b></div>
+                <div class="row"><span class="grow note">Rent</span><span class="rt" style="width:78px">₹85,000</span><span class="rt" style="width:78px">₹78,000</span><span class="rt" style="width:78px">₹1,63,000</span></div>
+                <div class="row"><span class="grow note">Coach salaries + commission</span><span class="rt" style="width:78px">₹92,000</span><span class="rt" style="width:78px">₹74,000</span><span class="rt" style="width:78px">₹1,66,000</span></div>
+                <div class="row"><span class="grow note">Indirect expenses</span><span class="rt" style="width:78px">₹48,000</span><span class="rt" style="width:78px">₹41,000</span><span class="rt" style="width:78px">₹89,000</span></div>
+                <div class="row" style="border-bottom:0;padding-top:9px">
+                  <b class="grow" style="color:var(--ink);font-size:12px">NET PROFIT</b>
+                  <b class="rt" style="width:78px;color:var(--ok);font-size:12px">₹1,57,000</b>
+                  <b class="rt" style="width:78px;color:var(--bad);font-size:12px">₹7,000</b>
+                  <b class="rt" style="width:78px;color:var(--ink);font-size:12px">₹1,64,000</b>
+                </div>
+              </div>
+              <div class="dash mt" style="text-align:left">
+                <b style="color:var(--ink)">The whole point.</b> Branch 2 collects ₹2.2L and keeps ₹7,000. Revenue alone said it was fine.
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — P&amp;L</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="note">Accounts</span><span class="grow"></span><span class="box" style="padding:2px 6px">Jul ▾</span></div>
+          <div class="p10 g gap">
+            <div class="box f"><div class="r"><span class="note grow">All branches · net</span><b style="color:var(--ink);font-size:15px">₹1.64L</b></div></div>
+            <div class="box"><div class="r"><b class="grow" style="color:var(--ink)">V. Nagar</b><b style="color:var(--ok)">₹1.57L</b></div>
+              <div class="row mt"><span class="note grow">Income</span><span>₹4.10L</span></div>
+              <div class="row"><span class="note grow">Expenses</span><span>₹2.53L</span></div></div>
+            <div class="box" style="border-color:var(--bad)"><div class="r"><b class="grow" style="color:var(--ink)">Branch 2</b><b style="color:var(--bad)">₹7,000</b></div>
+              <div class="row mt"><span class="note grow">Income</span><span>₹2.20L</span></div>
+              <div class="row"><span class="note grow">Expenses</span><span>₹2.13L</span></div></div>
+            <div class="btn o">+ Record expense</div>
+          </div>
+          <div class="tabbar"><div>Home</div><div>Members</div><div class="on">Accounts</div><div>More</div></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 09 EQUIPMENT -->
+  <div class="screen">
+    <div class="screen-head"><h3>Equipment</h3><span class="chip demo">Demo</span><span class="chip role">Admin · Manager</span><span class="chip role">AD-08 · FD-08</span></div>
+    <p class="screen-note">The clearest demonstration of the roll-up: <b>total units outside, branch-wise inside</b>, no explanation needed. Out-of-order count is really a churn indicator — broken machines are one of the top reasons members quit.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop — asset roll-up</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="brand">OAN</span><span class="note">Equipment</span><span class="grow"></span><span class="btn" style="padding:4px 9px">+ Add asset</span></div>
+          <div style="display:flex">
+            <div class="side"><div class="nv">Dashboard</div><div class="nv">Members</div><div class="nv on">Equipment</div><div class="nv">Staff</div><div class="nv">Branches</div><div class="nv">Accounts</div></div>
+            <div class="p10 grow">
+              <div class="g g4 gap">
+                <div class="kpi"><div class="k">Total units</div><div class="v">146</div></div>
+                <div class="kpi"><div class="k">Working</div><div class="v" style="color:var(--ok)">138</div></div>
+                <div class="kpi"><div class="k">Out of order</div><div class="v" style="color:var(--bad)">4</div></div>
+                <div class="kpi"><div class="k">Service due</div><div class="v" style="color:var(--warn)">11</div></div>
+              </div>
+              <div class="box mt"><div class="note" style="font-weight:700;color:var(--ink)">BY CATEGORY × BRANCH</div>
+                <div class="r mt"><span class="grow"></span><span class="note" style="width:80px;text-align:right">V. NAGAR</span><span class="note" style="width:80px;text-align:right">BRANCH 2</span></div>
+                <div class="row"><span class="grow">Cardio</span><span class="rt" style="width:80px">24</span><span class="rt" style="width:80px">8 <span class="pill bd">2 down</span></span></div>
+                <div class="row"><span class="grow">Strength machines</span><span class="rt" style="width:80px">31</span><span class="rt" style="width:80px">18</span></div>
+                <div class="row"><span class="grow">Free weights</span><span class="rt" style="width:80px">42</span><span class="rt" style="width:80px">21</span></div>
+                <div class="row"><span class="grow">Functional</span><span class="rt" style="width:80px">14</span><span class="rt" style="width:80px">6</span></div>
+              </div>
+              <div class="box mt" style="border-color:var(--bad)">
+                <div class="note" style="color:var(--bad);font-weight:700">OUT OF ORDER — blocks 3 assigned programs</div>
+                <div class="row mt"><span class="grow">Treadmill #TM-07 · Branch 2</span><span class="note">down 6 days</span><span class="btn o" style="padding:3px 7px">Log service</span></div>
+                <div class="row"><span class="grow">Leg press #LP-02 · Branch 2</span><span class="note">down 2 days</span><span class="btn o" style="padding:3px 7px">Log service</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — report a fault</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="note">Equipment</span><span class="grow"></span><span class="box" style="padding:2px 6px">All ▾</span></div>
+          <div class="p10 g gap">
+            <div class="g g2 gap">
+              <div class="kpi"><div class="k">Total</div><div class="v">146</div></div>
+              <div class="kpi"><div class="k">Down</div><div class="v" style="color:var(--bad)">4</div></div>
+            </div>
+            <div class="box"><div class="r"><span class="grow">V. Nagar</span><b style="color:var(--ink)">111</b><span class="note">›</span></div></div>
+            <div class="box"><div class="r"><span class="grow">Branch 2</span><b style="color:var(--ink)">35</b><span class="pill bd">2</span><span class="note">›</span></div></div>
+            <div class="dash">◻ Scan asset tag</div>
+            <div class="btn">Report a fault</div>
+            <div class="note">Front desk and coaches can report faults but not edit the register.</div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 10 PROGRESS -->
+  <div class="screen">
+    <div class="screen-head"><h3>Progress &amp; printable report</h3><span class="chip demo">Demo</span><span class="chip role">Coach · Manager</span><span class="chip role">CO-03 · CO-04 · ME-03</span></div>
+    <p class="screen-note">OAN already promises body-composition tracking on their website — this is that copy, implemented. The report is the commercial piece: <b>a member shown measured proof of six months' progress renews far more readily than one asked cold.</b></p>
+    <div class="frames">
+      <figure><figcaption>Desktop — progress tab</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="note">‹ Rahul Sharma / Progress</span><span class="grow"></span><span class="btn o" style="padding:4px 9px">+ Record measurement</span><span class="btn" style="padding:4px 9px">Generate report</span></div>
+          <div class="p10">
+            <div class="tabs"><div class="tab">Profile</div><div class="tab">Membership</div><div class="tab">Payments</div><div class="tab">Attendance</div><div class="tab on">Progress</div><div class="tab">Workout</div><div class="tab">Diet</div></div>
+            <div class="g g4 gap mt">
+              <div class="kpi"><div class="k">Weight</div><div class="v">78.4 <span style="font-size:9px">kg</span></div><div class="note" style="color:var(--ok)">▼ 6.2 since Jan</div></div>
+              <div class="kpi"><div class="k">Body fat</div><div class="v">18.2<span style="font-size:9px">%</span></div><div class="note" style="color:var(--ok)">▼ 4.1</div></div>
+              <div class="kpi"><div class="k">Lean mass</div><div class="v">64.1 <span style="font-size:9px">kg</span></div><div class="note" style="color:var(--ok)">▲ 2.4</div></div>
+              <div class="kpi"><div class="k">Waist</div><div class="v">33 <span style="font-size:9px">in</span></div><div class="note" style="color:var(--ok)">▼ 3</div></div>
+            </div>
+            <div class="g g2 gap mt">
+              <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">WEIGHT &amp; BODY FAT — 7 MONTHS</div><div class="chart mt" style="height:66px"></div>
+                <div class="r mt"><span class="note grow">Jan</span><span class="note">Jul</span></div></div>
+              <div class="box"><div class="note" style="font-weight:700;color:var(--ink)">MEASUREMENT LOG</div>
+                <div class="row mt"><span class="grow">28 Jul</span><span class="note">78.4 kg · 18.2%</span><span class="note">Coach Vikram</span></div>
+                <div class="row"><span class="grow">30 Jun</span><span class="note">79.8 kg · 19.0%</span><span class="note">Coach Vikram</span></div>
+                <div class="row"><span class="grow">28 May</span><span class="note">81.2 kg · 20.4%</span><span class="note">Coach Vikram</span></div>
+                <div class="row"><span class="grow">12 Jan</span><span class="note">84.6 kg · 22.3%</span><span class="note">baseline</span></div>
+              </div>
+            </div>
+            <div class="box mt f"><div class="r"><span class="grow"><b style="color:var(--ink)">Progress report</b> · branded PDF · Jan–Jul</span>
+              <span class="btn o" style="padding:4px 9px">Print</span><span class="btn" style="padding:4px 9px">Send on WhatsApp</span></div></div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — member's own view</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="brand">OAN</span><span class="grow"></span><span class="note">Rahul</span></div>
+          <div class="p10 g gap">
+            <div class="box f ctr"><div class="note">MUSCLE BUILDING · ANNUAL</div>
+              <div style="font-size:24px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums">214</div>
+              <div class="note">days remaining</div></div>
+            <div class="g g2 gap">
+              <div class="kpi"><div class="k">Weight</div><div class="v">78.4</div><div class="note" style="color:var(--ok)">▼ 6.2 kg</div></div>
+              <div class="kpi"><div class="k">Body fat</div><div class="v">18.2%</div><div class="note" style="color:var(--ok)">▼ 4.1</div></div>
+            </div>
+            <div class="box"><div class="note">PROGRESS</div><div class="chart mt"></div></div>
+            <div class="box"><div class="r"><span class="grow">This month</span><b style="color:var(--ink)">22 visits</b></div></div>
+            <div class="btn o">Get my progress report</div>
+          </div>
+          <div class="tabbar"><div class="on">Me</div><div>Workout</div><div>Diet</div><div>Pay</div></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 11 COACH -->
+  <div class="screen">
+    <div class="screen-head"><h3>Coach — today's clients &amp; session log</h3><span class="chip next">Next</span><span class="chip role">Coach</span><span class="chip role">CO-01 · CO-02</span></div>
+    <p class="screen-note">Mobile-first by nature — a coach is on the floor with a phone in their pocket, not at a desk. <b>Last week's loads are prefilled.</b> That single decision is the whole design: a coach who must retype last week's numbers logs nothing, and an empty log makes every progress metric worthless.</p>
+    <div class="frames">
+      <figure><figcaption>Desktop — coach roster (secondary)</figcaption>
+        <div class="wf">
+          <div class="bar"><span class="brand">OAN</span><span class="note">My clients · Coach Vikram</span><span class="grow"></span><span class="scope">NO FINANCIAL ACCESS</span></div>
+          <div style="display:flex">
+            <div class="side" style="min-width:88px"><div class="nv on">Today</div><div class="nv">Clients</div></div>
+            <div class="p10 grow">
+              <div class="r gap"><span class="pill ok">Checked in 6</span><span class="pill wn">Plateau 2</span><span class="pill bd">Absent 14d+ 3</span></div>
+              <div class="box mt">
+                <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Rahul Sharma</b><br/><span class="note">Push day · last session 26 Jul</span></span><span class="pill ok">In gym</span><span class="btn" style="padding:3px 7px">Log session</span></div>
+                <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Priya Meena</b><br/><span class="note">Full body · no PR in 5 weeks</span></span><span class="pill wn">Plateau</span><span class="btn o" style="padding:3px 7px">Review</span></div>
+                <div class="row"><span class="av"></span><span class="grow"><b style="color:var(--ink)">Karan Vyas</b><br/><span class="note">last seen 11 Jul</span></span><span class="pill bd">Absent 17d</span><span class="btn o" style="padding:3px 7px">WhatsApp</span></div>
+              </div>
+              <div class="dash mt" style="text-align:left"><b style="color:var(--ink)">"Trainers who notice when you skip a day"</b> — OAN's own promise, as a worklist.</div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <figure><figcaption>Mobile — log a session (primary)</figcaption>
+        <div class="wf wf-mob">
+          <div class="bar"><span class="note">‹ Rahul S.</span><span class="grow"></span><span class="note">Push day</span></div>
+          <div class="p10 g gap">
+            <div class="box f"><div class="note">BENCH PRESS · <span style="color:var(--accent)">last week 60kg × 8,8,7</span></div>
+              <div class="r gap mt"><span class="inp grow ctr">62.5</span><span class="inp grow ctr">8</span><span class="btn" style="padding:6px 9px">✓</span></div>
+              <div class="r gap mt"><span class="inp grow ctr">62.5</span><span class="inp grow ctr">8</span><span class="btn" style="padding:6px 9px">✓</span></div>
+              <div class="r gap mt"><span class="inp grow ctr">62.5</span><span class="inp grow ctr">7</span><span class="btn o" style="padding:6px 9px">+</span></div>
+              <div class="note mt" style="color:var(--ok)">▲ e1RM 78.1 kg · up 3.2%</div></div>
+            <div class="box"><div class="note">INCLINE DB PRESS · <span style="color:var(--accent)">22.5kg × 10,10,9</span></div>
+              <div class="r gap mt"><span class="inp grow ctr">—</span><span class="inp grow ctr">—</span><span class="btn o" style="padding:6px 9px">+</span></div></div>
+            <div class="btn">Finish session</div>
+            <div class="note ctr">Target: under 60 seconds</div>
+          </div>
+          <div class="tabbar"><div class="on">Today</div><div>Clients</div></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RULES ============ -->
+<section id="rules">
+  <div class="sec-head"><span class="sec-tag">07</span><h2>Layout rules</h2></div>
+  <p class="lede">What holds across every screen above, so new screens don't need re-litigating.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Rule</th><th>Desktop / .exe</th><th>Mobile</th></tr></thead>
+      <tbody>
+        <tr><td>Navigation</td><td>Left sidebar, max 6 items, filtered by role</td><td>Bottom tab bar, max 4 — the 5th becomes "More"</td></tr>
+        <tr><td>Branch scope</td><td>Switcher in header, applies to the whole page</td><td>Compact chip in header, same behaviour</td></tr>
+        <tr><td>Density</td><td>Table rows, side-by-side comparison</td><td>Cards, one record per row, never a wide table</td></tr>
+        <tr><td>Primary action</td><td>Top-right of the content area</td><td>Full-width button pinned at the bottom</td></tr>
+        <tr><td>Search</td><td>Inline, phone-number-first</td><td>Full-width field under the header</td></tr>
+        <tr><td>Status</td><td>Colour pill on every row</td><td>Same pill — colour survives the size change</td></tr>
+        <tr><td>Money</td><td>Right-aligned, tabular figures</td><td>Right-aligned, abbreviated (₹1.8L)</td></tr>
+        <tr><td>Drill-down</td><td>Every figure clicks to its source document</td><td>Same — tap through</td></tr>
+        <tr><td>Command palette</td><td>⌘K / Ctrl+K from anywhere</td><td>Search icon in header</td></tr>
+        <tr><td>Camera</td><td>Not available</td><td>QR scan, progress photos, asset tags</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call">
+    <h4>The test to apply to every new screen</h4>
+    <p>If a screen has more than <strong>seven things on it</strong>, it's the wrong screen. Advanced fields live behind "More", never on the default form. And the count that matters is <em>per role</em> — an Admin seeing six modules is fine as long as front desk still sees three.</p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Scope shown:</strong> the demo slice — Members, Plans, Check-in, Payments, Equipment, Accounts, Progress — across web, desktop <code>.exe</code> and mobile, with two branches and three role logins. Wireframes are layout and content only; visual design comes after these are agreed.</p>
+    <p>Companion to <code>Rishabhresearch.md</code> §9 (demo scope), §12 (RBAC), §13 (module structure), §14 (accounting), §17 (member data). Open questions for OAN live in §10 — the answers to plan pricing, GSTIN and GST-inclusive pricing change several of these screens.</p>
+  </div>
+</footer>
