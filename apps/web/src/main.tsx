@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import { SessionProvider } from './demo/session';
+import { DemoStoreProvider } from './demo/store';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/layout.css';
@@ -15,7 +16,9 @@ createRoot(root).render(
   <StrictMode>
     <BrowserRouter>
       <SessionProvider>
-        <App />
+        <DemoStoreProvider>
+          <App />
+        </DemoStoreProvider>
       </SessionProvider>
     </BrowserRouter>
   </StrictMode>,

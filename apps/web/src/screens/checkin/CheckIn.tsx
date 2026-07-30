@@ -10,8 +10,8 @@ import {
 } from '@oan/core';
 import { Button, Icon, Pill, LEVEL_TONE, TONE_VAR, EmptyState } from '../../components/ui';
 import { useSession } from '../../demo/session';
-import { BRANCHES, RECENT_CHECKINS, branchById, inGymNow, checkInsToday, maskPhone } from '../../demo/data';
-import { searchMembers } from '../../demo/selectors';
+import { BRANCHES, TODAY, branchById, inGymNow, checkInsToday, maskPhone } from '../../demo/data';
+import { useCheckInsToday, useDemo, useMemberSearch } from '../../demo/store';
 import type { Member } from '../../demo/types';
 import { useReducedMotion } from '../../lib/hooks';
 import './checkin.css';
@@ -154,18 +154,21 @@ export function CheckIn() {
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const [chosen, setChosen] = useState<Member | null>(null);
-  const [log, setLog] = useState(RECENT_CHECKINS);
-  const [inside, setInside] = useState(() => inGymNow(atBranch));
+
+  // The log lives in the shared world, not in this component. A check-in
+  // recorded here has to still be there after you walk to Members and back —
+  // otherwise the walkthrough contradicts itself.
+  const { recordCheckIn } = useDemo();
+  const log = useCheckInsToday(atBranch);
+  const inside = inGymNow(atBranch) + log.filter((c) => c.date === TODAY && c.branchId).length;
 
   // The field holds focus: a counter operator never clicks before typing.
   useEffect(() => {
     inputRef.current?.focus();
   }, [chosen]);
 
-  const hits = useMemo(
-    () => (chosen ? [] : searchMembers(query, atBranch, 5)),
-    [query, atBranch, chosen],
-  );
+  const found = useMemberSearch(query, atBranch, 5);
+  const hits = chosen ? [] : found;
 
   const verdict = useMemo(
     () => (chosen ? checkInVerdict(chosen.membership as Membership, atBranch) : null),
@@ -183,11 +186,12 @@ export function CheckIn() {
 
   const clear = () => {
     if (chosen && verdict?.allow) {
-      setLog((l) => [
-        { member: chosen, at: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false }) },
-        ...l,
-      ].slice(0, 12));
-      setInside((n) => n + 1);
+      recordCheckIn({
+        member: chosen,
+        branchId: atBranch,
+        level: verdict.level,
+        code: verdict.code,
+      });
     }
     setChosen(null);
     setQuery('');

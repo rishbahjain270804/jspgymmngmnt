@@ -31,6 +31,7 @@ import {
 } from '../../demo/selectors';
 import { ProgressReport } from '../progress/ProgressReport';
 import { inr } from '../../lib/money';
+import { useMember } from '../../demo/store';
 import type { Member } from '../../demo/types';
 
 type TabKey = 'profile' | 'membership' | 'payments' | 'attendance' | 'progress' | 'workout' | 'diet';
@@ -50,7 +51,7 @@ export function MemberDetail() {
   const [tab, setTab] = useState<TabKey>('profile');
   const [printing, setPrinting] = useState(false);
 
-  const member = memberById(memberId);
+  const member = useMember(memberId);
 
   if (!member) {
     return (

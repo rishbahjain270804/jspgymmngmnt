@@ -26,6 +26,7 @@ import {
   netProfit,
   pnlTotals,
 } from '../demo/data';
+import { useCheckInsToday, useCollectedToday } from '../demo/store';
 import { dues, memberStats } from '../demo/selectors';
 import { type Recommendation, recommendations, stakeSummary } from '../demo/recommend';
 import { useSimulatedLoad } from '../lib/hooks';
@@ -70,7 +71,12 @@ export function Dashboard() {
   const stake = stakeSummary(scope);
 
   const share = scope ? (SHARE[scope] ?? 0.5) : 1;
-  const collected = COLLECTED_TODAY * share;
+  // Live: a payment taken on the Collect screen moves this number, so the
+  // walkthrough can collect ₹8,000 and come back here to see it land.
+  const takenInDemo = useCollectedToday(scope);
+  const seeded = COLLECTED_TODAY * share;
+  const collected = Math.max(seeded, takenInDemo);
+  const visitsToday = useCheckInsToday(scope).length;
   const earned = EARNED_TODAY_ACCRUAL * share;
   const scopeNet = !scope ? profit.total : scope === 'br-vn' ? profit.vn : profit.ms;
 
@@ -144,7 +150,7 @@ export function Dashboard() {
           <Kpi
             index={3}
             label="Check-ins today"
-            value={checkInsToday(scope)}
+            value={Math.max(checkInsToday(scope), visitsToday)}
             icon="checkin"
             hint={`${members.active.toLocaleString('en-IN')} active members`}
           />

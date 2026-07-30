@@ -7,6 +7,7 @@ import { Drawer } from '../ui/Overlay';
 import { Pill } from '../ui/StatusPill';
 import { Select } from '../ui/Field';
 import { useSession, ROLE_LABEL } from '../../demo/session';
+import { useDemo } from '../../demo/store';
 import { BRANCHES, NOTIFICATIONS, STAFF } from '../../demo/data';
 import { CommandPalette } from './CommandPalette';
 import { NAV } from './nav';
@@ -202,6 +203,7 @@ function NotificationCentre({ open, onClose }: { open: boolean; onClose: () => v
 
 export function AppShell() {
   const { role, name, theme, setTheme, signInAs, staffId } = useSession();
+  const { touched, reset } = useDemo();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
 
@@ -301,6 +303,14 @@ export function AppShell() {
                 </option>
               ))}
             </Select>
+            {/* Only offered once something has actually been changed, so it
+             * stays out of the way until the walkthrough needs a clean slate
+             * for the next person. */}
+            {touched ? (
+              <Button variant="ghost" size="sm" icon="refresh" onClick={reset}>
+                Reset
+              </Button>
+            ) : null}
           </div>
         </div>
       </header>

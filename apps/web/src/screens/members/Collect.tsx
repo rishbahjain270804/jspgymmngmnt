@@ -25,6 +25,7 @@ import {
 } from '../../components/ui';
 import { useSession } from '../../demo/session';
 import { PLANS, TODAY, branchById, maskPhone, planById } from '../../demo/data';
+import { useDemo } from '../../demo/store';
 import { memberById, searchMembers, statusOf } from '../../demo/selectors';
 import type { Member } from '../../demo/types';
 import { inr } from '../../lib/money';
@@ -144,6 +145,7 @@ function CollectForm({
   actor: Parameters<typeof discountWithinCap>[0];
 }) {
   const nav = useNavigate();
+  const { collect } = useDemo();
   const [planId, setPlanId] = useState(member.membership.plan.planId);
   const [discountPct, setDiscountPct] = useState(0);
   const [mode, setMode] = useState<PaymentMode>('UPI');
@@ -168,6 +170,37 @@ function CollectForm({
   const received = receivedRupees === '' ? payable : rupees(Number(receivedRupees) || 0);
   const balance = paise(Math.max(0, payable - received));
   const overpaid = received > payable;
+
+  /**
+   * Actually record it.
+   *
+   * This used to be `setDone(true)` — the screen congratulated you and changed
+   * nothing. Walk back to the member and the dues were untouched, which is the
+   * moment a customer stops believing the demo. Now the payment lands in the
+   * shared world: the balance moves, the invoice appears in their history, and
+   * today's collection on the dashboard goes up by what you just took.
+   */
+  const save = () => {
+    collect({
+      memberId: member.id,
+      total: gst.total,
+      received,
+      mode,
+      planName: plan.name,
+      // Selling a different plan than the one they're on is a renewal, so the
+      // membership restarts from today rather than just clearing a balance.
+      ...(planId !== member.membership.plan.planId || member.membership.balanceDue === 0
+        ? {
+            renewal: {
+              planId: plan.planId,
+              durationUnit: plan.durationUnit,
+              durationCount: plan.durationCount,
+            },
+          }
+        : {}),
+    });
+    setDone(true);
+  };
 
   if (done) {
     return (
@@ -355,7 +388,7 @@ function CollectForm({
                 block
                 icon="whatsapp"
                 disabled={overpaid || cap.needsApproval}
-                onClick={() => setDone(true)}
+                onClick={save}
               >
                 Save and send on WhatsApp
               </Button>
@@ -364,7 +397,7 @@ function CollectForm({
                 block
                 icon="printer"
                 disabled={overpaid || cap.needsApproval}
-                onClick={() => setDone(true)}
+                onClick={save}
               >
                 Save and print receipt
               </Button>

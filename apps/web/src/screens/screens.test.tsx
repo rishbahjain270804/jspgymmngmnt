@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { App } from '../App';
 import { SessionProvider } from '../demo/session';
+import { DemoStoreProvider } from '../demo/store';
 import { STAFF } from '../demo/data';
 
 /**
@@ -54,6 +55,9 @@ afterEach(() => {
 function renderAt(path: string, staffId: string): string {
   localStorage.setItem('oan.staff', JSON.stringify(staffId));
   localStorage.setItem('oan.branch', 'null');
+  // Each render starts from the seeded world, so one test's check-in or
+  // payment cannot leak into the next one's assertions.
+  sessionStorage.clear();
 
   container = document.createElement('div');
   document.body.appendChild(container);
@@ -63,7 +67,9 @@ function renderAt(path: string, staffId: string): string {
     root.render(
       <MemoryRouter initialEntries={[path]}>
         <SessionProvider>
-          <App />
+          <DemoStoreProvider>
+            <App />
+          </DemoStoreProvider>
         </SessionProvider>
       </MemoryRouter>,
     );
